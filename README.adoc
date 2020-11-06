@@ -1,0 +1,18 @@
+= Rocketman
+
+* 03 DF
+* 06 FS
+
+This is the Repo for the ITP Project "Rocketman"
+
+Links:
+
+* https://dumfarth-felix.github.io/Rocketman/proposal[Projekt Auftrag]
+
+* https://github.com/2021-4ahitm-itp/01-project-proposal-rocketman
+
+
+
+Protokolle:
+
+* https://dumfarth-felix.github.io/Rocketman/protokoll1_231020[Protokoll 1, 23.10.2020]

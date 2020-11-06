@@ -1,0 +1,111 @@
+= Rocketman
+06 FS, 03 DF
+1.1.0, 2020
+ifndef::imagesdir[:imagesdir: images]
+//:toc-placement!:  // prevents the generation of the doc at this position, so it can be printed afterwards
+:sourcedir: ../src/main/java
+:icons: font
+:sectnums:    // Nummerierung der Überschriften / section numbering
+:toc: left
+
+//Need this blank line after ifdef, don't know why...
+ifdef::backend-html5[]
+
+// https://fontawesome.com/v4.7.0/icons/
+//icon:file-text-o[link=https://raw.githubusercontent.com/htl-leonding-college/asciidoctor-docker-template/master/asciidocs/{docname}.adoc] ‏ ‏ ‎
+icon:github-square[link=https://github.com/2021-4ahitm-itp/01-project-proposal-rocketman] ‏ ‏ ‎
+//icon:home[link=https://htl-leonding.github.io/]
+endif::backend-html5[]
+
+// print the toc here (not at the default position)
+//toc::[]
+
+== Project Proposal
+=== Project name
+Rocketman
+
+=== Pre-project
+There has been build a Rocket for the CanSat Competition that need a mobile launch suitcase.
+
+=== Assignment of tasks
+Our assigment of task is that we build and code a suitcase that can start a rocket wireless.
+
+
+=== Goal
+* With the mobile control unit it should be possible on the one hand to ignite model rockets by cable and on the other hand to carry out wireless communication (control and reception of telemetry data) with several branch offices at the same time. Communication should take place in two frequency ranges or with two protocols at the same time (433 MHz LoRa and 802.11b / g / n network using XBee 568).
+* It's not a goal to build the rocket just the suitcase.
+
+|===
+|phase |milestone
+
+|Project planing
+|Plan the Project so we can start coding
+
+|components
+|get all the componets we need
+
+|building
+|assemble all the different components
+
+|connect hardware and software
+|code the interface for all the different hardware
+
+|rocket
+|code the communication to the rocket
+
+| UI
+| code the User Interface and touch compatibility
+
+|===
+
+
+== Project start
+08.10.2020
+
+== Project End
+2022
+
+== Project resources
+
+|===
+|infrastructure |sum
+|Workshop |-
+|===
+
+|===
+|staff |amount
+|team members |5
+|===
+
+|===
+|material |amount |price per piece |sum
+|RFM95 LoRa |1 |18,50€ |18,50€
+|Raspberry Pi 4 |1 |77,50€ |77,50€
+|SX1268 433M LORA HAT |1 |30€ |30€
+|Sicherheitsabdeckungen für Kippschalter|1 |3,02€ |3,02€
+|Kippschalter |1 |- |-
+|LCD Display |1 |0,24€ |0,24€
+|Taster mit Abdeckung |1 |5,49€ |5,49€
+|Touchscreen |1 |121,84€ |121,84€
+|Joystick |1 |3,36€ |3,36€
+|Schlüsselschalter |1 |4,83€ |4,83€
+|Power Schalter (ohne Abdeckung) |1 |0,83€ |0,83€
+|Stromversorgung |1 |- |-
+|XBee 568-Modul |1 |- |-
+|===
+Sum: 260,12€
+
+== Project risks
+* communication between team members from different classes
+* Some hardware could not work the way we thought
+* We're blowing the budget
+
+== Project team
+=== 4AHITM
+* 03 Synchronsprecher
+* 06 Sarah mit Haube
+
+=== 4AHIF
+* 14 Jan Händler
+* 17 Marcel St. Martin
+* 10 Lukas Hörnchen

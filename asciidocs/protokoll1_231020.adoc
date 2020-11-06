@@ -1,0 +1,96 @@
+= 1. Protokoll 23.10.2020
+
+== Teilnehmer
+- Professor Stütz
+- Professor Ernecker
+- 03 Synchronsprecher
+- 06 Sarah mit der Haube
+- Professor Palitsch-Infanger
+
+== Besprochenes
+- Github Projekt wird öffentlich
+- Problemstellung: Gute flexible Bodenstation, damit Schüler die beim Raketenwettbewerb
+                    teilnehmen nicht immer eine neue eigene machen müssen
+- Modernes Design wird angestrebt
+- Konfig Files mit Voreinstellungen
+- Elektronik wird vorerst auf einer Holzplatte montiert
+
+
+=== Daten persistierung
+* Daten in csv files (Geschwindigkeit ist wichtig)
+* Für DB noSql, mongoDB
+* Lokale DB und csv files, um Lauffähigkeit ohne Internetanbindung zu ermöglichen
+
+=== Komponenten
+- Es wird keinen großen Monitor geben
+- Tabelle mit allen Bautteilen mit den Spalten "Bezeichnung", "Preis", "Benötigte Stückzahl",
+"Vorhandene Stückzahl", "Wo kann man es kaufen", "Leistungsaufnahme" erstellen
+* Bauteile sollten langfristig verfügbar sein
+
+==== Raspberry Pi
+Erwünscht ist das Modell 4 (mit 4 GB?), es sei denn der Stromverbrauch
+unterscheidet sich signifikant von dem der älteren Generationen (3) => überprüfen
+
+==== Touch Display:
+- 10 Zoll
+- Stromsparvariante und Optimumvariante heraussuchen
+- Problem: Eventuell ist der Bildschirm im Freien bei Sonne zu dunkel
+            => Abergers Wundermonitor (https://www.gesys.ch/cms/upload/downloads/produktinformationen/combi-line/pc-compact-pc/CompactPanel-PC-EN.pdf)
+- Primär für konfigurationen, und ggf. für einfache Datenübertragungen
+- Komplexere Daten werden mittels REST über eine Weboberfläche angezeigt
+
+==== Counter
+- Piep
+- Leds
+- LCD Display
+
+==== Joystick
+- Notfalleingabe
+
+==== Funkverbindung
+Über 2 Protokolle
+
+- long distance funk modul LoRa, auch als HAT für RaspberryPi vohanden
+* Problem: Zu wenige HAT Steckplätze, siehe Punkt HATS
+* Zu überprüfen: Ob HAT oder die Standardvariante mehr Strom benötigen
+- WLAN
+
+Kommunikation soll mit mehreren Außenstellen möglich sein -> Topics
+
+- Streams (hohe Datenmengen) funktionieren allerdings nicht
+
+==== Zündhardware
+- Taster für Zündung legt Spannung an Zündbuchse an
+- Bei Abbruch Schalter darf auf keinen Fall Zündstrom fließen
+
+== Arbeitsaufteilung
+ifdef::backend-html5,backend-revealjs[image:protokoll1/ueberblick.jpg[width=50%]]
+ifdef::backend-pdf[image:protokoll1/ueberblick.jpg[]]
+
+- Grün: Team 4ahit
+* Kommunikation & Startsignal mittels MQTT: Prof. Köck kennt sich mit MQTT (Broker) aus
+- Gelb: Team 4ahitm
+
+
+== Nächste Schritte
+* Tabelle mit den Spalten "wer", "was", "bis wann" anlegen
+- Konzept der Zündung
+- Konzept der Spannungsversorgung
+* Systemarchitektur mittels PlantUML für alle Bauteile bis zur Rakete (also auch Zündkabel)
+- Backend: Quarkus -> Messdaten erfassen, geg. Steuersignale senden (funk), evtl. Rakete starten
+
+== Ausstehende Aufgaben/Offene Fragen
+=== Aufgaben
+- Bezüglich der Spannungsversorgung nachfragen, ob Kontakt damit einen Bildschirm
+betrieben hat
+* Verwendet wurde ein originalen Raspberry Pi Touchscreen mit kapazitiver Toucheingabe.
+
+- Spannungsversorgung planen
+- Hinzufügen des Besprochenen zum Projektauftrag
+- Prof. Ernecker: Überlegen welche Daten persistent und über alle Raketenstarts hinweg
+                   benötigt werden
+
+
+=== Fragen
+- Wie wird mit dem Laptop auf die Weboberfläche zugegriffen wenn keine
+Internetverbindung besteht (z.B. wenn der Startplatz sehr abgelegen liegt)

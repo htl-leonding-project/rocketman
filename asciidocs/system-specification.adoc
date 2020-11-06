@@ -1,0 +1,195 @@
+= Pflichtenheft Rocketman
+// Metadata
+Sarah mit der Haube, Synchronsprecher
+1.0, 05.11.2020
+:sourcedir: ../src/main/java
+:icons: font
+:toc: left
+
+
+== Beschreibung der Ausgangssituation
+
+An der HTL Leonding nehmen immer wieder Schüler an einem sogenannten CanSat Wettbewerb teil,
+bei dem es darum geht einen Satelliten in Getränkedosengröße ins All zu schießen. Dieser ist mit verschiedenen
+Sensoren ausgestattet und sendet deren Messwerte.
+
+== Istzustand
+
+Derzeit gibt es keine einheitliche, einfach handhabbare Methode zum Senden und Empfangen von Daten der Rakete und
+dem CanSat. Die Geräte zur Datenübertragung und zum Abschuss von Raketen sind getrennt.
+
+== Problemstellung
+
+CanSat Wettbewerbsteilnehmer müssen für jede Rakete eine eigene Lösung für den Empfang der Daten und zur Zündung der Rakete
+konstruieren.
+So wird viel Zeit und Geld in Arbeit gesteckt, die eigentlich keine Anforderung des Wettbewerbs ist.
+
+== Aufgabenstellung
+
+Es soll eine Mobile Steuereinheit in Form eines Koffers gebaut werden, mit der man die Rakete
+über ein Kabel Starten kann. Außerdem soll die Kommunikation mit mehreren Außenstellen über 2
+verschiedene Protokolle ermöglicht werden.
+
+=== Funktionale Anforderungen
+
+==== Anwendungsfalldiagramm (Use-Case-Diagram)
+
+[plantuml]
+----
+    left to right direction
+    actor "CanSat Teilnehmer" as a
+    rectangle {
+    a -- (Daten beziehen)
+    a -- (Rakete starten)
+    a -- (Konfigurationsfiles erstellen und verwenden)
+    (Echtzeitdaten) .>(Daten beziehen) :<<extend>>
+    (Persistierte Daten) .>(Daten beziehen) :<<extend>>
+    }
+----
+
+
+==== Rakete Starten
+
+===== Charakterisierende Informationen
+
+[cols=2]
+|===
+| Übergeordneter elementarer Geschäftsprozess:
+| Schulunterricht
+
+| Ziel des Use Cases:
+| Ziel ist es eine Rakete erfolgreich zu starten
+
+| Umgebende Systemgrenze:
+| Der Zündmechanismus muss ausgelöst werden, der erfolgreiche Abflug und der weitere Verbleib der Rakete gehört nicht mehr zu den erforderlichen Kriterien
+
+| Vorbedingung:
+| Der richtige Modus muss mithilfe des Schlüsselschalters ausgewählt werden (Stufe 2) und die Zündung mittels Starttaster aktiviert werden
+
+| Beteiligte Nutzer:
+| CanSat Wettberwerbsteilnehmer der HTL Leonding
+
+|===
+
+
+==== Daten beziehen
+
+===== Charakterisierende Informationen
+
+[cols=2]
+|===
+| Übergeordneter elementarer Geschäftsprozess:
+| Schulunterricht
+
+| Ziel des Use Cases:
+| Ziel ist es, die Echtzeitdaten über den Bildschirm im Koffer und über eine Weboberfläche angezeigt zu bekommen
+und auf persistierten Daten ebenfalls über die Weboberfläche zugreifen zu können
+
+| Umgebende Systemgrenze:
+| Die Daten dürfen nicht verfälscht oder verändert werden
+
+| Vorbedingung:
+| Um auf die Gesamtheit der Daten Einsicht zu bekommen, muss mittels externen Geräten (Laptop, Handy, ...)
+auf die Weboberfläche zugegriffen werden, dazu muss Internetempfang bestehen
+
+| Beteiligte Nutzer:
+| CanSat Wettbewerbsteilnehmer
+
+|===
+
+
+==== Konfigurationsfiles erstellen und verwenden
+
+===== Charakterisierende Informationen
+
+[cols=2]
+|===
+| Übergeordneter elementarer Geschäftsprozess:
+| Schulunterricht
+
+| Ziel des Use Cases:
+| Ziel ist es, durch in Konfigfiles gespeicherte Voreinstellungen den Aufwand für den Nutzer zu senken
+
+| Beteiligte Nutzer:
+| CanSat Wettbewerbsteilnehmer
+|===
+
+
+=== Nicht-funktionale Anforderungen
+
+Typen von Produktcharakteristiken
+
+Typ USE: Benutzbarkeitsanforderung
+
+Das Koffer soll selbsterklärend funktionieren und einfach zu bedienen sein.
+Außerdem soll er gut zu transportieren und resistent gegen Wasser und Erschütterungen sein.
+
+Typ PFLEGE: Wartbarkeits- und Portierbarkeitsanforderung
+
+Verwendete Komponenten sollen allgemein verfügbar sein, damit eingegangene Bauteile ersetzt werden können.
+
+Typ SICHER: Sicherheitsanforderung
+
+Das System muss gewährleisten, dass die Verbindung der Rakete und des Koffers beim Abflug getrennt wird.
+Außerdem darf nur Zünstrom fließen, wenn alle vorgegebenen Einstellungen am Koffer vorgenommen wurden.
+
+
+== Zielsetzung
+
+Eine einfach handhabbare Bodenstation in Form eines Koffers, zur Zündung von Raketen und für die Kommunikation
+mit der Rakete.
+
+== Mengengerüst
+
+wird im laufe dieser woche erscheinen
+
+== Entwurf "Wie mache ich es"
+
+=== Systemarchitektur
+
+[plantuml]
+----
+package Suitcase{
+
+    database "LocalDB" {
+      folder "Real-time data" {
+        [Folder] as f2
+      }
+
+      file "CSV Files"
+
+    }
+
+    node "Quarkus" as q{
+        [REST] as r1
+      }
+
+    file "Konfig File"
+
+}
+
+
+package "Saved data"{
+
+    database "ExternalDB" {
+      folder "Persisted Data" {
+        [Folder] as f1
+      }
+    }
+
+    rectangle {
+        [REST] as r2
+    }
+
+}
+
+cloud {
+  [Cloud]
+}
+
+[r1] -- [Cloud]
+[Cloud] -- [r2]
+[r2] --> [f1]
+Zündung -- q
+
+----
