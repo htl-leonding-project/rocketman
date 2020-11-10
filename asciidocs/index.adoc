@@ -8,7 +8,7 @@ Feichtinger Sarah, Dumfarth Felix, Marcel Plakolb, Lukas Hain, Jan Kaufmann
 
 == Project Description
 
-// Short Desciption of your Project
+20/21 4ahitm/4ahif Instrumentenkoffer zum Abschuss einer Rakete für den Cansat Wettbewerb
 
 == Team
 
