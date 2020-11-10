@@ -12,11 +12,15 @@ Feichtinger Sarah, Dumfarth Felix, Marcel Plakolb, Lukas Hain, Jan Kaufmann
 
 == Team
 
+=== 4AHITM
+* 03 DF
+* 06 FS
+
+=== 4ahif
 * 17 PM
 * 10 HL
 * 14 KJ
-* 03 DF
-* 06 FS
+
 
 == Documents
 * https://htl-leonding-project.github.io/rocketman/proposal[Projekt Auftrag (4AHITM)]
