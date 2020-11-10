@@ -10,9 +10,9 @@ This is the Repo for the ITP Project "Rocketman"
 
 Links:
 
-* https://htl-leonding-project.github.io/rocketman/proposal[Projekt Auftrag]
+* https://htl-leonding-project.github.io/rocketman/proposal[Projekt Auftrag (4AHITM)]
 
-* https://htl-leonding-project.github.io/rocketman/system-specification[Pflichtenheft]
+* https://htl-leonding-project.github.io/rocketman/system-specification[Pflichtenheft (4AHITM)]
 
 Protokolle:
 
