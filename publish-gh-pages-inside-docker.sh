@@ -4,17 +4,27 @@
 # ONLY WORKS FROM THE PROJECT DIR
 # WILL PUBLISH STUFF ON THE WEBSITE, DON'T SCREW UP
 BUILD_DIR="gh-pages"
-OLD=$(PWD)
+echo "BUILD_DIR->${BUILD_DIR}"
+OLD=${PWD}
+echo "OLD->${OLD}"
 ORIGIN_URL=$(git config --get remote.origin.url)
-${PWD}/build-html-docker.sh
+echo "ORIGIN_URL->${ORIGIN_URL}"
+echo "->${PWD}/build-html-docker-inside-docker.sh"
+${PWD}/build-html-docker-inside-docker.sh
+#echo "*******************************"
+#ls -lah ${OLD}/${BUILD_DIR}
+#echo "*******************************"
+#exit 0
 cd $BUILD_DIR
+echo "GIT_GLOBAL_MAIL->${GIT_GLOBAL_MAIL}"
+echo "GIT_GLOBAL_USER_NAME->${GIT_GLOBAL_USER_NAME}"
+git config --global user.email ${GIT_GLOBAL_MAIL}
+git config --global user.name ${GIT_GLOBAL_USER_NAME}
 git init
 git add .
 git commit -m "$USER - rebuilding gh-pages $(date)"
 git remote add origin $ORIGIN_URL
-git push --force origin master:gh-pages
-cd $OLD
-rm -rf $BUILD_DIR
+
 
 # echo gh-pages url
 IFS='/' read -ra TEMP <<< "$ORIGIN_URL"
@@ -25,7 +35,7 @@ IFS='/' read -ra TEMP <<< "$ORIGIN_URL"
 REPO_NAME=${TEMP[4]}
 echo
 echo "***********************************************************"
-echo created gh-pages under following url
+echo trying to create gh-pages under following url
 echo https://${TEMP[3]}.github.io/${REPO_NAME%.*}
 echo "***********************************************************"
 

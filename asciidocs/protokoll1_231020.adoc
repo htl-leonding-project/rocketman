@@ -67,7 +67,7 @@ Kommunikation soll mit mehreren Außenstellen möglich sein -> Topics
 ifdef::backend-html5,backend-revealjs[image:protokoll1/ueberblick.jpg[width=50%]]
 ifdef::backend-pdf[image:protokoll1/ueberblick.jpg[]]
 
-- Grün: Team 4ahit
+- Grün: Team 4ahif
 * Kommunikation & Startsignal mittels MQTT: Prof. Köck kennt sich mit MQTT (Broker) aus
 - Gelb: Team 4ahitm
 

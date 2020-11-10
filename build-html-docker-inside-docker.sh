@@ -14,9 +14,10 @@ cp -r -p -v asciidocs/*.adoc $BUILD_DIR
 #uncomment it when you want to copy the source code into the gh-pages (for including source code into your document)
 #cp -r -p -v src $BUILD_DIR
 
-docker run --rm \
-           -v ${PWD}/$BUILD_DIR:/documents \
-           asciidoctor/docker-asciidoctor  /bin/bash -c "asciidoctor \
+CURRENT_FOLDER=${PWD}
+echo "pwd -> ${CURRENT_FOLDER}"
+echo "adoc-folder->${CURRENT_FOLDER}/${BUILD_DIR}/*.adoc"
+asciidoctor \
            -r asciidoctor-diagram \
            -a icons=font \
            -a experimental=true \
@@ -32,10 +33,10 @@ docker run --rm \
            -a favicon=themes/favicon.png \
            -a sourcedir=src/main/java \
            -b html5 \
-           '*.adoc' && rm -rf ./.asciidoctor && echo Creating html-docs in Docker finished ..."
+           "${CURRENT_FOLDER}/${BUILD_DIR}/*.adoc"
+rm -rf ./.asciidoctor
+echo Creating html-docs in Docker finished ...
 
-rm -rf -v $BUILD_DIR/revealjs
-#rm -rf -v $BUILD_DIR/.asciidoctor
 rm -rf -v $BUILD_DIR/*.adoc
 rm -v $BUILD_DIR/docinfo.html
 

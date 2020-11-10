@@ -1,7 +1,9 @@
 = Rocketman
 
-* https://dumfarth-felix.github.io/Rocketman/proposal[Projekt Auftrag]
+* https://htl-leonding-project.github.io/rocketman/proposal[Projekt Auftrag]
+
+* https://htl-leonding-project.github.io/rocketman/system-specification[Pflichtenheft]
 
 Protokolle:
 
-* https://dumfarth-felix.github.io/Rocketman/protokoll1_231020[Protokoll 1, 23.10.2020]
+* https://htl-leonding-project.github.io/rocketman/protokoll1_231020[Protokoll 1, 23.10.2020]
