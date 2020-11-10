@@ -21,7 +21,7 @@ Feichtinger Sarah, Dumfarth Felix, Marcel Plakolb, Lukas Hain, Jan Kaufmann
 == Documents
 * https://htl-leonding-project.github.io/rocketman/proposal[Projekt Auftrag (4AHITM)]
 
-* https://htl-leonding-project.github.io/rocketman/system-specification[Pflichtenheft (4AAHITM)]
+* https://htl-leonding-project.github.io/rocketman/system-specification[Pflichtenheft (4AHITM)]
 
 === Protokolle
 * https://htl-leonding-project.github.io/rocketman/protokoll1_231020[Protokoll 1, 23.10.2020]
