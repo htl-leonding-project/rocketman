@@ -1,9 +1,31 @@
 = Rocketman
+Feichtinger Sarah, Dumfarth Felix, Marcel Plakolb, Lukas Hain, Jan Kaufmann
+1.1.0, 2020-10-28
+:sourcedir: ../src/main/java
+:icons: font
+:sectnums:    // Nummerierung der Überschriften / section numbering
+:toc: left
 
+== Project Description
+
+// Short Desciption of your Project
+
+== Team
+
+* 17 PM
+* 10 HL
+* 14 KJ
+* 03 DF
+* 06 FS
+
+== Documents
 * https://htl-leonding-project.github.io/rocketman/proposal[Projekt Auftrag]
 
 * https://htl-leonding-project.github.io/rocketman/system-specification[Pflichtenheft]
 
-Protokolle:
-
+=== Protokolle
 * https://htl-leonding-project.github.io/rocketman/protokoll1_231020[Protokoll 1, 23.10.2020]
+
+== External Project Repository
+
+https://github.com/2021-4ahif-syp/assigment02-system-specification-rocketman[System Specification 4AHIF]
