@@ -2,9 +2,9 @@
 
 * 03 DF
 * 06 FS
-* 10HL
-* 14KJ
-* 17PM
+* 10 HL
+* 14 KJ
+* 17 PM
 
 This is the Repo for the ITP Project "Rocketman"
 
