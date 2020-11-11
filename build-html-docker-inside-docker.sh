@@ -13,6 +13,8 @@ cp -r -p -v asciidocs/index.adoc $BUILD_DIR
 cp -r -p -v asciidocs/*.adoc $BUILD_DIR
 cp -r -p -v asciidocs/ahitm $BUILD_DIR
 cp -r -p -v asciidocs/ahif $BUILD_DIR
+cp -r -p -v asciidocs/ahif/*.adoc $BUILD_DIR/ahif
+cp -r -p -v asciidocs/ahitm/*.adoc $BUILD_DIR/ahitm
 #uncomment it when you want to copy the source code into the gh-pages (for including source code into your document)
 #cp -r -p -v src $BUILD_DIR
 
@@ -37,10 +39,53 @@ asciidoctor \
            -b html5 \
            "${CURRENT_FOLDER}/${BUILD_DIR}/*.adoc"
 rm -rf ./.asciidoctor
+rm -v $BUILD_DIR/docinfo.html
+rm -rf -v $BUILD_DIR/*.adoc
 echo Creating html-docs in Docker finished ...
+BUILD_DIR="gh-pages/ahitm"
+asciidoctor \
+           -r asciidoctor-diagram \
+           -a icons=font \
+           -a experimental=true \
+           -a source-highlighter=rouge \
+           -a rouge-theme=github \
+           -a rouge-linenums-mode=inline \
+           -a docinfo=shared \
+           -a imagesdir=images \
+           -a toc=left \
+           -a toclevels=2 \
+           -a sectanchors=true \
+           -a sectnums=true \
+           -a favicon=themes/favicon.png \
+           -a sourcedir=src/main/java \
+           -b html5 \
+           "${CURRENT_FOLDER}/${BUILD_DIR}/*.adoc"
+echo Ahitm html created
+rm -rf -v $BUILD_DIR/*.adoc
+BUILD_DIR="gh-pages/ahif"
+asciidoctor \
+           -r asciidoctor-diagram \
+           -a icons=font \
+           -a experimental=true \
+           -a source-highlighter=rouge \
+           -a rouge-theme=github \
+           -a rouge-linenums-mode=inline \
+           -a docinfo=shared \
+           -a imagesdir=images \
+           -a toc=left \
+           -a toclevels=2 \
+           -a sectanchors=true \
+           -a sectnums=true \
+           -a favicon=themes/favicon.png \
+           -a sourcedir=src/main/java \
+           -b html5 \
+           "${CURRENT_FOLDER}/${BUILD_DIR}/*.adoc"
+
+
 
 rm -rf -v $BUILD_DIR/*.adoc
-rm -v $BUILD_DIR/docinfo.html
+echo ahif html created
+
 
 # https://github.com/asciidoctor/docker-asciidoctor
 
