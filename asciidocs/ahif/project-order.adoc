@@ -1,0 +1,86 @@
+= Project Charter - Rocketman
+Hain Lukas, Plakolb Marcel, Kaufmann Jan
+1.0.0, 2020-10-06
+ifndef::imagesdir[:imagesdir: images]
+//:toc-placement!:  // prevents the generation of the doc at this position, so it can be printed afterwards
+:sourcedir: ../src/main/java
+:icons: font
+:sectnums:    // Nummerierung der Überschriften / section numbering
+:toc: left
+
+//Need this blank line after ifdef, don't know why...
+ifdef::backend-html5[]
+
+// print the toc here (not at the default position)
+//toc::[]
+
+== Project Charter
+
+=== Project Name
+Rocketman
+
+=== Project Initiator
+Currently there is no unified, easy to handle way to send and receive data from the rocket and the CanSat. The devices for data transmission and for launching rockets are currently seperate.
+
+=== Task definition
+With the mobile control unit it should be possible to launch model rockets by cable and to communicate wirelessly (control and reception of telemetry data) with several outposts simultaneously. The communication should take place in two frequency ranges or with two protocols at the same time (433 MHz LoRa and 802.11b/g/n network via XBee 568).
+
+==== Milestones
+|===
+|Phase |Start date |End date
+
+|Functional scope determined
+|28.08.2020
+|Ongoing
+
+|Hardware determined
+|08.10.2020
+|Ongoing
+
+|API determined
+|Unknown
+|Not yet started
+
+|Software implemented
+|Unknown
+|Not yet started
+
+|Hardware installed in suitcase
+|Unknown
+|Not yet started
+|===
+
+=== Project goal
+It is easily possible to send telemetry data to the mobile control unit to participate at the CanSat Competition. The participants are able to steer the rocket and the CanSat. It is now also possible to receive video streams from the rocket and CanSat.
+
+=== Project start/end
+The project started on 28. September 2020 with the project proposal. +
+It should be finished by the end of this school year.
+
+=== Project resources
+See *Rocketman_Partslist.pdf*
+
+=== Project risk
+A failure in the launch electronics could destroy the mobile control unit and/or the rocket. Wrong configuration of the LoRa or xBee modules could lead to the disqualification from the CanSat competition. It is possible that the needed hardware is not available. Due to poor planing it could be possible that the hardware will not fit in the case.
+
+=== Project team
+|===
+|Name |Class
+
+|Hain Lukas
+|4AHIF
+
+|Plakolb Marcel
+|4AHIF
+
+|Kaufmann Jan
+|4AHIF
+
+|Dumfarth Felix
+|4AHITM
+
+|Feichtinger Sarah
+|4AHITM
+|===
+
+

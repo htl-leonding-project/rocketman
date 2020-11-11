@@ -1,0 +1,45 @@
+= Project proposal - Rocketman
+Hain Lukas, Plakolb Marcel, Kaufmann Jan
+1.2.1, 2020-09-22
+ifndef::imagesdir[:imagesdir: images]
+//:toc-placement!:  // prevents the generation of the doc at this position, so it can be printed afterwards
+:sourcedir: ../src/main/java
+:icons: font
+//:sectnums:    // Nummerierung der Überschriften / section numbering
+:toc: left
+
+//Need this blank line after ifdef, don't know why...
+ifdef::backend-html5[]
+
+// https://fontawesome.com/v4.7.0/icons/
+//icon:file-text-o[link=https://raw.githubusercontent.com/htl-leonding-college/asciidoctor-docker-template/master/asciidocs/{docname}.adoc]
+//icon:github-square[link=https://github.com/2021-4ahif-syp/assigment-01-projektantrag-MrUnnormal]
+//icon:home[link=https://htl-leonding.github.io/]
+endif::backend-html5[]
+
+// print the toc here (not at the default position)
+//toc::[]
+
+== Project proposal
+
+=== Project name
+Rocketman
+
+=== Client
+Prof. Ernecker.
+
+=== Project background
+It is currently unsafe to launch rockets from up close.
+The launch device and the monitoring device are currently two
+seperate devices.
+
+=== Project result
+Launch and monitoring device is in an easy to handle and transportable
+case. Rockets can now be launched from a safe distance.
+
+=== Project goal
+Improving tool to launch a rocket and adding the possibility of monitoring statistics after
+launch such as altitude, incline etc..
+
+=== Project start / Project end
+Currently, there are no fixed dates for start or end.

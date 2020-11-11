@@ -1,0 +1,105 @@
+= System Specification - Rocketman
+Hain Lukas, Plakolb Marcel, Kaufmann Jan
+1.5.0, 2020-10-28
+ifndef::imagesdir[:imagesdir: images]
+//:toc-placement!:  // prevents the generation of the doc at this position, so it can be printed afterwards
+:sourcedir: ../src/main/java
+:icons: font
+:sectnums:    // Nummerierung der Überschriften / section numbering
+:toc: left
+
+//Need this blank line after ifdef, don't know why...
+ifdef::backend-html5[]
+
+// https://fontawesome.com/v4.7.0/icons/
+//icon:file-text-o[link=https://raw.githubusercontent.com/htl-leonding-college/asciidoctor-docker-template/master/asciidocs/{docname}.adoc] ‏ ‏ ‎
+//icon:github-square[link=https://github.com/htl-leonding-college/asciidoctor-docker-template] ‏ ‏ ‎
+//icon:home[link=https://htl-leonding.github.io/]
+endif::backend-html5[]
+
+// print the toc here (not at the default position)
+//toc::[]
+
+== Pflichtenheft
+
+=== Ausgangssituation
+Die HTL Leonding ist eine HTL im oö. Zentralraum mit ca. 1000 Schülern und den Fachabteilungen Informatik, Medientechnik, Elektronik und Bio-Medizin. SchülerInnen Gruppen nehmen öfters am CanSat Wettbewerb teil. Ziel dieses Wettbewerbs ist es einen Satelliten in Getränkedosengröße in eine Höhe von 500 Metern zu schießen. Dieser ist mit verschiedenen Sensoren ausgestattet und sendet Telemetriedaten zu einer oder mehreren Bodenstationen.
+
+=== Istzustand
+Die teilnehmenden SchülerInnen haben zurzeit keine einheitliche, leicht transportierbare Möglichkeit, eine Rakete oder den Satelliten zu steuern und Telemetriedaten zu empfangen bzw. aufzuzeichnen. Startvorrichtung und Steuergerät sind derzeit nicht miteinander verbunden. Jeder Schülergruppe hat immer ein eigenes nicht vereinheitlichtes Design.
+
+=== Problemstellung
+SchülerInnen müssen bei jeder Teilnahme ein eigenes Design zur Teilnahme des CanSat Wettbewerbs entwerfen und erstellen. Dies kostet immer unnötige Zeit und Ressourcen. Manche schrecken deswegen vor der Teilnahme zurück.
+
+=== Aufgabenstellung
+Es soll eine mobile Steuereinheit in Form eines Koffers gebaut werden, mit der man die Rakete über ein Kabel oder Funksignal starten kann. Außerdem soll die Kommunikation mit mehreren Außenstellen über 2 verschiedene Protokolle ermöglicht werden.
+
+==== Funktionale Anforderungen
+* Es soll möglich sein, Modellraketen kabelgebunden zu zünden.
+* Es soll möglich sein, kabellose Kommunikation mit mehreren Außenstellen gleichzeitig durchzuführen.
+* Die Kontrolleinheit soll mobil sein.
+* Die Kontrolleinheit soll ohne Internetempfang funktionieren.
+* Die Kommunikation soll in zwei Frequenzbereichen bzw. mit zwei Protokollen gleichzeitig stattfinden (433 MHz LoRa und 802.11b/g/n Netzwerk mittels XBee 568).
+
+
+==== Nichtfunktionale Anforderungen (NFA)
+* Einfache Benutzbarkeit
+* Verfügbarkeit von Teilen bei Defekt
+* Teile müssen einfach zu tauschen sein
+* Bei kabelgebundener Zündung muss sichergestellt werden, dass sich die Systeme trennen
+* Zündstrom darf nur dann fließen, wenn dies auch wirklich vom Benutzer gewollt ist
+
+=== Ziele
+Eine mobile, robuste und einfach handhabbare Bodenstation in Form eines Koffers, zur Zündung und Kommunikation mit der Rakete und dem abgeworfenen Satelliten.
+
+=== Mengengerüst
+Zurzeit nicht absehbar. Wird so bald wie möglich nachgetragen.
+
+== Entwurf "Wie mache ich es"
+=== Systemarchitektur
+[plantuml, systemarchitecture, png]
+----
+package Suitcase {
+    database "LocalDB" {
+      folder "Real-time data" {
+        [Folder] as f2
+      }
+      file "CSV Files"
+    }
+    node "Quarkus" as q {
+        [REST] as r1
+    }
+    file "Config File"
+}
+
+package CanSat {
+node "Sensors" as s {
+        [Humidity Sensor]
+        [Temperatur Sensor]
+    }
+}
+
+package "Saved data" {
+    database "ExternalDB" {
+      folder "Persisted Data" {
+        [Folder] as f1
+      }
+    }
+    rectangle {
+        [REST] as r2
+    }
+}
+
+cloud {
+  [Cloud]
+  [MQTT Broker]
+}
+
+[r1] -- [Cloud]
+[Cloud] -- [r2]
+s -- [MQTT Broker]
+r1 -left- [MQTT Broker]
+[r2] --> [f1]
+Zündung -right- [MQTT Broker]
+
+----
