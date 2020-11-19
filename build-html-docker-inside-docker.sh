@@ -5,17 +5,13 @@ BUILD_DIR="gh-pages"
 rm -rf -v $BUILD_DIR # else plantuml diagrams won't be rebuilt
 # do not copy revealjs
 mkdir -p $BUILD_DIR
-cp -r -p -v asciidocs/images $BUILD_DIR/images/
-cp -r -p -v asciidocs/plantuml $BUILD_DIR/plantuml/
-cp -r -p -v asciidocs/themes $BUILD_DIR
 cp -r -p -v asciidocs/docinfo.html $BUILD_DIR
 cp -r -p -v asciidocs/.nojekyll $BUILD_DIR
 cp -r -p -v asciidocs/index.adoc $BUILD_DIR
 cp -r -p -v asciidocs/*.adoc $BUILD_DIR
-cp -r -p -v asciidocs/ahitm $BUILD_DIR
-cp -r -p -v asciidocs/ahif $BUILD_DIR
-cp -r -p -v asciidocs/ahif/*.adoc $BUILD_DIR/ahif
-cp -r -p -v asciidocs/ahitm/*.adoc $BUILD_DIR/ahitm
+for d in $(find ./asciidocs -type d -maxdepth 1 -mindepth 1); do
+  cp -r -p -v asciidocs/${d##*/} $BUILD_DIR/${d##*/}
+done
 #uncomment it when you want to copy the source code into the gh-pages (for including source code into your document)
 #cp -r -p -v src $BUILD_DIR
 

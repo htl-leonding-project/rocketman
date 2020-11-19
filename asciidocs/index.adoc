@@ -31,7 +31,7 @@ Feichtinger Sarah, Dumfarth Felix, Marcel Plakolb, Lukas Hain, Jan Kaufmann
 
 === 4AHIF
 
-* https://htl-leonding-project.github.io/rocketman/ahif/proposal[Projekt Auftrag (4AHIF)]
+* https://htl-leonding-project.github.io/rocketman/ahif/project-proposal[Projekt Auftrag (4AHIF)]
 
 * https://htl-leonding-project.github.io/rocketman/ahif/system-specification[Pflichtenheft (4AHIF)]
 
