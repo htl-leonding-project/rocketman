@@ -1,0 +1,235 @@
+= Aufgaben
+// Metadata
+Sarah mit der Haube
+1.0, 26.11.2020
+:sourcedir: ../src/main/java
+:icons: font
+:toc: left
+
+**Genaue Spezifikation was wo zu tun ist:**
+
+== Software
+
+=== Quarkus Anwendung (4ahif)
+
+* Konfigfile evaluieren
+
+==== Daten der I/O Devices vom Koffer
+* Auslesen von Starttaster und Start einleiten
+- LCD-Display Counter Ausgabe und Ansteuerung der Counter LEDs(-Streifen)
+* Schlüsselschalter-stand evaluieren und folglich deaktivierung bestimmter Funktionen
+* Joystick entweder Notfalleingabe (oder zum Steuern von Aktoren der Rakete)
+* Spannung der Zündhardware messen, über Wert des Konfigfiles (Anzahl der Zünder) sollwert Berechnen und wenn zu
+hoch oder zu niedrig Warnung über Weboberfläche ausgeben und Start nicht Zulassen
+
+===== Daten der Rakete speichern
+====== Extern
+* Erkennt ob Internetzugang besteht und sendet die Daten an den externen (i guess?) Server
+* Ein Service-Level zB 2 https://assetwolf.com/learn/mqtt-qos-understanding-quality-of-service ist auszuwählen
+* In einem eigenen json-File ist die letzte gesendete Zeile der DB (oder des csv files) einzutragen.
+(Um sich zu merken was schon extern gespeichert wurde)
+- Dies ist in Form einer Transaktion zu realisieren, zB Verwendung eines lock-Files wegen REENTRANT
+* Müssen Videostreams auch gespeichert werden, (wie)?
+
+====== Intern
+* Konzept in welcher Form die Daten der Rakete hereinkommen überlegen (von Funkmodulen, Verwender des Koffers müssen sich danach richten)
+- Prof. Ernecker hat alte Raspberrys und WLAN Funkmodule zum testen
+* Schreibt die Daten der Rakete in eine sqlite-db, falls möglich (wird diese korrupt nach einem unsauberen shutdown?), ansonsten in ein csv file
+=> Aufgabe: testen
+- Einen db-Process mit einem process-kill (kill -9) abgeschossen
+- Anschließend wird kontrolliert ob die sqlite-db noch intakt (konsistent) ist
+- bzw ob eine automatische Reparatur möglich ist
+- Auch in Web Erfahrungen zu diesem Thema suchen
+- Falls nicht möglich evtl. mit einem extra Akku/Powerbank über die der Raspberry noch einen normalen shutdown machen kann?
+
+==== Testen
+* Die Testkonfiguration ist in einem docker-compose aufzubauen (lokal auf Entwicklungsmaschine) und wird anschließend auf RPi deployed
+* Die Raketenwerte sind zu simulieren/mocken:
+- Primär Luftdruck und Temperatur und Sekundär beliebige Daten wie z.B. Luftqualität, Ozon,..
+(auch vom WLAN Modul?)
+- Videostream (nur vom WLAN Modul)
+
+* Es ist alles ohne "Koffer" zu programmieren (entwickeln, vorführen, testen)
+* Nur hin und wieder auf RPi deployen, um auszuprobieren, ob alles funktioniert
+
+
+=== Webanwendungen (Felix)
+
+==== Extern
+* Stellt Zugriff auf bisherige Daten, welche auf der externen DB gespeichert sind zur Verfügung.
+
+==== Für Laptop Lokal
+* Laptop hängt im lokalen Netz -> Bekommt die Daten immer
+* die Web-Anwendung am Laptop entweder über
+- Websockets oder
+- SSE http://m-button.blogspot.com/2019/04/server-sent-events-with-quarkus-and.html
+
+==== Für Touchdisplay
+* Einstellungen für die Werte im Konfigfile
+* Darstellung von einfachen Daten
+* Warnung ausgeben, wenn der Sollwert der Zündspannung stark über oder unterschritten wird
+
+
+==== Testdaten
+
+=== Konfigfiles (Alle - jeder das was er braucht)
+* Nutzer sollte nicht direkt auf diese zugreifen können (sondern über Weboberfläche im Koffer)
+* Format überlegen: json, csv,.. ?
+
+* Einträge:
+
+- Video ja/nein
+- evtl. Welche Daten man auf dem Touch-Bildschirm ausgeben will?
+- Wie viele Zünder man hat
+- Countdown Zeit
+- Einstellungen welche Aktoren gestoppt werden, wenn Abbruchschalter gedrückt wird
+- Einstellung ob Joystick als Eingabe oder als Steuerung von Aktoren verwendet wird?
+- ...
+
+==  Hardware (Sarah)
+
+* Liste aller Bauteile anlegen (name, kaufort, preis, benötigte stückzahl, stückzahl vorhanden, datenblatt, versorgungsspannung, verbrauch)
+- auf langfristige Verfügbarkeit der Bauteile achten
+
+* Anschlüsse aller Bauteile am Raspberry definieren
+
+=== Hauptschalter
+Raspberry wird hochgefahren, Hauptprogramm wird gestartet (im Boot-Menü einstellen?)
+
+=== Stromversorgung
+* Über Netz und Akkus
+* Verbrauch überschlagen und wenn es sich ausgeht einen USV-Hat verwenden
+
+=== Zündhardware
+* min. 12V und 2A
+* ohmsche Spannungsmessung für Zündkreis und Zündspannung
+
+==== Abbruch-Schalter
+* hardwaremäßige Unterbrechung des Zündkabels zu der Kontrolleinheit
+* gleichzeitiges Kurzschließen des Zündkreises
+
+
+
+== Aufgaben Aufteilung
+**Bis 06.12:**
+
+* Github Milesones & Issues, Besprechung mit Prof. Stütz der Aufgabenaufteilung (ahitm)
+* SQL LightDb auf Raspberry testen und dockern (Sarah, außer jemand anders hat einen Raspberry und möchts gern machen)
+
+**Bis Ende Dezember**
+
+* Stromversorgung planung(Sarah)
+* Zündhardware planung (Sarah)
+* Raketenwerte Simulationsprogramm (ahitm)
+* Quarkus Anwendung die mittels MQTT die Raketenwerte empfängt und diese Lokal speichert (ahit)
+- Konzept für Aufbau der Raketenwerte überlegen
+
+**Bis Mitte Jannuar**
+
+* Liste der Bauteile (Sarah)
+* In Quarkus Anwendung Einstellungen aus dem Konfigfile für Raketenwerte miteinbeziehen (ahit)
+* Quarkus Anwendung mit Simulationsprogramm testen (ahit)
+
+**Bis Ende Jannuar**
+
+* Bauteile einkaufen (Stütz)
+* Planung des Kofferaufbaus abschließen (Sarah)
+* Quarkus Anwendung erweitern -> externe Speicherung der Raketendaten (ahit)
+
+**Bis Ende Februar**
+
+* Simulationsprogramm Erweiterung - Kofferinputs (ahitm)
+* Quarkus Anwendung erweitern - Kofferinputs über MQTT empfangen und verwenden
+- Je nach Einstellungen im Konfigfile müssen die Kofferwerte evaluiert werden
+
+**Bis Mitte März**
+
+* Quarkus Anwendung mit Simulationsprogramm testen
+
+**Bis Ende März**
+
+* Quarkus Anwendung - Outputs für Bildschirme bereitstellen
+- Lokales Netz aufbauen, Websockets
+* Quarkus
+* Koffer zusammenbauen (Sarah)
+
+**Bis Mitte April**
+
+* Quarkus Anwendung - Joystick Output über Funkmodul
+* Aktuellen Stand der Quarkus Applikation auf Koffer testen (je nach Corona, alle oder der der den Koffer daheim hat)
+
+
+
+
+
+[plantuml, systemarchitecture, png]
+----
+package Suitcase {
+
+rectangle {
+    database "LocalDB" as ldb{
+          rectangle "Real-time data" as rtdata{
+          }
+    }
+    File jsonFile
+
+    }
+    node "Quarkus" as q {
+            [REST] as r1
+        }
+
+    file "Config File"
+
+    rectangle "Imput and Output" as io{
+        [funkmodules] as fm
+        [imput devices] as id
+        [output devices] as od
+
+        rectangle "Touch Display" as td{
+            [Webapplication] as w1
+        }
+    }
+
+    [MQTT Broker]
+}
+
+
+package CanSat {
+    node "Sensors" as s {
+        [Humidity Sensor]
+        [Temperatur Sensor]
+    }
+}
+
+package "Laptop" {
+    [Webapplication] as w2
+}
+
+cloud {
+
+
+    package "Saved data" as sd{
+        database "ExternalDB" {
+          folder "Persisted Data" {
+            [Folder] as f1
+          }
+        }
+        rectangle {
+            [REST] as r2
+        }
+    }
+}
+
+w2 -- ldb
+ldb -- q
+[r1] -- sd
+sd -- [r2]
+q -- [MQTT Broker]
+[r2] --> [f1]
+[MQTT Broker] -down- Zündung
+id --> fm
+od --> fm
+od --> td
+io -- [MQTT Broker]
+s -- fm
+----
