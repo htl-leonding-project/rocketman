@@ -123,28 +123,33 @@ Raspberry wird hochgefahren, Hauptprogramm wird gestartet (im Boot-Menü einstel
 * Raketenwerte Simulationsprogramm (ahitm)
 * Quarkus Anwendung die mittels MQTT die Raketenwerte empfängt und diese Lokal speichert (ahit)
 - Konzept für Aufbau der Raketenwerte überlegen
+* Konzept für die verschiedenen Weboberflächen (Felix)
 
 **Bis Mitte Jannuar**
 
 * Liste der Bauteile (Sarah)
 * In Quarkus Anwendung Einstellungen aus dem Konfigfile für Raketenwerte miteinbeziehen (ahit)
 * Quarkus Anwendung mit Simulationsprogramm testen (ahit)
+* Back-End & grobes Front-End für die erstellung der Config Files (Felix)
 
 **Bis Ende Jannuar**
 
 * Bauteile einkaufen (Stütz)
 * Planung des Kofferaufbaus abschließen (Sarah)
 * Quarkus Anwendung erweitern -> externe Speicherung der Raketendaten (ahit)
+* Front-End für Config ausbauen (Felix)
 
 **Bis Ende Februar**
 
 * Simulationsprogramm Erweiterung - Kofferinputs (ahitm)
 * Quarkus Anwendung erweitern - Kofferinputs über MQTT empfangen und verwenden
 - Je nach Einstellungen im Konfigfile müssen die Kofferwerte evaluiert werden
+* Back-End & Front-End Anzeige der (Test) Daten (Felix)
 
 **Bis Mitte März**
 
 * Quarkus Anwendung mit Simulationsprogramm testen
+* Back-End & Front-End Erweiterung für Fehlermeldungen der Daten
 
 **Bis Ende März**
 
@@ -152,6 +157,7 @@ Raspberry wird hochgefahren, Hauptprogramm wird gestartet (im Boot-Menü einstel
 - Lokales Netz aufbauen, Websockets
 * Quarkus
 * Koffer zusammenbauen (Sarah)
+* Back-End mit Quarkus Anwendung verbinden (Felix)
 
 **Bis Mitte April**
 
