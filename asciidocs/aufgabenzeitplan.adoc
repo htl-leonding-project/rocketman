@@ -155,9 +155,9 @@ Raspberry wird hochgefahren, Hauptprogramm wird gestartet (im Boot-Menü einstel
 
 **Bis Mitte April**
 
-* Quarkus Anwendung - Joystick Output über Funkmodul
+* Testwerte Programm mit Phytonanwendung (und mqtt), die die Werte vom Koffer ausließt ersetzen (jemand der phyton kann)
+* Quarkus Anwendung - Joystick Output über Funkmodul (4ahit)
 * Aktuellen Stand der Quarkus Applikation auf Koffer testen (je nach Corona, alle oder der der den Koffer daheim hat)
-
 
 
 
