@@ -157,7 +157,7 @@ Raspberry wird hochgefahren, Hauptprogramm wird gestartet (im Boot-Menü einstel
 - Lokales Netz aufbauen, Websockets
 * Quarkus
 * Koffer zusammenbauen (Sarah)
-* Back-End mit Quarkus Anwendung verbinden
+* Back-End mit Quarkus Anwendung verbinden (Felix)
 
 **Bis Mitte April**
 
