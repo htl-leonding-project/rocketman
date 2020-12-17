@@ -2,15 +2,21 @@ package at.htl.rocketman;
 
 
 import javax.inject.Inject;
+
+import org.jboss.logging.Logger;
 import org.sqlite.SQLiteDataSource;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Datasource {
     SQLiteDataSource sqliteDb;
+    private static final Logger LOG = Logger.getLogger(MqttPrimaryMissionConsumer.class);
 
     public Datasource() {
         sqliteDb = new SQLiteDataSource();
+        sqliteDb.setUrl("jdbc:sqlite:rocketman.db");
     }
 
     private static Connection c = null;
@@ -21,9 +27,18 @@ public class Datasource {
      */
     public Connection getDb() throws SQLException {
         if (c == null) {
-            sqliteDb.setDatabaseName("rocketman.db");
-            sqliteDb.setUrl("jdbc:sqlite:rocketman.db");
             c = sqliteDb.getConnection();
+            DatabaseMetaData dbm = c.getMetaData();
+            // check if "temperature" table is there
+            ResultSet tables = dbm.getTables(null, null, "temperature", null);
+            if (tables.next()) {
+                // Table exists
+                LOG.info("table exists");
+            }
+            else {
+                // Table does not exist
+                LOG.error("table does not exists");
+            }
         }
         return c;
     }

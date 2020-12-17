@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @ApplicationScoped
 public class MqttPrimaryMissionConsumer {
@@ -18,23 +19,29 @@ public class MqttPrimaryMissionConsumer {
     @Incoming("temperature")
     public void consumeTemperature(byte[] raw) throws SQLException {
         Datasource ds = new Datasource();
-        Connection connection = ds.getDb();
-        LOG.error(connection);
         Double temp = null;
         try {
-            LOG.error("parse value");
             temp = Double.parseDouble(new String(raw));
         } catch (Exception e) {
             LOG.error("Failed to parse value");
         }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
         if(temp != null) {
-            LOG.error("prepare statement");
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO temperature VALUES (?, ?)");
-            preparedStatement.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now().toString()));
-            preparedStatement.setDouble(2, temp);
-            preparedStatement.executeUpdate();
-            //LOG.info("Temperature: " + temp + "; " + LocalDateTime.now());
+            LOG.info("Temperature: " + temp + "; " + LocalDateTime.now().format(formatter));
             //ExportController.writeToCsv(new String[] {temp.toString(), LocalDateTime.now().toString()}, "temperature.csv");
+            try {
+                Connection conn = ds.getDb();
+                LOG.info("Connected.");
+                PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO temperature VALUES (?, ?)");
+                preparedStatement.setTimestamp(1, Timestamp.valueOf(LocalDateTime.now().format(formatter)));
+                preparedStatement.setDouble(2, temp);
+                preparedStatement.executeUpdate();
+                conn.close();
+            } catch (SQLException e) {
+                LOG.error("SQl-Error occured: " + e.getMessage());
+            } catch (Exception e) {
+                LOG.error("Unknown error occured: " + e.getMessage());
+            }
         }
     }
 
