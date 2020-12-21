@@ -1,11 +1,12 @@
 DROP TABLE temperature;
-CREATE TABLE temperature (
-    timestamp TIMESTAMP NOT NULL ,
-    temperature NUMERIC NOT NULL
-);
-
 DROP TABLE atmospheric_pressure;
-CREATE TABLE atmospheric_pressure (
-     timestamp TIMESTAMP NOT NULL ,
-     atmospheric_pressure NUMERIC NOT NULL
+DROP TABLE data_set;
+CREATE TABLE data_set (
+    ds_id INT NOT NULL
+        CONSTRAINT DATASET_PK PRIMARY KEY
+        GENERATED ALWAYS AS IDENTITY,
+    ds_description varchar NOT NULL ,
+    ds_value varchar NOT NULL ,
+    ds_unit varchar NOT NULL ,
+    ds_timestamp TIMESTAMP NOT NULL
 );

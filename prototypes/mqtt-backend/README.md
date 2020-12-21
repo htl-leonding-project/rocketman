@@ -15,7 +15,7 @@ docker-compose -f docker-compose.mqtt.yml up
 
 You can run your application in dev mode that enables live coding using:
 ```shell script
-./mvnw compile clean quarkus:dev
+./mvnw compile quarkus:dev
 ```
 
 To submit test data use MQTT Explorer
