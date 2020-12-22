@@ -1,5 +1,3 @@
-DROP TABLE temperature;
-DROP TABLE atmospheric_pressure;
 DROP TABLE data_set;
 CREATE TABLE data_set (
     ds_id INT NOT NULL

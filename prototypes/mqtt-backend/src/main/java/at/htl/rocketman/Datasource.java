@@ -34,7 +34,7 @@ public class Datasource {
                 LOG.info("table exists");
             }
             else {
-                // Table does not exist
+                //TODO
                 LOG.error("table does not exists");
             }
         }
