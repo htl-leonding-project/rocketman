@@ -1,8 +1,6 @@
 package at.htl.rocketman;
 
 
-import javax.inject.Inject;
-
 import org.jboss.logging.Logger;
 import org.sqlite.SQLiteDataSource;
 import java.sql.Connection;
@@ -12,7 +10,7 @@ import java.sql.SQLException;
 
 public class Datasource {
     SQLiteDataSource sqliteDb;
-    private static final Logger LOG = Logger.getLogger(MqttPrimaryMissionConsumer.class);
+    private static final Logger LOG = Logger.getLogger(MqttConsumer.class);
 
     public Datasource() {
         sqliteDb = new SQLiteDataSource();

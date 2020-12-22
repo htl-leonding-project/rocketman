@@ -4,6 +4,7 @@ import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.jboss.logging.Logger;
 
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
@@ -14,14 +15,13 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-@RequestScoped
-public class MqttPrimaryMissionConsumer {
+public class MqttConsumer {
 
-    private static final Logger LOG = Logger.getLogger(MqttPrimaryMissionConsumer.class);
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
+    @Inject
+    Logger LOG;
+
     private static final String temperatureSqlString = "INSERT INTO temperature VALUES (?, ?)";
     private static final String pressureSqlString = "INSERT INTO atmospheric_pressure VALUES (?, ?)";
-
 
     /*
         {
@@ -29,7 +29,7 @@ public class MqttPrimaryMissionConsumer {
           "atmospheric-pressure": 1245
         }
      */
-    @Incoming("primary-json")
+    @Incoming("rocketman")
     public void consumePrimaryMissionJson(byte[] raw) {
         ByteArrayInputStream bais = new ByteArrayInputStream(raw);
         JsonReader jsonReader = Json.createReader(bais);
@@ -49,11 +49,11 @@ public class MqttPrimaryMissionConsumer {
                 LOG.info("Connected.");
                 LOG.info("Temperature: " + temp + "; Pressure: " + pressure + "; " + LocalDateTime.now());
                 PreparedStatement preparedStatement = conn.prepareStatement(pressureSqlString);
-                preparedStatement.setString(1, LocalDateTime.now().format(formatter));
+                preparedStatement.setString(1, LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
                 preparedStatement.setDouble(2, pressure);
                 preparedStatement.executeUpdate();
                 preparedStatement = conn.prepareStatement(temperatureSqlString);
-                preparedStatement.setString(1, LocalDateTime.now().format(formatter));
+                preparedStatement.setString(1, LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
                 preparedStatement.setDouble(2, temp);
                 preparedStatement.executeUpdate();
             } catch (SQLException e) {

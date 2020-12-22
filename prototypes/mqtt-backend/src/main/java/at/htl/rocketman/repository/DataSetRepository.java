@@ -1,11 +1,12 @@
 package at.htl.rocketman.repository;
 
 import at.htl.rocketman.Datasource;
-import at.htl.rocketman.MqttPrimaryMissionConsumer;
+import at.htl.rocketman.MqttConsumer;
 import at.htl.rocketman.entity.DataSet;
 import org.jboss.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,8 +18,8 @@ import java.util.*;
 @ApplicationScoped
 public class DataSetRepository {
 
-    private static final Logger LOG = Logger.getLogger(MqttPrimaryMissionConsumer.class);
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
+    @Inject
+    Logger LOG;
 
     public void persist(DataSet dataSet) {
         Datasource ds = new Datasource();
@@ -31,7 +32,7 @@ public class DataSetRepository {
             preparedStatement.setString(1, dataSet.getDescription());
             preparedStatement.setString(2, dataSet.getValue());
             preparedStatement.setString(3, dataSet.getUnit());
-            preparedStatement.setString(4, dataSet.getTimestamp().format(formatter));
+            preparedStatement.setString(4, dataSet.getTimestamp().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             LOG.error("SQl-Error occurred: " + e.getMessage());
@@ -55,7 +56,7 @@ public class DataSetRepository {
                 dataSet.setDescription(resultSet.getString("ds_description"));
                 dataSet.setValue(resultSet.getString("ds_value"));
                 dataSet.setUnit(resultSet.getString("ds_unit"));
-                dataSet.setTimestamp(LocalDateTime.parse(resultSet.getString("ds_timestamp"), formatter));
+                dataSet.setTimestamp(LocalDateTime.parse(resultSet.getString("ds_timestamp"), DateTimeFormatter.ISO_LOCAL_DATE_TIME));
                 res.add(dataSet);
             }
         } catch (SQLException e) {

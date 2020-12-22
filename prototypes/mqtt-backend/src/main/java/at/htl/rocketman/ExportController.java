@@ -11,7 +11,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 
 public class ExportController {
-    private static final Logger LOG = Logger.getLogger(MqttPrimaryMissionConsumer.class);
+    private static final Logger LOG = Logger.getLogger(MqttConsumer.class);
 
     public static void writeToCsv(String[] data, String fileName) {
         if  (data.length > 0) {
