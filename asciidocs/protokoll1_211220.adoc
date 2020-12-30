@@ -1,0 +1,24 @@
+= 2. Protokoll 4AHIF 21.12.2020
+
+== Teilnehmer
+- Professor Stütz
+- Professor Gruber-Leitner
+- 10 HL
+- 14 KJ
+- 17 PM
+
+== Besprochenes
+- Keine eigenen Channels für jeden Sensor
+- Es soll alles in ein JSON-Array
+- Validierung von JSON Struktur: https://www.baeldung.com/introduction-to-json-schema-in-java
+- Struktur von einem JSON-Objekt:
+[source,json]
+----
+{
+  "description": "temperature" ,
+  "value": 1200,
+  "unit": "celsius"
+}
+----
+- Die Logger-Klasse soll injected werden
+- Statt manuel ISO definieren vordefinierte Werte benutzen
