@@ -9,9 +9,11 @@ Sarah mit der Haube, Synchronsprecher
 
 == Beschreibung der Ausgangssituation
 
-An der HTL Leonding nehmen immer wieder Schüler an einem sogenannten CanSat Wettbewerb teil,
-bei dem es darum geht einen Satelliten in Getränkedosengröße ins All zu schießen. Dieser ist mit verschiedenen
-Sensoren ausgestattet und sendet deren Messwerte.
+Die HTL Leonding ist eine Bundeslehranstalt in Oberösterreich in Leonding mit ca. 1000.
+Angeboten werden die Fachrichtungen Medientechnik, Informatik, Elektronik und Medizintechnik.
+Als Projekt nehmen immer wieder Schüler an einem sogenannten CanSat Wettbewerb teil,
+bei dem es darum geht einen Satelliten in Getränkedosengröße auf 500 Meter Höhe zu schießen.
+Dieser ist mit verschiedenen Sensoren ausgestattet und sendet deren Messwerte.
 
 == Istzustand
 
