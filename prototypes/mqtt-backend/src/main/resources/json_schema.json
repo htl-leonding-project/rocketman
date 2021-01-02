@@ -1,0 +1,20 @@
+{
+  "title": "Payload",
+  "description": "A payload from the CANsat",
+  "type": "object",
+  "properties": {
+    "description": {
+      "description": "What is in the value",
+      "type": "string"
+    },
+    "value": {
+      "description": "Sensorvalue",
+      "type": "string"
+    },
+    "unit": {
+      "description": "The unit of value",
+      "type": "string"
+    }
+  },
+  "required": ["description", "value", "unit"]
+}
