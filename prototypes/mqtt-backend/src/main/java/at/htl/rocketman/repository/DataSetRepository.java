@@ -27,7 +27,7 @@ public class DataSetRepository {
             Connection conn = ds.getDb();
             LOG.info("Connected.");
             LOG.info("Description: " + dataSet.getDescription() + "; Value: " + dataSet.getValue() + "; Unit: " + dataSet.getUnit() + "; Timestamp: " + dataSet.getTimestamp() + "; " + LocalDateTime.now());
-            String persistSqlString = "INSERT INTO temperature VALUES (?, ?, ?, ?)";
+            String persistSqlString = "INSERT INTO data_set VALUES (?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(persistSqlString);
             preparedStatement.setString(1, dataSet.getDescription());
             preparedStatement.setString(2, dataSet.getValue());
