@@ -24,7 +24,7 @@ public class MqttConsumer {
     @Inject
     DataSetRepository dataSetRepository;
 
-    private static final String SCHEMA_FILENAME = "json_schema.json";
+    private static final String SCHEMA_FILENAME = "classes/json_schema.json";
     private static final String JSON_ARRAY_NAME = "payload";
     private final ObjectMapper mapper = new ObjectMapper();
 
