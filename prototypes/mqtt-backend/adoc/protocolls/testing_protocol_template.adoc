@@ -1,0 +1,22 @@
+= Test Protocol - [date]
+
+== Used software
+=== Operating system
+- name [e.g. Windows 10 Pro, Ubuntu 20.04, ...]
+- current build [e.g. for Windows: 20H2, might not be viable for linux]
+
+=== Development environment
+- name [e.g. IntelliJ Idea 2020.3.1]
+- Docker used [if used; e.g. Docker Desktop]
+- WSL [if used; e.g. Ubuntu 20.04 WSL2]
+
+=== Other Software
+- name [e.g. mqtt-explorer 0.4.0-beta1, powershell 7]
+
+== Tasks
+- description of task
+
+== What has been done?
+- things tried
+- maybe test data
+- did errors occur if yes which

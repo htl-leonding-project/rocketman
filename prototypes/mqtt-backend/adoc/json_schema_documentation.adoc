@@ -1,4 +1,4 @@
-# Json Schema
+= Json Schema
 
 The Json-Object sent from the CANsat contains an array of datasets.
 
@@ -9,27 +9,28 @@ A dataset consists of:
 * the value itself
 * timestamp -> time of recording by the CANsat
 
-```json
+[source,json]
+----
 {
     "payload": [
         {
             "description": "temperature",
             "value": "1200",
             "unit": "celsius",
-            "timestamp": " 2021-01-11T13:11:09.34"
+            "timestamp": "2021-01-11T13:11:09.34"
         },
         {
             "description": "atmospheric_pressure",
             "value": "4",
             "unit": "pascal",
-            "timestamp": " 2021-01-11T13:11:09.35"
+            "timestamp": "2021-01-11T13:11:09.35"
         },
         {
             "description": "coordinates",
             "value": "48.13726°N 11.57558°E",
             "unit": "",
-            "timestamp": " 2021-01-11T13:11:09.36"
+            "timestamp": "2021-01-11T13:11:09.36"
         }
     ]
 }
-```
+----

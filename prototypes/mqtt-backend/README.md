@@ -18,7 +18,7 @@ You can run your application in dev mode that enables live coding using:
 ./mvnw compile quarkus:dev
 ```
 
-To submit test data use MQTT Explorer
+To submit test data use MQTT Explorer see [here](adoc/json_schema_documentation.adoc)
 
 ## Packaging and running the application
 
