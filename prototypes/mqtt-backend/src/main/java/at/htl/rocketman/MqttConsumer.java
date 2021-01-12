@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Set;
 
 public class MqttConsumer {
@@ -61,9 +62,14 @@ public class MqttConsumer {
             }
             LOG.info("no error found");
 
-            String description = objects.get("description").toString();
-            String value = objects.get("value").toString();
-            String unit = objects.get("unit").toString();
+            String description = removeQuotes(objects.get("description").toString());
+            String value = removeQuotes(objects.get("value").toString());
+            String unit = removeQuotes(objects.get("unit").toString());
+            try {
+                double valueDouble = Double.parseDouble(value);
+                valueDouble /= 100.0;
+                value = String.valueOf(valueDouble);
+            } catch (NumberFormatException e) { }
             dataSetRepository.persist(new DataSet(description, value, unit, LocalDateTime.now()));
         }
         for (DataSet x : dataSetRepository.getAll()) {
@@ -107,5 +113,9 @@ public class MqttConsumer {
     protected JsonSchema getJsonSchemaFromStringContent(String schemaContent) {
         JsonSchemaFactory factory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
         return factory.getSchema(schemaContent);
+    }
+
+    public String removeQuotes(String text) {
+        return text.substring(1, text.length() - 1);
     }
 }
