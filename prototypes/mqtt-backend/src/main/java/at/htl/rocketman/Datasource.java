@@ -27,7 +27,7 @@ public class Datasource {
         if (c == null) {
             c = sqliteDb.getConnection();
             DatabaseMetaData dbm = c.getMetaData();
-            // check if "temperature" table is there
+            // check if "data_set" table is there
             ResultSet tables = dbm.getTables(null, null, "data_set", null);
             if (tables.next()) {
                 // Table exists
