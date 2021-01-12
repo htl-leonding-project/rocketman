@@ -1,0 +1,21 @@
+= Test Protocol - [12.01.2021]
+
+== Used software
+=== Operating system
+- Windows 10 Home
+- Build: 2004
+
+=== Development environment
+- IntelliJ Idea 2020.3.1
+- Docker Desktop
+
+=== Other Software
+- mqtt-explorer 0.4.0-beta1
+
+== Tasks
+- Fix formatting of numeric values in DB
+
+== What has been done?
+- tried to format value in try/catch block
+- catch NumberFormatException, if the string contains something other than numbers
+- works perfectly
