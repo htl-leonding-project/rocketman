@@ -1,4 +1,4 @@
-# Json Schema
+= Json Schema
 
 The Json-Object sent from the CANsat contains an array of datasets.
 
@@ -9,7 +9,8 @@ A dataset consists of:
 * the value itself
 * timestamp -> time of recording by the CANsat
 
-```json
+[source,json]
+----
 {
     "payload": [
         {
@@ -32,4 +33,4 @@ A dataset consists of:
         }
     ]
 }
-```
+----
