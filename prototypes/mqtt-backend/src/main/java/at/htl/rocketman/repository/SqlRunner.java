@@ -13,7 +13,7 @@ public class SqlRunner {
     private static final String SCRIPT_PROPERTIES_PATH = "prototypes/mqtt-backend/sql/script-files.properties";
 
     public static void main(String[] args) {
-        dropAndCreateTablesWithExampleData();
+        dropTablesAndCreateEmptyTables();
         //runScript(SqlScript.INSERT);
         //runScript(SqlScript.INSERT);
     }
@@ -56,6 +56,27 @@ public class SqlRunner {
 
             String dropScript = scriptProperties.getProperty(SqlScript.DROP.name().toLowerCase());
             sr.runScript(new BufferedReader(new FileReader(dropScript)));
+            String createScript = scriptProperties.getProperty(SqlScript.CREATE.name().toLowerCase());
+            sr.runScript(new BufferedReader(new FileReader(createScript)));
+
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void createEmptyTables() {
+
+        try {
+            Properties scriptProperties = new Properties();
+            scriptProperties.load(new FileInputStream(SCRIPT_PROPERTIES_PATH));
+
+
+            Datasource dataSource = new Datasource();
+            Connection conn = dataSource.getDb();
+            System.out.println("Connection established......");
+            ScriptRunner sr = new ScriptRunner(conn);
+            sr.setLogWriter(null);
+
             String createScript = scriptProperties.getProperty(SqlScript.CREATE.name().toLowerCase());
             sr.runScript(new BufferedReader(new FileReader(createScript)));
 

@@ -1,6 +1,7 @@
 package at.htl.rocketman;
 
 
+import at.htl.rocketman.repository.SqlRunner;
 import org.jboss.logging.Logger;
 import org.sqlite.SQLiteDataSource;
 import java.sql.Connection;
@@ -34,8 +35,8 @@ public class Datasource {
                 LOG.info("table exists");
             }
             else {
-                //TODO
-                LOG.error("table does not exists");
+                LOG.info("tables created");
+                SqlRunner.createEmptyTables();
             }
         }
         return c;
