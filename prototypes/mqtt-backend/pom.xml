@@ -75,6 +75,11 @@
       <artifactId>sqlite-jdbc</artifactId>
       <version>3.32.3</version>
     </dependency>
+    <dependency>
+      <groupId>org.apache.ibatis</groupId>
+      <artifactId>ibatis-core</artifactId>
+      <version>3.0</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
@@ -92,6 +97,9 @@
             </goals>
           </execution>
         </executions>
+        <configuration>
+          <additionalBuildArgs>-H:IncludeResources=json_schema.json</additionalBuildArgs>
+        </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>

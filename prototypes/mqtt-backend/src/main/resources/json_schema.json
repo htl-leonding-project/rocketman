@@ -14,7 +14,11 @@
     "unit": {
       "description": "The unit of value",
       "type": "string"
+    },
+    "timestamp": {
+      "description": "Timestamp when measurement was taken",
+      "type": "string"
     }
   },
-  "required": ["description", "value", "unit"]
+  "required": ["description", "value", "unit", "timestamp"]
 }

@@ -1,5 +1,5 @@
 package at.htl.rocketman.repository;
-
+import at.htl.rocketman.Datasource;
 import org.apache.ibatis.jdbc.ScriptRunner;
 
 import javax.sql.DataSource;
@@ -10,7 +10,7 @@ import java.util.Properties;
 
 public class SqlRunner {
 
-    private static final String SCRIPT_PROPERTIES_PATH = "sql/script-files.properties";
+    private static final String SCRIPT_PROPERTIES_PATH = "prototypes/mqtt-backend/sql/script-files.properties";
 
     public static void main(String[] args) {
         dropAndCreateTablesWithExampleData();
@@ -25,8 +25,8 @@ public class SqlRunner {
             scriptProperties.load(new FileInputStream(SCRIPT_PROPERTIES_PATH));
 
 
-            DataSource dataSource = Database.getDataSource();
-            Connection conn = dataSource.getConnection();
+            Datasource dataSource = new Datasource();
+            Connection conn = dataSource.getDb();
             System.out.println("Connection established......");
             ScriptRunner sr = new ScriptRunner(conn);
             sr.setLogWriter(null);
@@ -48,8 +48,8 @@ public class SqlRunner {
             scriptProperties.load(new FileInputStream(SCRIPT_PROPERTIES_PATH));
 
 
-            DataSource dataSource = Database.getDataSource();
-            Connection conn = dataSource.getConnection();
+            Datasource dataSource = new Datasource();
+            Connection conn = dataSource.getDb();
             System.out.println("Connection established......");
             ScriptRunner sr = new ScriptRunner(conn);
             sr.setLogWriter(null);
@@ -70,8 +70,8 @@ public class SqlRunner {
             Properties scriptProperties = new Properties();
             scriptProperties.load(new FileInputStream(SCRIPT_PROPERTIES_PATH));
 
-            DataSource dataSource = Database.getDataSource();
-            Connection conn = dataSource.getConnection();
+            Datasource dataSource = new Datasource();
+            Connection conn = dataSource.getDb();
             System.out.println("Connection established for " + sqlScript.name() + "......");
             ScriptRunner sr = new ScriptRunner(conn);
             //sr.setLogWriter(null);

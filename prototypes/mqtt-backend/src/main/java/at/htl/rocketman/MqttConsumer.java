@@ -1,5 +1,7 @@
 package at.htl.rocketman;
 
+import at.htl.rocketman.entity.DataSet;
+import at.htl.rocketman.repository.DataSetRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.networknt.schema.*;
@@ -11,16 +13,20 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Set;
 
 public class MqttConsumer {
 
     @Inject
     Logger LOG;
-    private static final String SCHEMA_FILENAME = "json_schema.json";
+
+    @Inject
+    DataSetRepository dataSetRepository;
+
+    private static final String SCHEMA_FILENAME = "classes/json_schema.json";
     private static final String JSON_ARRAY_NAME = "payload";
-    private static final String temperatureSqlString = "INSERT INTO temperature VALUES (?, ?)";
-    private static final String pressureSqlString = "INSERT INTO atmospheric_pressure VALUES (?, ?)";
     private final ObjectMapper mapper = new ObjectMapper();
 
     /*
@@ -29,7 +35,8 @@ public class MqttConsumer {
             {
               "description": "temperature",
               "value": "1200",
-              "unit": "celsius"
+              "unit": "celsius",
+              "timestamp": " 2021-01-11T13:11:09.34"
             }
            ]
         }
@@ -43,7 +50,6 @@ public class MqttConsumer {
             object = reader.readObject();
         }
         JsonArray getArray = object.getJsonArray(JSON_ARRAY_NAME);
-        System.out.println(getArray);
         for(int i = 0; i < getArray.size(); i++)
         {
             JsonObject objects = getArray.getJsonObject(i);
@@ -55,6 +61,19 @@ public class MqttConsumer {
                 return;
             }
             LOG.info("no error found");
+
+            String description = removeQuotes(objects.get("description").toString());
+            String value = removeQuotes(objects.get("value").toString());
+            String unit = removeQuotes(objects.get("unit").toString());
+            try {
+                double valueDouble = Double.parseDouble(value);
+                valueDouble /= 100.0;
+                value = String.valueOf(valueDouble);
+            } catch (NumberFormatException e) { }
+            dataSetRepository.persist(new DataSet(description, value, unit, LocalDateTime.now()));
+        }
+        for (DataSet x : dataSetRepository.getAll()) {
+            System.out.println(x.getValue());
         }
 
         /*Datasource ds = new Datasource();
@@ -94,5 +113,9 @@ public class MqttConsumer {
     protected JsonSchema getJsonSchemaFromStringContent(String schemaContent) {
         JsonSchemaFactory factory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
         return factory.getSchema(schemaContent);
+    }
+
+    public String removeQuotes(String text) {
+        return text.substring(1, text.length() - 1);
     }
 }

@@ -1,6 +1,6 @@
 = System Specification - Rocketman
 Hain Lukas, Plakolb Marcel, Kaufmann Jan
-1.5.0, 2020-10-28
+1.8.0, 2020-10-28
 ifndef::imagesdir[:imagesdir: images]
 //:toc-placement!:  // prevents the generation of the doc at this position, so it can be printed afterwards
 :sourcedir: ../src/main/java
@@ -20,43 +20,89 @@ endif::backend-html5[]
 // print the toc here (not at the default position)
 //toc::[]
 
-== Pflichtenheft
+== System Specification
 
-=== Ausgangssituation
-Die HTL Leonding ist eine HTL im oö. Zentralraum mit ca. 1000 Schülern und den Fachabteilungen Informatik, Medientechnik, Elektronik und Bio-Medizin. SchülerInnen Gruppen nehmen öfters am CanSat Wettbewerb teil. Ziel dieses Wettbewerbs ist es einen Satelliten in Getränkedosengröße in eine Höhe von 500 Metern zu schießen. Dieser ist mit verschiedenen Sensoren ausgestattet und sendet Telemetriedaten zu einer oder mehreren Bodenstationen.
+=== Initial situation
+The HTL Leonding is an HTL in the central region of Upper Austria. Groups of students often take part in the CanSat competition where the goal is to shoot a satellite the size of a tin can at a height of 500 meters.
 
-=== Istzustand
-Die teilnehmenden SchülerInnen haben zurzeit keine einheitliche, leicht transportierbare Möglichkeit, eine Rakete oder den Satelliten zu steuern und Telemetriedaten zu empfangen bzw. aufzuzeichnen. Startvorrichtung und Steuergerät sind derzeit nicht miteinander verbunden. Jeder Schülergruppe hat immer ein eigenes nicht vereinheitlichtes Design.
+=== Actual state
+This satellite is equipped with various sensors and sends telemetry data (sensor data such as ambient temperature, altitude, etc.) to one or more ground stations.
 
-=== Problemstellung
-SchülerInnen müssen bei jeder Teilnahme ein eigenes Design zur Teilnahme des CanSat Wettbewerbs entwerfen und erstellen. Dies kostet immer unnötige Zeit und Ressourcen. Manche schrecken deswegen vor der Teilnahme zurück.
+=== Problem definition
+The participating students currently do not have a uniform, easily transportable way to control a rocket or the satellite and to receive or record telemetry data (see actual state). Launching device and control unit are currently not connected to each other. The Launching device is currently a small handheld, connected by wire to a small electronic detonator inside the rocket. https://www.ebay.de/itm/Quest-Zuendgeraet-fuer-Modellraketen-mit-Blinklicht-und-Piepser-Neu-OVP-/193723804904[Ebay link]. Each student group always has its own non-unified design.
 
-=== Aufgabenstellung
-Es soll eine mobile Steuereinheit in Form eines Koffers gebaut werden, mit der man die Rakete über ein Kabel oder Funksignal starten kann. Außerdem soll die Kommunikation mit mehreren Außenstellen über 2 verschiedene Protokolle ermöglicht werden.
+=== Task definition
+Based on an externally delivered control unit, software for the implementation on the problem statement given above will be delivered by the project team. The results which will be described in this section are divided into the prerequisites, the functionality and other aspects which derive from the functionality, each in a separate subsection.
 
-==== Funktionale Anforderungen
-* Es soll möglich sein, Modellraketen kabelgebunden zu zünden.
-* Es soll möglich sein, kabellose Kommunikation mit mehreren Außenstellen gleichzeitig durchzuführen.
-* Die Kontrolleinheit soll mobil sein.
-* Die Kontrolleinheit soll ohne Internetempfang funktionieren.
-* Die Kommunikation soll in zwei Frequenzbereichen bzw. mit zwei Protokollen gleichzeitig stattfinden (433 MHz LoRa und 802.11b/g/n Netzwerk mittels XBee 568).
+==== Prerequisites
+In the following requirements we assume that the hardwareparts are delivered externally.
+Moreover we assume that all delivered software APIs come together with the documentation.
+
+==== Functional requirements
+* The user should be able to set the software mode of operation
+** The trigger for the change of software mode is the delivered suitcase key
+** The software should be able to chose between user-mode, readonly-mode and admin-mode by the movement of the suitcase key
+*** readonly-mode: In this mode it should only be possible to observe telemetry data
+*** user-mode: In this mode it should be possible to observe telemetry data, initiate the countdown and control an actuator
+*** admin-mode: In this mode the system may be configured(e.g. set the Countdown and activate an actuator)
+* The software in user-mode should be able to initiate the ignition of the rocket
+** The ignition should be possible by wire or wirelessly
+* Communication capabilities should be delivered
+** The suitcase should be able to communicate by standard API with competition administration system. The standard API documentation must be delivered by the competition administration.
+* It should be possible to communicate wirelessly with several branch offices simultaneously.
 
 
-==== Nichtfunktionale Anforderungen (NFA)
-* Einfache Benutzbarkeit
-* Verfügbarkeit von Teilen bei Defekt
-* Teile müssen einfach zu tauschen sein
-* Bei kabelgebundener Zündung muss sichergestellt werden, dass sich die Systeme trennen
-* Zündstrom darf nur dann fließen, wenn dies auch wirklich vom Benutzer gewollt ist
+==== Non-functional requirements
+* Easy usability
+** Due to user with limited software knowledge the UI has to be easy to use
+* Ignition current may only flow, if this is really wanted by the user
+* The control unit should function without internet or cloud access
+** As currently known the internet access is only required for downloading settings for the launch, so the user has to download them beforehand
 
-=== Ziele
-Eine mobile, robuste und einfach handhabbare Bodenstation in Form eines Koffers, zur Zündung und Kommunikation mit der Rakete und dem abgeworfenen Satelliten.
+==== Use-Case-Diagramm
+[plantuml,usecasediagramm, png]
+----
+@startuml
+skinparam actorStyle awesome
+left to right direction
+:User:
+:Admin:
+:ReadOnlyUser:
+rectangle Rocketman {
+    (receive telemetry data)
+    rectangle {
+        (initiate the ignition of the rocket)
+        (control actuator)
+        (communicate wirelessly with branch offices)
+        (set software mode of operation)
+    }
+    rectangle {
+        (configure system)
+        (activate actuator)
+        (set countdown)
+        (configure system) .right.> (activate actuator)
+        (configure system) .left.> (set countdown)
+    }
+}
+ReadOnlyUser -- (receive telemetry data)
+User -->> ReadOnlyUser
+User -- (initiate the ignition of the rocket)
+User -- (control actuator)
+User -- (set software mode of operation)
+User -- (communicate wirelessly with branch offices)
+Admin -->> User
+Admin -- (configure system)
+@enduml
+----
 
-=== Mengengerüst
-Zurzeit nicht absehbar. Wird so bald wie möglich nachgetragen.
+=== Goals
+The goal is to make it easier for future students to participate. As there is already an existing design for the ground station.
 
-== Entwurf "Wie mache ich es"
-=== Systemarchitektur
+=== Quantity structure
+Currently not foreseeable. Will be added as soon as possible.
+
+== Concept
+=== System architecture
 [plantuml, systemarchitecture, png]
 ----
 package Suitcase {
@@ -91,15 +137,13 @@ package "Saved data" {
 }
 
 cloud {
-  [Cloud]
+  [Internet]
   [MQTT Broker]
 }
 
-[r1] -- [Cloud]
-[Cloud] -- [r2]
+[r1] -- [Internet]
+[Internet] -- [r2]
 s -- [MQTT Broker]
 r1 -left- [MQTT Broker]
 [r2] --> [f1]
-Zündung -right- [MQTT Broker]
-
 ----
