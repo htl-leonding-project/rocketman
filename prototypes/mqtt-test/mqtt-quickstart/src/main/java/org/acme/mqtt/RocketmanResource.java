@@ -18,7 +18,7 @@ import io.smallrye.reactive.messaging.annotations.Channel;
 public class RocketmanResource {
 
     @Inject
-    @Channel("my-data-stream")
+    @Channel("rocketman")
     Publisher<DataSet> dS;
 
     @GET

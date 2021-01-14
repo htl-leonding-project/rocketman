@@ -14,8 +14,8 @@ import io.smallrye.reactive.messaging.annotations.Broadcast;
 
 
 /**
- * A bean producing random prices every 5 seconds.
- * The prices are written to a MQTT topic (prices). The MQTT configuration is specified in the application configuration.
+ * A bean producing random values every 5 seconds.
+ *
  */
 @ApplicationScoped
 public class RocketmanGenerator {
@@ -23,14 +23,19 @@ public class RocketmanGenerator {
     private Random random = new Random();
     private DataHelper[] dh = fillDH();
 
-    @Outgoing("my-data-stream")
+    @Outgoing("rocketman")
     @Broadcast
     public Flowable<DataSet> generate() {
 
         return Flowable.interval(5, TimeUnit.SECONDS)
                 .map(r -> {
                     int ran = random.nextInt(3);
-                    DataSet ds = new DataSet(dh[ran].getDescription(),String.valueOf(random.nextInt(100)),dh[ran].getUnit(),LocalDateTime.now());
+                    DataSet ds = new DataSet(
+                            dh[ran].getDescription(),
+                            String.valueOf(random.nextInt(100)),
+                            dh[ran].getUnit(),
+                            LocalDateTime.now()
+                    );
                     System.out.println("Sending DataSet: " + ds.toString());
                     return ds;
                 });

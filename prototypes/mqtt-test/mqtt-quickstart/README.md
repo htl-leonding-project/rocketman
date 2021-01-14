@@ -5,8 +5,11 @@ This project illustrates how you can interact with MQTT using MicroProfile React
 
 ## MQTT server
 
-First you need a MQTT server. You can follow the instructions from the [Eclipse Mosquitto](https://mosquitto.org/) or run `docker-compose up` if you have docker installed on your machine.
+First you need a MQTT server. You can follow the instructions from the [Eclipse Mosquitto](https://mosquitto.org/) or run
 
+```bash
+docker-compose up
+```  
 ## Start the application
 
 The application can be started using: 
