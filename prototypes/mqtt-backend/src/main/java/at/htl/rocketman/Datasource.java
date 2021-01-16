@@ -25,7 +25,7 @@ public class Datasource {
      * @throws SQLException
      */
     public Connection getDb() throws SQLException {
-        if (c == null) {
+        if (c == null || c.isClosed()) {
             c = sqliteDb.getConnection();
             DatabaseMetaData dbm = c.getMetaData();
             // check if "data_set" table is there
@@ -40,5 +40,9 @@ public class Datasource {
             }
         }
         return c;
+    }
+
+    public SQLiteDataSource getSqliteDb() {
+        return sqliteDb;
     }
 }
