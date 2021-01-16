@@ -110,6 +110,10 @@
         </executions>
         <configuration>
           <additionalBuildArgs>-H:IncludeResources=json_schema.json</additionalBuildArgs>
+          <additionalBuildArgs>-H:IncludeResources=sql\cr_rocketman.sql</additionalBuildArgs>
+          <additionalBuildArgs>-H:IncludeResources=sql\dr_rocketman.sql</additionalBuildArgs>
+          <additionalBuildArgs>-H:IncludeResources=sql\ins_rocketman.sql</additionalBuildArgs>
+          <additionalBuildArgs>-H:IncludeResources=sql\script-files.properties</additionalBuildArgs>
         </configuration>
       </plugin>
       <plugin>
