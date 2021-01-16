@@ -1,6 +1,6 @@
 #!/bin/sh
 
-sqlite3 test_db_2 << 'END_SQL'
+sqlite3 test_db << 'END_SQL'
 .timeout 2000
 
 DROP TABLE test;
