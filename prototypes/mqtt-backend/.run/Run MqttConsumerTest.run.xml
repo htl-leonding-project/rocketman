@@ -1,0 +1,18 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run MqttConsumerTest" type="JUnit" factoryName="JUnit">
+    <module name="rocketman" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="at.htl.rocketman.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <option name="PACKAGE_NAME" value="at.htl.rocketman" />
+    <option name="MAIN_CLASS_NAME" value="at.htl.rocketman.MqttConsumerTest" />
+    <option name="METHOD_NAME" value="" />
+    <option name="TEST_OBJECT" value="class" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
