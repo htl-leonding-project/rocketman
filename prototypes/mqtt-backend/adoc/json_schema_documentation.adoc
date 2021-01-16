@@ -34,3 +34,17 @@ A dataset consists of:
     ]
 }
 ----
+
+[source,json]
+----
+{
+    "payload": [
+        {
+            "description": "temperature",
+            "value": "200",
+            "unit": "celsius",
+            "timestamp": "2021-01-11T13:11:09.5Z4"
+        }
+    ]
+}
+----

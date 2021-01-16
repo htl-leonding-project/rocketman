@@ -23,8 +23,7 @@ public class DataSetRepository {
 
     public void persist(DataSet dataSet) {
         Datasource ds = new Datasource();
-        try {
-            Connection conn = ds.getDb();
+        try (Connection conn = ds.getDb()) {
             LOG.info("Connected.");
             LOG.info("Description: " + dataSet.getDescription() + "; Value: " + dataSet.getValue() + "; Unit: " + dataSet.getUnit() + "; Timestamp: " + dataSet.getTimestamp() + "; " + LocalDateTime.now());
             String persistSqlString = "INSERT INTO data_set VALUES (?, ?, ?, ?)";
@@ -45,8 +44,7 @@ public class DataSetRepository {
 
         List<DataSet> res = new LinkedList<>();
         Datasource ds = new Datasource();
-        try {
-            Connection conn = ds.getDb();
+        try (Connection conn = ds.getDb()) {
             LOG.info("Connected.");
             String persistSqlString = "SELECT ds_description, ds_value, ds_unit, ds_timestamp FROM data_set";
             PreparedStatement preparedStatement = conn.prepareStatement(persistSqlString);

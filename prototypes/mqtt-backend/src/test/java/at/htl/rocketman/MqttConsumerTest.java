@@ -34,13 +34,11 @@ class MqttConsumerTest {
     void setUp() {
         // should be replaced with Sql runner drop and create
         Datasource ds = new Datasource();
-        try {
-            Connection conn = ds.getDb();
+        try (Connection conn = ds.getDb()) {
             LOG.info("Connected.");
             String deleteSqlString = "DELETE FROM data_set";
             PreparedStatement preparedStatement = conn.prepareStatement(deleteSqlString);
             preparedStatement.executeUpdate();
-            conn.close();
         } catch (SQLException e) {
             LOG.error("SQl-Error occurred: " + e.getMessage());
         } catch (Exception e) {
