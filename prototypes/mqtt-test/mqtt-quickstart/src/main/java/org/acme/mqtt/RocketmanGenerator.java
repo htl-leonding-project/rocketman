@@ -5,6 +5,9 @@ import java.util.concurrent.TimeUnit;
 import org.acme.mqtt.entity.DataHelper;
 import org.acme.mqtt.entity.DataSet;
 import javax.enterprise.context.ApplicationScoped;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
 import java.time.LocalDateTime;
 
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
@@ -22,7 +25,6 @@ public class RocketmanGenerator {
 
     private Random random = new Random();
     private DataHelper[] dh = fillDH();
-
     @Outgoing("rocketman")
     @Broadcast
     public Flowable<DataSet> generate() {
@@ -37,7 +39,7 @@ public class RocketmanGenerator {
                             LocalDateTime.now()
                     );
                     System.out.println("Sending DataSet: " + ds.toString());
-                    return ds;
+                    return  ds;
                 });
     }
 

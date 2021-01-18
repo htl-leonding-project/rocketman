@@ -1,12 +1,15 @@
 package org.acme.mqtt.entity;
 
+import javax.json.Json;
+import javax.json.JsonObjectBuilder;
+
 import java.time.LocalDateTime;
 
 public class DataSet {
     String description;
     String value;
     String unit;
-    LocalDateTime timestamp;
+    String timestamp;
 
     public DataSet() {
     }
@@ -15,7 +18,7 @@ public class DataSet {
         this.description = description;
         this.value = value;
         this.unit = unit;
-        this.timestamp = timestamp;
+        this.timestamp = timestamp.toString();
     }
 
     public String getDescription() {
@@ -42,11 +45,11 @@ public class DataSet {
         this.unit = unit;
     }
 
-    public LocalDateTime getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(LocalDateTime timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -59,4 +62,14 @@ public class DataSet {
                 ", timestamp=" + timestamp +
                 '}';
     }
+
+   /* public JsonObjectBuilder getJsonObjectBuilder() {
+        final JsonObjectBuilder jsonObjectBuilder =
+                Json.createObjectBuilder()
+                        .add("description", this.description)
+                        .add("value", this.value)
+                        .add("unit", this.unit)
+                        .add("timestamp", this.timestamp);
+        return jsonObjectBuilder;
+    }*/
 }
