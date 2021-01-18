@@ -1,8 +1,11 @@
 package at.htl.rocketman;
 
 
+import at.htl.rocketman.repository.SqlRunner;
 import org.jboss.logging.Logger;
 import org.sqlite.SQLiteDataSource;
+
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -23,21 +26,14 @@ public class Datasource {
      * @return
      * @throws SQLException
      */
-    public Connection getDb() throws SQLException {
-        if (c == null) {
+    public Connection getDb() throws SQLException, IOException {
+        if (c == null || c.isClosed()) {
             c = sqliteDb.getConnection();
-            DatabaseMetaData dbm = c.getMetaData();
-            // check if "data_set" table is there
-            ResultSet tables = dbm.getTables(null, null, "data_set", null);
-            if (tables.next()) {
-                // Table exists
-                LOG.info("table exists");
-            }
-            else {
-                //TODO
-                LOG.error("table does not exists");
-            }
         }
         return c;
+    }
+
+    public SQLiteDataSource getSqliteDb() {
+        return sqliteDb;
     }
 }

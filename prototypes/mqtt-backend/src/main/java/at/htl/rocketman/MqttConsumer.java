@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.networknt.schema.*;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.jboss.logging.Logger;
+
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.json.*;
 import java.io.ByteArrayInputStream;
@@ -14,9 +16,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.Set;
 
+@ApplicationScoped
 public class MqttConsumer {
 
     @Inject
@@ -25,21 +27,26 @@ public class MqttConsumer {
     @Inject
     DataSetRepository dataSetRepository;
 
-    private static final String SCHEMA_FILENAME = "classes/json_schema.json";
+    private static String SCHEMA_FILENAME = "classes/json_schema.json";
     private static final String JSON_ARRAY_NAME = "payload";
     private final ObjectMapper mapper = new ObjectMapper();
 
+    // Only for unittests
+    public void setSchemaFilename(String schemaFilename) {
+        SCHEMA_FILENAME = schemaFilename;
+    }
+
     /*
-        {
-          "payload": [
-            {
-              "description": "temperature",
-              "value": "1200",
-              "unit": "celsius",
-              "timestamp": " 2021-01-11T13:11:09.34"
-            }
-           ]
-        }
+                {
+                  "payload": [
+                    {
+                      "description": "temperature",
+                      "value": "1200",
+                      "unit": "celsius",
+                      "timestamp": " 2021-01-11T13:11:09.34"
+                    }
+                   ]
+                }
      */
     @Incoming("rocketman")
     public void consumeJson(byte[] raw) throws IOException {

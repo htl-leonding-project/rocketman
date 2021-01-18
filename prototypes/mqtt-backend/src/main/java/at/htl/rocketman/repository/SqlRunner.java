@@ -10,10 +10,9 @@ import java.util.Properties;
 
 public class SqlRunner {
 
-    private static final String SCRIPT_PROPERTIES_PATH = "prototypes/mqtt-backend/sql/script-files.properties";
+    private static final String SCRIPT_PROPERTIES_PATH = "classes/sql/script-files.properties";
 
     public static void main(String[] args) {
-        dropAndCreateTablesWithExampleData();
         //runScript(SqlScript.INSERT);
         //runScript(SqlScript.INSERT);
     }
@@ -62,6 +61,17 @@ public class SqlRunner {
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void createEmptyTables(Connection c) throws IOException {
+        Properties scriptProperties = new Properties();
+        scriptProperties.load(new FileInputStream(SCRIPT_PROPERTIES_PATH));
+
+        ScriptRunner sr = new ScriptRunner(c);
+        sr.setLogWriter(null);
+
+        String createScript = scriptProperties.getProperty(SqlScript.CREATE.name().toLowerCase());
+        sr.runScript(new BufferedReader(new FileReader(createScript)));
     }
 
     public static void runScript(SqlScript sqlScript) {

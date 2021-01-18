@@ -1,0 +1,59 @@
+= SQLITE TEST
+// Metadata
+Sarah mit der Haube
+1.0, 26.11.2020
+:sourcedir: ../src/main/java
+:icons: font
+:toc: left
+
+== Problemstellung
+Für die lokale Datenspeicherung am Raspberry Pi wird eine Datenbank benötigt.
+Dazu muss getestet werden, ob die Datenbank korrupt wird, wenn die Stromversorgung unabsichtlich
+unterbrochen wird.
+
+== Vorgehensweise
+Die folgenden Schritte beschreiben, wie die Datenbank am Raspberry Pi aufgesetzt werden kann,
+und auf Korruption überprüft werden kann:
+
+=== Update und Upgrade der Raspberry Pi packages:
+* Update Raspberry Pi packages
+[source]
+sudo apt-get update
+
+* Upgrade Raspberry Pi Packages
+[source]
+sudo apt-get upgrade
+
+
+=== SQLite Installieren:
+[source]
+sudo apt-get install sqlite3
+
+=== Create and Insert Skript ausführen
+[source]
+bash sqlinserts.sh
+
+Das Skript erzeugt eine Datenbank namens "test_db",
+und fügt in eine Tabelle namens Test, in 2 aufeinanderfolgenden Transaktionen jeweils 1000 und 1000000 Datensätze ein.
+Abschließend an jede Transaktion wird "Transaktion <Nr> abgeschlossen" ausgegeben.
+
+=== Stromzufuhr beenden
+
+Während den Inserts kann nun die Stromzufuhr über das ausstecken des Raspberry PIs beendet werden,
+oder der Datenbankprozess mit dem Befehl
+
+[source]
+pkill -9 sqlite3
+
+beendet werden.
+
+=== Daten überprüfen
+Nun ist zu überprüfen ob die Datenbank nicht korrupt ist, bzw. ob alle die Datensätze der abgeschlossenen Transaktionen
+noch vorhanden sind. (Dies sollte der Fall sein)
+[source]
+sqlite3 test_db
+
+Mit folgenden Befehlen können die Richtigkeit und die Anzahl der Daten überprüft werden
+[source]
+select * from test;
+select count(*) from test;
