@@ -79,37 +79,4 @@ class MqttConsumerTest {
         output(dataset).toConsole();
         assertThat(dataset).hasNumberOfRows(0);
     }
-
-    @Test
-    @Order(300)
-    @DisplayName("Test consumeJson with a working json with multiple example objects")
-    void test_consumeWithBigJson() throws IOException {
-        byte[] data = Files.readAllBytes(Path.of("src/test/resources/big.json"));
-        mqttConsumer.setSchemaFilename("src/main/resources/json_schema.json");
-        mqttConsumer.consumeJson(data);
-
-        Datasource ds = new Datasource();
-
-        Table dataset = new Table(ds.getSqliteDb(), "data_set");
-        output(dataset).toConsole();
-        assertThat(dataset).hasNumberOfRows(3);
-    }
-
-    @Test
-    @Order(400)
-    @DisplayName("Test consumeJson with a two json files")
-    void test_consumeWithTwoJson() throws IOException {
-        byte[] data = Files.readAllBytes(Path.of("src/test/resources/big.json"));
-        mqttConsumer.setSchemaFilename("src/main/resources/json_schema.json");
-        mqttConsumer.consumeJson(data);
-
-        data = Files.readAllBytes(Path.of("src/test/resources/good.json"));
-        mqttConsumer.consumeJson(data);
-
-        Datasource ds = new Datasource();
-
-        Table dataset = new Table(ds.getSqliteDb(), "data_set");
-        output(dataset).toConsole();
-        assertThat(dataset).hasNumberOfRows(4);
-    }
 }
