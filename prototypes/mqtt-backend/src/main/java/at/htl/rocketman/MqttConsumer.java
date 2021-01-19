@@ -10,14 +10,11 @@ import org.jboss.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.json.*;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.LocalDateTime;
 import java.util.Set;
 
 @ApplicationScoped
@@ -30,7 +27,6 @@ public class MqttConsumer {
     DataSetRepository dataSetRepository;
 
     private static String SCHEMA_FILENAME = "classes/json_schema.json";
-    private static final String JSON_ARRAY_NAME = "payload";
     private final ObjectMapper mapper = new ObjectMapper();
 
     // Only for unittests
@@ -39,16 +35,12 @@ public class MqttConsumer {
     }
 
     /*
-                {
-                  "payload": [
-                    {
-                      "description": "temperature",
-                      "value": "1200",
-                      "unit": "celsius",
-                      "timestamp": " 2021-01-11T13:11:09.34"
-                    }
-                   ]
-                }
+        {
+          "description": "temperature",
+          "value": "1200",
+          "unit": "celsius",
+          "timestamp": " 2021-01-11T13:11:09.34"
+        }
      */
     @Incoming("rocketman")
     public void consumeJson(byte[] raw) throws IOException {
@@ -110,9 +102,5 @@ public class MqttConsumer {
     protected JsonSchema getJsonSchemaFromStringContent(String schemaContent) {
         JsonSchemaFactory factory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
         return factory.getSchema(schemaContent);
-    }
-
-    public String removeQuotes(String text) {
-        return text.substring(1, text.length() - 1);
     }
 }
