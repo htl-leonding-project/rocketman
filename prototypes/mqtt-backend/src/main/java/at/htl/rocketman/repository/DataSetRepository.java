@@ -28,7 +28,7 @@ public class DataSetRepository {
             LOG.info("Description: " + dataSet.getDescription() + "; Value: " + dataSet.getValue() + "; Unit: " + dataSet.getUnit() + "; Timestamp: " + dataSet.getTimestamp() + "; " + LocalDateTime.now());
             String persistSqlString = "INSERT INTO data_set VALUES (?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(persistSqlString);
-            preparedStatement.setString(1, dataSet.getDescription());
+            preparedStatement.setString(1, dataSet.getDescription().toLowerCase());
             preparedStatement.setString(2, dataSet.getValue());
             preparedStatement.setString(3, dataSet.getUnit());
             preparedStatement.setString(4, dataSet.getTimestamp().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
@@ -71,7 +71,7 @@ public class DataSetRepository {
             LOG.info("Connected.");
             String persistSqlString = "SELECT ds_description, ds_value, ds_unit, ds_timestamp FROM data_set WHERE ds_description = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(persistSqlString);
-            preparedStatement.setString(1, description);
+            preparedStatement.setString(1, description.toLowerCase());
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 DataSet dataSet = new DataSet();
