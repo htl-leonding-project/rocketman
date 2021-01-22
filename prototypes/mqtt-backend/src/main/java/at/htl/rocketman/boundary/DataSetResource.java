@@ -18,12 +18,10 @@ public class DataSetResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     public Response getTimeStamps(@PathParam("description") String description) {
-        List<DataSet> list = dataSetRepository.getAll();
+        List<DataSet> list = dataSetRepository.findByDescription(description);
         StringBuilder array = new StringBuilder("[");
         for (DataSet dataSet : list) {
-            if(dataSet.getDescription().equalsIgnoreCase(description)) {
-                array.append("\"").append(dataSet.getTimestamp()).append("\"").append(",");
-            }
+            array.append("\"").append(dataSet.getTimestamp()).append("\"").append(",");
         }
         array.append("]");
         array.delete(array.lastIndexOf(","), array.lastIndexOf(",") + 1);
@@ -35,12 +33,10 @@ public class DataSetResource {
     @Consumes(MediaType.APPLICATION_JSON    )
     @Produces(MediaType.APPLICATION_JSON)
     public Response getValues(@PathParam("description") String description) {
-        List<DataSet> list = dataSetRepository.getAll();
+        List<DataSet> list = dataSetRepository.findByDescription(description);
         StringBuilder array = new StringBuilder("[");
         for (DataSet dataSet : list) {
-            if(dataSet.getDescription().equalsIgnoreCase(description)) {
-                array.append(dataSet.getValue()).append(",");
-            }
+            array.append(dataSet.getValue()).append(",");
         }
         array.append("]");
         array.delete(array.lastIndexOf(","), array.lastIndexOf(",") + 1);

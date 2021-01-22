@@ -63,4 +63,29 @@ public class DataSetRepository {
         }
         return res;
     }
+
+    public List<DataSet> findByDescription(String description) {
+        List<DataSet> res = new LinkedList<>();
+        Datasource ds = new Datasource();
+        try (Connection conn = ds.getDb()) {
+            LOG.info("Connected.");
+            String persistSqlString = "SELECT ds_description, ds_value, ds_unit, ds_timestamp FROM data_set WHERE ds_description = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(persistSqlString);
+            preparedStatement.setString(1, description);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                DataSet dataSet = new DataSet();
+                dataSet.setDescription(resultSet.getString("ds_description"));
+                dataSet.setValue(resultSet.getString("ds_value"));
+                dataSet.setUnit(resultSet.getString("ds_unit"));
+                dataSet.setTimestamp(LocalDateTime.parse(resultSet.getString("ds_timestamp"), DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+                res.add(dataSet);
+            }
+        } catch (SQLException e) {
+            LOG.error("SQl-Error occurred: " + e.getMessage());
+        } catch (Exception e) {
+            LOG.error("Unknown error occurred: " + e.getMessage());
+        }
+        return res;
+    }
 }
