@@ -39,7 +39,7 @@ public class MqttConsumer {
           "description": "temperature",
           "value": "1200",
           "unit": "celsius",
-          "timestamp": " 2021-01-11T13:11:09.34"
+          "timestamp": "2021-01-11T13:11:09.34"
         }
      */
     @Incoming("rocketman")
@@ -47,7 +47,6 @@ public class MqttConsumer {
         String message = new String(raw);
         JsonSchema schema = getJsonSchemaFromStringContent(new String(Files.readAllBytes(Path.of(SCHEMA_FILENAME))));
         JsonNode node = getJsonNodeFromStringContent(message);
-        System.out.println(message);
         Jsonb jsonb = JsonbBuilder.create();
         Set<ValidationMessage> errors = schema.validate(node);
         if(!errors.isEmpty()) {
@@ -55,6 +54,7 @@ public class MqttConsumer {
             return;
         }
         DataSet ds = jsonb.fromJson(message, DataSet.class);
+        LOG.info("JSON Object has no errors! " + ds.getDescription() + ": " + ds.getValue());
         try {
             double valueDouble = Double.parseDouble(ds.getValue());
             valueDouble /= 100.0;

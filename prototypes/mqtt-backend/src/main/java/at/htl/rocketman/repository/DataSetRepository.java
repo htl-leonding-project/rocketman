@@ -41,7 +41,6 @@ public class DataSetRepository {
     }
 
     public List<DataSet> getAll() {
-
         List<DataSet> res = new LinkedList<>();
         Datasource ds = new Datasource();
         try (Connection conn = ds.getDb()) {

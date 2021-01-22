@@ -1,0 +1,13 @@
+h1 {
+    margin-left: 20px;
+    text-align: center;
+    font-size: 50px;
+}
+
+canvas {
+    margin: 20px;
+}
+
+body {
+    width: 75%;
+}
