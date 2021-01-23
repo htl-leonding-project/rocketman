@@ -4,7 +4,45 @@ async function getData(url) {
 }
 
 async function main() {
-    let timestamps_h = await getData('http://localhost:8080/api/dataset/timestamps/hoehe');
+    let descriptions = await getData('http://localhost:8080/api/dataset/descriptions');
+    console.log("Fetched " + descriptions.length + " descriptions");
+    if(descriptions.length === 0) {
+        document.getElementById("no_data_found_txt").style.visibility = "visible";
+    }
+    for (let i = 0; i < descriptions.length; i++) {
+        // fetch data for current descriptions
+        let timestamps = await getData('http://localhost:8080/api/dataset/timestamps/' + descriptions[i]);
+        let values = await getData('http://localhost:8080/api/dataset/values/' + descriptions[i]);
+        console.log("Fetched " + values.length + " values for " + descriptions[i]);
+
+        if(values.length !== 0) {
+            // create canvas element in html
+            let canvas = document.createElement('canvas');
+            canvas.id = descriptions[i];
+            document.body.appendChild(canvas);
+
+            // create chart
+            let ctx = document.getElementById(descriptions[i]).getContext('2d');
+            let chart = new Chart(ctx, {
+                // The type of chart we want to create
+                type: 'line',
+                // The data for our dataset
+                data: {
+                    labels: timestamps,
+                    datasets: [{
+                        label: 'Height',
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        data: values
+                    }]
+                },
+                // Configuration options go here
+                options: {}
+            });
+        }
+    }
+
+    /*let timestamps_h = await getData('http://localhost:8080/api/dataset/timestamps/hoehe');
     let values_h = await getData('http://localhost:8080/api/dataset/values/hoehe');
     console.log("Fetched " + values_h.length + " values for height");
     let ctx = document.getElementById('height').getContext('2d');
@@ -63,5 +101,5 @@ async function main() {
         },
         // Configuration options go here
         options: {}
-    });
+    });*/
 }

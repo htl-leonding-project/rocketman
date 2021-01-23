@@ -11,3 +11,10 @@ canvas {
 body {
     width: 75%;
 }
+
+.err_txt {
+    font-size: 30px;
+    color: red;
+    font-weight: bolder;
+    text-align: center;
+}

@@ -14,9 +14,24 @@ public class DataSetResource {
     DataSetRepository dataSetRepository;
 
     @GET
+    @Path("/descriptions")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllDescriptions() {
+        List<String> list = dataSetRepository.getAllDescriptions();
+        StringBuilder array = new StringBuilder("[");
+        for (String description : list) {
+            array.append("\"").append(description.toLowerCase()).append("\"").append(",");
+        }
+        array.append("]");
+        array.delete(array.lastIndexOf(","), array.lastIndexOf(",") + 1);
+        return Response.ok(array.toString()).build();
+    }
+
+    @GET
     @Path("/timestamps/{description}")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getTimeStamps(@PathParam("description") String description) {
         List<DataSet> list = dataSetRepository.findByDescription(description);
         StringBuilder array = new StringBuilder("[");

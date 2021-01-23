@@ -88,4 +88,23 @@ public class DataSetRepository {
         }
         return res;
     }
+
+    public List<String> getAllDescriptions() {
+        List<String> res = new LinkedList<>();
+        Datasource ds = new Datasource();
+        try (Connection conn = ds.getDb()) {
+            LOG.info("Connected.");
+            String persistSqlString = "SELECT DISTINCT ds_description FROM data_set";
+            PreparedStatement preparedStatement = conn.prepareStatement(persistSqlString);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                res.add(resultSet.getString("ds_description"));
+            }
+        } catch (SQLException e) {
+            LOG.error("SQl-Error occurred: " + e.getMessage());
+        } catch (Exception e) {
+            LOG.error("Unknown error occurred: " + e.getMessage());
+        }
+        return res;
+    }
 }
