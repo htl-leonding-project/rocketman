@@ -24,7 +24,9 @@ public class DataSetResource {
             array.append("\"").append(description.toLowerCase()).append("\"").append(",");
         }
         array.append("]");
-        array.delete(array.lastIndexOf(","), array.lastIndexOf(",") + 1);
+        if(list.size() != 0) {
+            array.delete(array.lastIndexOf(","), array.lastIndexOf(",") + 1);
+        }
         return Response.ok(array.toString()).build();
     }
 
@@ -39,7 +41,9 @@ public class DataSetResource {
             array.append("\"").append(dataSet.getTimestamp()).append("\"").append(",");
         }
         array.append("]");
-        array.delete(array.lastIndexOf(","), array.lastIndexOf(",") + 1);
+        if(list.size() != 0) {
+            array.delete(array.lastIndexOf(","), array.lastIndexOf(",") + 1);
+        }
         return Response.ok(array.toString()).build();
     }
 
@@ -54,7 +58,9 @@ public class DataSetResource {
             array.append(dataSet.getValue()).append(",");
         }
         array.append("]");
-        array.delete(array.lastIndexOf(","), array.lastIndexOf(",") + 1);
+        if(list.size() != 0) {
+            array.delete(array.lastIndexOf(","), array.lastIndexOf(",") + 1);
+        }
         return Response.ok(array.toString()).build();
     }
 
