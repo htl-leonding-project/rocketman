@@ -24,7 +24,8 @@ public class DataSetResource {
         List<String> list = dataSetRepository.getAllDescriptions();
         StringBuilder array = new StringBuilder("[");
         for (String description : list) {
-            array.append("\"").append(description.toLowerCase()).append("\"").append(",");
+            String pascalCase = description.substring(0, 1).toUpperCase() + description.substring(1).toLowerCase();
+            array.append("\"").append(pascalCase).append("\"").append(",");
         }
         array.append("]");
         if(list.size() != 0) {

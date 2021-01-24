@@ -4,6 +4,12 @@ async function getData(url) {
 }
 
 async function main() {
+    const colors = [
+        'rgb(103, 135, 72)',
+        'rgb(176, 114, 194)',
+        'rgb(191, 159, 99)',
+        'rgb(151, 191, 111)'
+    ]
     let descriptions = await getData('http://localhost:8080/api/dataset/descriptions');
     console.log("Fetched " + descriptions.length + " descriptions");
     if(descriptions.length === 0) {
@@ -32,8 +38,8 @@ async function main() {
                     labels: timestamps,
                     datasets: [{
                         label: descriptions[i],
-                        backgroundColor: 'rgb(176, 114, 194)',
-                        borderColor: 'rgb(168, 86, 191)',
+                        backgroundColor: colors[i % colors.length],
+                        borderColor: colors[i % colors.length],
                         data: values
                     }]
                 },
