@@ -30,7 +30,7 @@ async function main() {
                 data: {
                     labels: timestamps,
                     datasets: [{
-                        label: 'Height',
+                        label: descriptions[i],
                         backgroundColor: 'rgb(255, 99, 132)',
                         borderColor: 'rgb(255, 99, 132)',
                         data: values
