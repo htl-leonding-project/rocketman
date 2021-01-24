@@ -34,7 +34,7 @@ public class RocketmanGenerator {
                     int ran = random.nextInt(3);
                     DataSet ds = new DataSet(
                             dh[ran].getDescription(),
-                            String.valueOf(random.nextInt(100)),
+                            String.valueOf(random.nextInt(100) * 100),
                             dh[ran].getUnit(),
                             LocalDateTime.now()
                     );
@@ -45,7 +45,7 @@ public class RocketmanGenerator {
 
     private DataHelper[] fillDH(){
         DataHelper d1 = new DataHelper("Luftdruck","Bar");
-        DataHelper d2 = new DataHelper("Höhe","m");
+        DataHelper d2 = new DataHelper("Hoehe","m");
         DataHelper d3 = new DataHelper("Luftfeuchtigkeit","g/m3");
         DataHelper[] dh = {d1,d2,d3};
         return dh;

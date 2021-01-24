@@ -11,7 +11,7 @@ async function main() {
     }
     for (let i = 0; i < descriptions.length; i++) {
         // fetch data for current descriptions
-        let timestamps = await getData('http://localhost:8080/api/dataset/timestamps/' + descriptions[i]);
+        let timestamps = await getData('http://localhost:8080/api/dataset/timesSinceStart/' + descriptions[i]);
         let values = await getData('http://localhost:8080/api/dataset/values/' + descriptions[i]);
         console.log("Fetched " + values.length + " values for " + descriptions[i]);
 
@@ -31,13 +31,32 @@ async function main() {
                     labels: timestamps,
                     datasets: [{
                         label: descriptions[i],
-                        backgroundColor: 'rgb(255, 99, 132)',
-                        borderColor: 'rgb(255, 99, 132)',
+                        backgroundColor: 'rgb(176, 114, 194)',
+                        borderColor: 'rgb(168, 86, 191)',
                         data: values
                     }]
                 },
                 // Configuration options go here
-                options: {}
+                options: {
+                    legend: {
+                        labels: {
+                            fontColor: 'rgb(134, 138, 143)',
+                            fontSize: 18
+                        }
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                fontColor: 'rgb(134, 138, 143)'
+                            }
+                        }],
+                        xAxes: [{
+                            ticks: {
+                                fontColor: 'rgb(134, 138, 143)'
+                            }
+                        }]
+                    }
+                }
             });
         }
     }
@@ -102,4 +121,8 @@ async function main() {
         // Configuration options go here
         options: {}
     });*/
+}
+function toggleDarkMode() {
+    var element = document.body;
+    element.classList.toggle("dark-mode");
 }
