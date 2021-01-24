@@ -107,4 +107,22 @@ public class DataSetRepository {
         }
         return res;
     }
+
+    public String getUnitForDescription(String description) {
+        Datasource ds = new Datasource();
+        try (Connection conn = ds.getDb()) {
+            String persistSqlString = "SELECT DISTINCT ds_unit FROM data_set WHERE ds_description = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(persistSqlString);
+            preparedStatement.setString(1, description.toLowerCase());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getString("ds_unit");
+            }
+        } catch (SQLException e) {
+            LOG.error("SQl-Error occurred: " + e.getMessage());
+        } catch (Exception e) {
+            LOG.error("Unknown error occurred: " + e.getMessage());
+        }
+        return null;
+    }
 }

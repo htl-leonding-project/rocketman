@@ -13,6 +13,7 @@ async function main() {
         // fetch data for current descriptions
         let timestamps = await getData('http://localhost:8080/api/dataset/timesSinceStart/' + descriptions[i]);
         let values = await getData('http://localhost:8080/api/dataset/values/' + descriptions[i]);
+        let unit = await getData('http://localhost:8080/api/dataset/unit/' + descriptions[i]);
         console.log("Fetched " + values.length + " values for " + descriptions[i]);
 
         if(values.length !== 0) {
@@ -47,11 +48,21 @@ async function main() {
                     scales: {
                         yAxes: [{
                             ticks: {
+                                fontColor: 'rgb(134, 138, 143)',
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'value in ' + unit,
                                 fontColor: 'rgb(134, 138, 143)'
                             }
                         }],
                         xAxes: [{
                             ticks: {
+                                fontColor: 'rgb(134, 138, 143)',
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'time from start in seconds',
                                 fontColor: 'rgb(134, 138, 143)'
                             }
                         }]

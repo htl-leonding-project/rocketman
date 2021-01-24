@@ -1,19 +1,15 @@
 package at.htl.rocketman.boundary;
 
-import at.htl.rocketman.entity.DataSet;
 import at.htl.rocketman.repository.DataSetRepository;
-import org.assertj.db.internal.bytebuddy.asm.Advice;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
+import at.htl.rocketman.entity.DataSet;
 
 @Path("/api/dataset")
 public class DataSetResource {
@@ -21,7 +17,7 @@ public class DataSetResource {
     DataSetRepository dataSetRepository;
 
     @GET
-    @Path("/descriptions")
+    @Path("descriptions")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllDescriptions() {
@@ -38,7 +34,7 @@ public class DataSetResource {
     }
 
     @GET
-    @Path("/timestamps/{description}")
+    @Path("timestamps/{description}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTimeStamps(@PathParam("description") String description) {
@@ -55,7 +51,7 @@ public class DataSetResource {
     }
 
     @GET
-    @Path("/timesSinceStart/{description}")
+    @Path("timesSinceStart/{description}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTimesSinceStart(@PathParam("description") String description) {
@@ -74,7 +70,7 @@ public class DataSetResource {
     }
 
     @GET
-    @Path("/values/{description}")
+    @Path("values/{description}")
     @Consumes(MediaType.APPLICATION_JSON    )
     @Produces(MediaType.APPLICATION_JSON)
     public Response getValues(@PathParam("description") String description) {
@@ -88,6 +84,18 @@ public class DataSetResource {
             array.delete(array.lastIndexOf(","), array.lastIndexOf(",") + 1);
         }
         return Response.ok(array.toString()).build();
+    }
+
+    @GET
+    @Path("unit/{description}")
+    @Consumes(MediaType.APPLICATION_JSON    )
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUnit(@PathParam("description") String description) {
+        String unit = dataSetRepository.getUnitForDescription(description);
+        if(unit != null) {
+            return Response.ok("\"" + unit + "\"").build();
+        }
+        return Response.noContent().build();
     }
 
    /* @GET
