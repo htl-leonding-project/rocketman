@@ -33,9 +33,7 @@ class DataSetRepositoryTest {
         Datasource ds = new Datasource();
         try (Connection conn = ds.getDb()) {
             LOG.info("Connected.");
-            String deleteSqlString = "DELETE FROM data_set";
-            PreparedStatement preparedStatement = conn.prepareStatement(deleteSqlString);
-            preparedStatement.executeUpdate();
+            SqlRunner.dropTablesAndCreateEmptyTables();
         } catch (SQLException e) {
             LOG.error("SQl-Error occurred: " + e.getMessage());
         } catch (Exception e) {

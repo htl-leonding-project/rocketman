@@ -24,7 +24,7 @@ public class SqlRunner {
 
         try {
             Properties scriptProperties = new Properties();
-            scriptProperties.load(new FileInputStream(SCRIPT_PROPERTIES_PATH));
+            loadFile(scriptProperties);
 
 
             Datasource dataSource = new Datasource();
@@ -47,7 +47,7 @@ public class SqlRunner {
 
         try {
             Properties scriptProperties = new Properties();
-            scriptProperties.load(new FileInputStream(SCRIPT_PROPERTIES_PATH));
+            loadFile(scriptProperties);
 
 
             Datasource dataSource = new Datasource();
