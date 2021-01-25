@@ -10,16 +10,17 @@ async function main() {
         'rgb(191, 159, 99)',
         'rgb(151, 191, 111)'
     ]
-    let descriptions = await getData('http://localhost:8080/api/dataset/descriptions');
+    const descriptions = await getData('http://localhost:8080/api/dataset/descriptions');
     console.log("Fetched " + descriptions.length + " descriptions");
     if(descriptions.length === 0) {
         document.getElementById("no_data_found_txt").style.visibility = "visible";
+        return;
     }
     for (let i = 0; i < descriptions.length; i++) {
         // fetch data for current descriptions
-        let timestamps = await getData('http://localhost:8080/api/dataset/timesSinceStart/' + descriptions[i]);
-        let values = await getData('http://localhost:8080/api/dataset/values/' + descriptions[i]);
-        let unit = await getData('http://localhost:8080/api/dataset/unit/' + descriptions[i]);
+        const timestamps = await getData('http://localhost:8080/api/dataset/timesSinceStart/' + descriptions[i]);
+        const values = await getData('http://localhost:8080/api/dataset/values/' + descriptions[i]);
+        const unit = await getData('http://localhost:8080/api/dataset/unit/' + descriptions[i]);
         console.log("Fetched " + values.length + " values for " + descriptions[i]);
 
         if(values.length !== 0) {
@@ -77,7 +78,7 @@ async function main() {
             });
         }
     }
-
+    console.log("Finished loading")
     /*let timestamps_h = await getData('http://localhost:8080/api/dataset/timestamps/hoehe');
     let values_h = await getData('http://localhost:8080/api/dataset/values/hoehe');
     console.log("Fetched " + values_h.length + " values for height");
@@ -138,8 +139,4 @@ async function main() {
         // Configuration options go here
         options: {}
     });*/
-}
-function toggleDarkMode() {
-    var element = document.body;
-    element.classList.toggle("dark-mode");
 }
