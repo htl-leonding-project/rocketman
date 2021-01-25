@@ -1,5 +1,6 @@
 package at.htl.rocketman.boundary;
 
+import at.htl.rocketman.entity.DataSet;
 import at.htl.rocketman.repository.DataSetRepository;
 
 import javax.inject.Inject;
@@ -9,7 +10,6 @@ import javax.ws.rs.core.Response;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-import at.htl.rocketman.entity.DataSet;
 
 @Path("/api/dataset")
 public class DataSetResource {
@@ -25,7 +25,10 @@ public class DataSetResource {
         StringBuilder array = new StringBuilder("[");
         for (String description : list) {
             String pascalCase = description.substring(0, 1).toUpperCase() + description.substring(1).toLowerCase();
-            array.append("\"").append(pascalCase).append("\"").append(",");
+            array.append("\"")
+                    .append(pascalCase)
+                    .append("\"")
+                    .append(",");
         }
         array.append("]");
         if(list.size() != 0) {
@@ -42,7 +45,10 @@ public class DataSetResource {
         List<DataSet> list = dataSetRepository.findByDescription(description);
         StringBuilder array = new StringBuilder("[");
         for (DataSet dataSet : list) {
-            array.append("\"").append(dataSet.getTimestamp()).append("\"").append(",");
+            array.append("\"")
+                    .append(dataSet.getTimestamp())
+                    .append("\"")
+                    .append(",");
         }
         array.append("]");
         if(list.size() != 0) {
@@ -61,7 +67,10 @@ public class DataSetResource {
         StringBuilder array = new StringBuilder("[");
         for (DataSet dataSet : list) {
             long timeSinceStart = ChronoUnit.SECONDS.between(start, dataSet.getTimestamp());
-            array.append("\"").append(timeSinceStart).append("\"").append(",");
+            array.append("\"")
+                    .append(timeSinceStart)
+                    .append("\"")
+                    .append(",");
         }
         array.append("]");
         if(list.size() != 0) {
@@ -78,7 +87,8 @@ public class DataSetResource {
         List<DataSet> list = dataSetRepository.findByDescription(description);
         StringBuilder array = new StringBuilder("[");
         for (DataSet dataSet : list) {
-            array.append(dataSet.getValue()).append(",");
+            array.append(dataSet.getValue())
+                    .append(",");
         }
         array.append("]");
         if(list.size() != 0) {

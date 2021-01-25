@@ -9,8 +9,6 @@ import org.junit.jupiter.api.*;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -32,7 +30,6 @@ class DataSetRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        // should be replaced with Sql runner drop and create
         Datasource ds = new Datasource();
         try (Connection conn = ds.getDb()) {
             LOG.info("Connected.");

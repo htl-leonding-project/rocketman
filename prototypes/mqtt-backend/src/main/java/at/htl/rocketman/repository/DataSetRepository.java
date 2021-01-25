@@ -1,7 +1,6 @@
 package at.htl.rocketman.repository;
 
 import at.htl.rocketman.Datasource;
-import at.htl.rocketman.MqttConsumer;
 import at.htl.rocketman.entity.DataSet;
 import org.jboss.logging.Logger;
 
@@ -24,8 +23,6 @@ public class DataSetRepository {
     public void persist(DataSet dataSet) {
         Datasource ds = new Datasource();
         try (Connection conn = ds.getDb()) {
-            LOG.info("Connected.");
-            LOG.info("Description: " + dataSet.getDescription() + "; Value: " + dataSet.getValue() + "; Unit: " + dataSet.getUnit() + "; Timestamp: " + dataSet.getTimestamp() + "; " + LocalDateTime.now());
             String persistSqlString = "INSERT INTO data_set VALUES (?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(persistSqlString);
             preparedStatement.setString(1, dataSet.getDescription().toLowerCase());
@@ -68,7 +65,6 @@ public class DataSetRepository {
         List<DataSet> res = new LinkedList<>();
         Datasource ds = new Datasource();
         try (Connection conn = ds.getDb()) {
-            LOG.info("Connected.");
             String persistSqlString = "SELECT ds_description, ds_value, ds_unit, ds_timestamp FROM data_set WHERE ds_description = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(persistSqlString);
             preparedStatement.setString(1, description.toLowerCase());
@@ -93,7 +89,6 @@ public class DataSetRepository {
         List<String> res = new LinkedList<>();
         Datasource ds = new Datasource();
         try (Connection conn = ds.getDb()) {
-            LOG.info("Connected.");
             String persistSqlString = "SELECT DISTINCT ds_description FROM data_set";
             PreparedStatement preparedStatement = conn.prepareStatement(persistSqlString);
             ResultSet resultSet = preparedStatement.executeQuery();

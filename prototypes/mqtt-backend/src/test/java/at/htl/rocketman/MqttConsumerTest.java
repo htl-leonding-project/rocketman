@@ -1,6 +1,5 @@
 package at.htl.rocketman;
 
-import at.htl.rocketman.entity.DataSet;
 import io.quarkus.test.junit.QuarkusTest;
 import org.assertj.db.type.Table;
 import org.jboss.logging.Logger;
@@ -12,13 +11,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import static org.assertj.db.api.Assertions.assertThat;
-import static org.assertj.db.api.Assertions.bytesContentFromClassPathOf;
 import static org.assertj.db.output.Outputs.output;
 
 @QuarkusTest
@@ -32,7 +27,6 @@ class MqttConsumerTest {
 
     @BeforeEach
     void setUp() {
-        // should be replaced with Sql runner drop and create
         Datasource ds = new Datasource();
         try (Connection conn = ds.getDb()) {
             LOG.info("Connected.");
