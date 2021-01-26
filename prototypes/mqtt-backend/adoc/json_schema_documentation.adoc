@@ -11,40 +11,23 @@ A dataset consists of:
 
 [source,json]
 ----
+
 {
-    "payload": [
-        {
-            "description": "temperature",
-            "value": "1200",
-            "unit": "celsius",
-            "timestamp": "2021-01-11T13:11:09.34"
-        },
-        {
-            "description": "atmospheric_pressure",
-            "value": "4",
-            "unit": "pascal",
-            "timestamp": "2021-01-11T13:11:09.35"
-        },
-        {
-            "description": "coordinates",
-            "value": "48.13726°N 11.57558°E",
-            "unit": "",
-            "timestamp": "2021-01-11T13:11:09.36"
-        }
-    ]
+    "description": "atmospheric_pressure",
+    "value": "4",
+    "unit": "pascal",
+    "timestamp": "2021-01-11T13:11:09.35"
 }
 ----
 
 [source,json]
 ----
+
 {
-    "payload": [
-        {
-            "description": "temperature",
-            "value": "200",
-            "unit": "celsius",
-            "timestamp": "2021-01-11T13:11:09.5Z4"
-        }
-    ]
+    "description": "temperature",
+    "value": "200",
+    "unit": "celsius",
+    "timestamp": "2021-01-11T13:11:09.5Z4"
 }
+
 ----
