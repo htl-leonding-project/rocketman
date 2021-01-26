@@ -1,27 +1,93 @@
+let dataExists = false;
+let descriptions;
+let timestamps;
+let values;
+let unit;
+const colors = [
+    'rgb(103, 135, 72)',
+    'rgb(176, 114, 194)',
+    'rgb(191, 159, 99)',
+    'rgb(151, 191, 111)'
+]
+let charts;
+
+async function loadDescriptions() {
+    descriptions = await getData('http://localhost:8080/api/dataset/descriptions');
+    charts = [descriptions.length];
+    if(descriptions.length === 0 && !dataExists) {
+        document.getElementById("no_data_found_txt").style.visibility = "visible";
+        setTimeout(function(){ loadDescriptions(); }, 5000);
+    } else {
+        document.getElementById("no_data_found_txt").style.visibility = "hidden";
+        dataExists = true;
+        console.log("Fetched " + descriptions.length + " descriptions");
+    }
+}
+
+async function loadData(desc) {
+    timestamps = await getData('http://localhost:8080/api/dataset/timesSinceStart/' + desc);
+    values = await getData('http://localhost:8080/api/dataset/values/' + desc);
+    unit = await getData('http://localhost:8080/api/dataset/unit/' + desc);
+    console.log("Fetched " + values.length + " values for " + desc);
+}
+
+const createChart = (ctx, i) => {
+    charts[i] = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'line',
+        // The data for our dataset
+        data: {
+            labels: timestamps,
+            datasets: [{
+                label: descriptions[i],
+                backgroundColor: colors[i % colors.length],
+                borderColor: colors[i % colors.length],
+                data: values
+            }]
+        },
+        // Configuration options go here
+        options: {
+            legend: {
+                labels: {
+                    fontColor: 'rgb(134, 138, 143)',
+                    fontSize: 18
+                }
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        fontColor: 'rgb(134, 138, 143)',
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'value in ' + unit,
+                        fontColor: 'rgb(134, 138, 143)'
+                    }
+                }],
+                xAxes: [{
+                    ticks: {
+                        fontColor: 'rgb(134, 138, 143)',
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'time from start in seconds',
+                        fontColor: 'rgb(134, 138, 143)'
+                    }
+                }]
+            }
+        }
+    });
+}
+
 async function getData(url) {
     const response = await fetch(url);
     return response.json();
 }
 
-async function main() {
-    const colors = [
-        'rgb(103, 135, 72)',
-        'rgb(176, 114, 194)',
-        'rgb(191, 159, 99)',
-        'rgb(151, 191, 111)'
-    ]
-    const descriptions = await getData('http://localhost:8080/api/dataset/descriptions');
-    console.log("Fetched " + descriptions.length + " descriptions");
-    if(descriptions.length === 0) {
-        document.getElementById("no_data_found_txt").style.visibility = "visible";
-        return;
-    }
+async function displayCharts() {
     for (let i = 0; i < descriptions.length; i++) {
         // fetch data for current descriptions
-        const timestamps = await getData('http://localhost:8080/api/dataset/timesSinceStart/' + descriptions[i]);
-        const values = await getData('http://localhost:8080/api/dataset/values/' + descriptions[i]);
-        const unit = await getData('http://localhost:8080/api/dataset/unit/' + descriptions[i]);
-        console.log("Fetched " + values.length + " values for " + descriptions[i]);
+        await loadData(descriptions[i]);
 
         if(values.length !== 0) {
             // create canvas element in html
@@ -31,54 +97,36 @@ async function main() {
 
             // create chart
             let ctx = document.getElementById(descriptions[i]).getContext('2d');
-            let chart = new Chart(ctx, {
-                // The type of chart we want to create
-                type: 'line',
-                // The data for our dataset
-                data: {
-                    labels: timestamps,
-                    datasets: [{
-                        label: descriptions[i],
-                        backgroundColor: colors[i % colors.length],
-                        borderColor: colors[i % colors.length],
-                        data: values
-                    }]
-                },
-                // Configuration options go here
-                options: {
-                    legend: {
-                        labels: {
-                            fontColor: 'rgb(134, 138, 143)',
-                            fontSize: 18
-                        }
-                    },
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                fontColor: 'rgb(134, 138, 143)',
-                            },
-                            scaleLabel: {
-                                display: true,
-                                labelString: 'value in ' + unit,
-                                fontColor: 'rgb(134, 138, 143)'
-                            }
-                        }],
-                        xAxes: [{
-                            ticks: {
-                                fontColor: 'rgb(134, 138, 143)',
-                            },
-                            scaleLabel: {
-                                display: true,
-                                labelString: 'time from start in seconds',
-                                fontColor: 'rgb(134, 138, 143)'
-                            }
-                        }]
-                    }
-                }
-            });
+            createChart(ctx, i);
         }
     }
-    console.log("Finished loading")
+}
+
+async function continuouslyUpdateCharts() {
+    let length = descriptions.length;
+    await loadDescriptions();
+    if (length !== descriptions.length) {
+        await displayCharts();
+    }
+    for (let i = 0; i < descriptions.length; i++) {
+        // fetch data for current descriptions
+        await loadData(descriptions[i]);
+
+        if(values.length !== 0) {
+            // create chart
+            let ctx = document.getElementById(descriptions[i]).getContext('2d');
+            createChart(ctx, i);
+            charts[i].update();
+        }
+    }
+    setTimeout(function(){ continuouslyUpdateCharts(); }, 5000);
+}
+
+async function main() {
+    await loadDescriptions();
+    await displayCharts();
+    await continuouslyUpdateCharts();
+
     /*let timestamps_h = await getData('http://localhost:8080/api/dataset/timestamps/hoehe');
     let values_h = await getData('http://localhost:8080/api/dataset/values/hoehe');
     console.log("Fetched " + values_h.length + " values for height");
