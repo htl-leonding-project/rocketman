@@ -10,7 +10,10 @@ import java.util.Properties;
 
 public class SqlRunner {
 
-    private static final String SCRIPT_PROPERTIES_PATH = "classes/sql/script-files.properties";
+    private static final String SCRIPT_PROPERTIES_PATH = "src/main/resources/sql/test-script-files.properties";
+    private static final String TARGET_SCRIPT_PROPERTIES_PATH = "classes/sql/script-files.properties";
+
+
 
     public static void main(String[] args) {
         //runScript(SqlScript.INSERT);
@@ -21,7 +24,7 @@ public class SqlRunner {
 
         try {
             Properties scriptProperties = new Properties();
-            scriptProperties.load(new FileInputStream(SCRIPT_PROPERTIES_PATH));
+            loadFile(scriptProperties);
 
 
             Datasource dataSource = new Datasource();
@@ -44,7 +47,7 @@ public class SqlRunner {
 
         try {
             Properties scriptProperties = new Properties();
-            scriptProperties.load(new FileInputStream(SCRIPT_PROPERTIES_PATH));
+            loadFile(scriptProperties);
 
 
             Datasource dataSource = new Datasource();
@@ -65,13 +68,22 @@ public class SqlRunner {
 
     public static void createEmptyTables(Connection c) throws IOException {
         Properties scriptProperties = new Properties();
-        scriptProperties.load(new FileInputStream(SCRIPT_PROPERTIES_PATH));
+        loadFile(scriptProperties);
 
         ScriptRunner sr = new ScriptRunner(c);
         sr.setLogWriter(null);
 
         String createScript = scriptProperties.getProperty(SqlScript.CREATE.name().toLowerCase());
         sr.runScript(new BufferedReader(new FileReader(createScript)));
+    }
+
+    private static void loadFile(Properties scriptProperties) throws IOException {
+        try {
+            scriptProperties.load(new FileInputStream(SCRIPT_PROPERTIES_PATH));
+        } catch(FileNotFoundException e){
+            scriptProperties.load(new FileInputStream(TARGET_SCRIPT_PROPERTIES_PATH));
+        }
+
     }
 
     public static void runScript(SqlScript sqlScript) {

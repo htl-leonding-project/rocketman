@@ -49,4 +49,9 @@ public class DataSet {
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s: %s %s measured %s", this.getDescription(), this.getValue(), this.getUnit(), this.getTimestamp());
+    }
 }

@@ -1,7 +1,6 @@
 package at.htl.rocketman.repository;
 
 import at.htl.rocketman.Datasource;
-import at.htl.rocketman.MqttConsumer;
 import at.htl.rocketman.entity.DataSet;
 import org.jboss.logging.Logger;
 
@@ -24,11 +23,9 @@ public class DataSetRepository {
     public void persist(DataSet dataSet) {
         Datasource ds = new Datasource();
         try (Connection conn = ds.getDb()) {
-            LOG.info("Connected.");
-            LOG.info("Description: " + dataSet.getDescription() + "; Value: " + dataSet.getValue() + "; Unit: " + dataSet.getUnit() + "; Timestamp: " + dataSet.getTimestamp() + "; " + LocalDateTime.now());
             String persistSqlString = "INSERT INTO data_set VALUES (?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(persistSqlString);
-            preparedStatement.setString(1, dataSet.getDescription());
+            preparedStatement.setString(1, dataSet.getDescription().toLowerCase());
             preparedStatement.setString(2, dataSet.getValue());
             preparedStatement.setString(3, dataSet.getUnit());
             preparedStatement.setString(4, dataSet.getTimestamp().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
@@ -41,7 +38,6 @@ public class DataSetRepository {
     }
 
     public List<DataSet> getAll() {
-
         List<DataSet> res = new LinkedList<>();
         Datasource ds = new Datasource();
         try (Connection conn = ds.getDb()) {
@@ -63,5 +59,65 @@ public class DataSetRepository {
             LOG.error("Unknown error occurred: " + e.getMessage());
         }
         return res;
+    }
+
+    public List<DataSet> findByDescription(String description) {
+        List<DataSet> res = new LinkedList<>();
+        Datasource ds = new Datasource();
+        try (Connection conn = ds.getDb()) {
+            String persistSqlString = "SELECT ds_description, ds_value, ds_unit, ds_timestamp FROM data_set WHERE ds_description = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(persistSqlString);
+            preparedStatement.setString(1, description.toLowerCase());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                DataSet dataSet = new DataSet();
+                dataSet.setDescription(resultSet.getString("ds_description"));
+                dataSet.setValue(resultSet.getString("ds_value"));
+                dataSet.setUnit(resultSet.getString("ds_unit"));
+                dataSet.setTimestamp(LocalDateTime.parse(resultSet.getString("ds_timestamp"), DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+                res.add(dataSet);
+            }
+        } catch (SQLException e) {
+            LOG.error("SQl-Error occurred: " + e.getMessage());
+        } catch (Exception e) {
+            LOG.error("Unknown error occurred: " + e.getMessage());
+        }
+        return res;
+    }
+
+    public List<String> getAllDescriptions() {
+        List<String> res = new LinkedList<>();
+        Datasource ds = new Datasource();
+        try (Connection conn = ds.getDb()) {
+            String persistSqlString = "SELECT DISTINCT ds_description FROM data_set";
+            PreparedStatement preparedStatement = conn.prepareStatement(persistSqlString);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                res.add(resultSet.getString("ds_description"));
+            }
+        } catch (SQLException e) {
+            LOG.error("SQl-Error occurred: " + e.getMessage());
+        } catch (Exception e) {
+            LOG.error("Unknown error occurred: " + e.getMessage());
+        }
+        return res;
+    }
+
+    public String getUnitForDescription(String description) {
+        Datasource ds = new Datasource();
+        try (Connection conn = ds.getDb()) {
+            String persistSqlString = "SELECT DISTINCT ds_unit FROM data_set WHERE ds_description = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(persistSqlString);
+            preparedStatement.setString(1, description.toLowerCase());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getString("ds_unit");
+            }
+        } catch (SQLException e) {
+            LOG.error("SQl-Error occurred: " + e.getMessage());
+        } catch (Exception e) {
+            LOG.error("Unknown error occurred: " + e.getMessage());
+        }
+        return null;
     }
 }
