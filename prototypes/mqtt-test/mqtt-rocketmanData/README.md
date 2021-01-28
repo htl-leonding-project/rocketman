@@ -3,16 +3,11 @@ Quarkus MQTT Quickstart
 
 This project illustrates how you can interact with MQTT using MicroProfile Reactive Messaging.
 
-## MQTT server
-
-First you need a MQTT server. You can follow the instructions from the [Eclipse Mosquitto](https://mosquitto.org/) or run
-
-```bash
-docker-compose up
-```  
 ## Start the application
 
-The application can be started using: 
+In application.properties you should uncomment the properties you need, vm90 or localhost.
+
+Then the application can be started using: 
 
 ```bash
 mvn quarkus:dev
