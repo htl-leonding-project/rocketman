@@ -8,14 +8,17 @@ If you want to learn more about Quarkus, please visit its website: https://quark
 
 ## Running the application in dev mode
 
-The application will connect to vm90.
+Start MQTT	The application will connect to vm90.
+```shell script	
+docker-compose -f docker-compose.mqtt.yml up	
+```
 
 You can run your application in dev mode that enables live coding using:
 ```shell script
 ./mvnw compile quarkus:dev
 ```
 
-To submit test data use mqtt-test see [here](https://github.com/htl-leonding-project/rocketman/tree/master/prototypes/mqtt-test/mqtt-rocketmanData)
+To submit test data use MQTT Explorer see [here](adoc/json_schema_documentation.adoc)
 
 ## Packaging and running the application
 
