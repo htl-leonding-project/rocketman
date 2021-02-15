@@ -10,6 +10,8 @@ In application.properties you should uncomment the properties you need, vm90 or 
 Then the application can be started using: 
 
 ```bash
+docker-compose up
+
 mvn quarkus:dev
 ```  
 
