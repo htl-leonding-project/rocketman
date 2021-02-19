@@ -123,46 +123,46 @@ Raspberry wird hochgefahren, Hauptprogramm wird gestartet (im Boot-Menü einstel
 * Raketenwerte Simulationsprogramm (ahitm)
 * Quarkus Anwendung die mittels MQTT die Raketenwerte empfängt und diese Lokal speichert (ahif)
 - Konzept für Aufbau der Raketenwerte überlegen
-* Konzept für die verschiedenen Weboberflächen (Felix)
 
 **Bis Mitte Jannuar**
 
 * Liste der Bauteile (Sarah)
 * In Quarkus Anwendung Einstellungen aus dem Konfigfile für Raketenwerte miteinbeziehen (ahif)
 * Quarkus Anwendung mit Simulationsprogramm testen (ahif)
-* Back-End & grobes Front-End für die erstellung der Config Files (Felix)
+* Konzept für die verschiedenen Weboberflächen (Felix)
 
 **Bis Ende Jannuar**
 
 * Bauteile einkaufen (Stütz)
 * Planung des Kofferaufbaus abschließen (Sarah)
 * Quarkus Anwendung erweitern -> externe Speicherung der Raketendaten (ahif)
-* Front-End für Config ausbauen (Felix)
 
 **Bis Ende Februar**
 
 * Simulationsprogramm Erweiterung - Kofferinputs (ahitm)
 * Quarkus Anwendung erweitern - Kofferinputs über MQTT empfangen und verwenden (ahif)
 - Je nach Einstellungen im Konfigfile müssen die Kofferwerte evaluiert werden
-* Back-End & Front-End Anzeige der (Test) Daten (Felix)
+* Back-End & Front-End für die erstellung der Config Files (Felix)
+
 
 **Bis Mitte März**
 
 * Quarkus Anwendung mit Simulationsprogramm testen
-* Back-End & Front-End Erweiterung für Fehlermeldungen der Daten (Felix)
+* Anzeige der Flugdaten (Felix)
 
 **Bis Ende März**
 
 * Quarkus Anwendung - Outputs für Bildschirme bereitstellen (ahif)
 - Lokales Netz aufbauen, Websockets
 * Koffer zusammenbauen (Sarah)
-* Back-End mit Quarkus Anwendung verbinden (Felix)
+* Archiv der Flugdaten(Felix)
 
 **Bis Mitte April**
 
 * Testwerte Programm mit Phytonanwendung (und mqtt), die die Werte vom Koffer ausließt ersetzen (jemand der phyton kann)
 * Quarkus Anwendung - Joystick Output über Funkmodul (ahif)
 * Aktuellen Stand der Quarkus Applikation auf Koffer testen (je nach Corona, alle oder der der den Koffer daheim hat)
+* Laptop Version der Rocketman Seite(Felix)
 
 
 

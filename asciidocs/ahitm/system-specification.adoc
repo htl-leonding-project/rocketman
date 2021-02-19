@@ -149,49 +149,74 @@ wird im laufe dieser woche erscheinen
 
 === Systemarchitektur
 
-[plantuml]
+[plantuml, systemarchitecture, png]
 ----
-package Suitcase{
+package Suitcase {
 
-    database "LocalDB" {
-      folder "Real-time data" {
-        [Folder] as f2
-      }
-
-      file "CSV Files"
+rectangle {
+    database "LocalDB" as ldb{
+          rectangle "Real-time data" as rtdata{
+          }
+    }
+    File jsonFile
 
     }
+    node "Quarkus" as q {
+            [REST] as r1
+        }
 
-    node "Quarkus" as q{
-        [REST] as r1
-      }
+    file "Config File"
 
-    file "Konfig File"
+    rectangle "Imput and Output" as io{
+        [funkmodules] as fm
+        [imput devices] as id
+        [output devices] as od
 
+        rectangle "Touch Display" as td{
+            [Webapplication] as w1
+        }
+    }
+
+    [MQTT Broker]
 }
 
 
-package "Saved data"{
-
-    database "ExternalDB" {
-      folder "Persisted Data" {
-        [Folder] as f1
-      }
+package CanSat {
+    node "Sensors" as s {
+        [Humidity Sensor]
+        [Temperatur Sensor]
     }
+}
 
-    rectangle {
-        [REST] as r2
-    }
-
+package "Laptop" {
+    [Webapplication] as w2
 }
 
 cloud {
-  [Cloud]
+
+
+    package "Saved data" as sd{
+        database "ExternalDB" {
+          folder "Persisted Data" {
+            [Folder] as f1
+          }
+        }
+        rectangle {
+            [REST] as r2
+        }
+    }
 }
 
-[r1] -- [Cloud]
-[Cloud] -- [r2]
+w2 -- ldb
+ldb -- q
+[r1] -- sd
+sd -- [r2]
+q -- [MQTT Broker]
 [r2] --> [f1]
-Zündung -- q
-
+[MQTT Broker] -down- Zündung
+id --> fm
+od --> fm
+od --> td
+io -- [MQTT Broker]
+s -- fm
 ----
