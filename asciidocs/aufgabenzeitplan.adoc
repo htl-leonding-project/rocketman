@@ -142,7 +142,7 @@ Raspberry wird hochgefahren, Hauptprogramm wird gestartet (im Boot-Menü einstel
 * Simulationsprogramm Erweiterung - Kofferinputs (ahitm)
 * Quarkus Anwendung erweitern - Kofferinputs über MQTT empfangen und verwenden (ahif)
 - Je nach Einstellungen im Konfigfile müssen die Kofferwerte evaluiert werden
-* Back-End & Front-End für die erstellung der Config Files (Felix)
+* Front-End für die erstellung der Config Files (Felix)
 
 
 **Bis Mitte März**
