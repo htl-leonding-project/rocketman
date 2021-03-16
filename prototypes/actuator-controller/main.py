@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # For further information see the readme file
+import json
 import spidev
 import time
 import paho.mqtt.client as mqtt
@@ -44,9 +45,17 @@ while True:
     print("--------------------------------------------")
     print("X : {}  Y : {}  Switch : {}".format(vrx_pos, vry_pos, swt_val))
 
+    data_set = {"x-axis": vrx_pos, "y-axis": vry_pos, "switch_value": swt_val}
+
+    json_dump = json.dumps(data_set)
+    json_object = json.loads(json_dump)
+    print(json_object)
+
     client.publish('xaxis', vrx_pos)
     client.publish('yaxis', vry_pos)
-    client.publish('swt_val', swt_val)
+    client.publish('swt-val', swt_val)
+
+    #client.publish('actuator-json', json_dump)
 
     # Wait before repeating loop
     time.sleep(delay)
