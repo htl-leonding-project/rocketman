@@ -8,7 +8,7 @@ If you want to learn more about Quarkus, please visit its website: https://quark
 
 ## Running the application in dev mode
 
-Start MQTT	The application will connect to vm90.
+Start MQTT the Broker
 ```shell script	
 docker-compose -f docker-compose.mqtt.yml up	
 ```
