@@ -1,0 +1,29 @@
+<form >
+  <h1 fxLayout="row" fxLayoutAlign="center center">Einstellungen</h1>
+  <p fxLayout="row" fxLayoutAlign="center center">
+    Countdown <input [(ngModel)]="countdown" name="countdown" type="number" placeholder="mm:ss">
+  </p>
+  <p fxLayout="row" fxLayoutAlign="center center">
+    Anzahl Zünder <input [(ngModel)]="igniter" name="igniter" type="number" placeholder="1">
+  </p>
+  <p fxLayout="row" fxLayoutAlign="center center">
+    Innenwiederstand pro Zünder (Ohm) <input [(ngModel)]="resistance" name="resistance" type="number" placeholder="1">
+  </p>
+  <p fxLayout="row" fxLayoutAlign="center center">
+    JoyStick
+    <button class="checkBtn yes" type="button" [class.highlightBtn]="!useJoyStick" (click)="changeJoyStickUse(true)">✓</button>
+    <button class="checkBtn no" type="button" [class.highlightBtn]="useJoyStick" (click)="changeJoyStickUse(false)">✗</button></p>
+  <p fxLayout="row" fxLayoutAlign="center center">Video
+    <button class="checkBtn yes" type="button" [class.highlightBtn]="!useVideo" (click)="changeVideo(true)">✓</button>
+    <button class="checkBtn no" type="button" [class.highlightBtn]="useVideo" (click)="changeVideo(false)">✗</button></p>
+  <div class="buttons" fxLayoutAlign="center center" fxLayout="row">
+  <button class="btn" type="button">Flug Starten</button>
+  </div>
+  <div class="buttons" fxLayoutAlign="center center" fxLayout="row">
+    <br>
+  <button class="btn" type="button">Einstellung Speichern</button>
+  <button class="btn" type="button">Einstellung Bearbeiten</button>
+  </div>
+</form>
+
+
