@@ -9,6 +9,9 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -33,6 +36,18 @@ public class InitBean {
         else {
             LOG.info("tables created");
             SqlRunner.createEmptyTables(c);
+        }
+
+        // check internet connectivity
+        try {
+            URL url = new URL("https://www.google.com");
+            URLConnection connection = url.openConnection();
+            connection.connect();
+            LOG.info("Internet is connected");
+        } catch (MalformedURLException e) {
+            LOG.error("Internet is not connected");
+        } catch (IOException e) {
+            LOG.error("Internet is not connected");
         }
     }
 
