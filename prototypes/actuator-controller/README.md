@@ -5,7 +5,7 @@
 * mqtt client in python: http://www.steves-internet-guide.com/into-mqtt-python-client/
 
 ## Description
-This program reads the position of an analog joystick using a MCP3008 ADC and sends it to a mqtt-broker that is running on localhost.
+This program reads the position of an analog joystick using a MCP3008 ADC and sends it to a mqtt-broker that is running on localhost. Additional functionality might be added in the future.
 
 ## Running the application
 ### Raspberry Pi setup
