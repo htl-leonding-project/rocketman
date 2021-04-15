@@ -34,7 +34,15 @@ public class DataSetResource {
         if(list.size() != 0) {
             array.delete(array.lastIndexOf(","), array.lastIndexOf(",") + 1);
         }
-        return Response.ok(array.toString()).build();
+        return Response
+                .ok(array.toString())
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Credentials", "true")
+                .header("Access-Control-Allow-Headers",
+                        "origin, content-type, accept, authorization")
+                .header("Access-Control-Allow-Methods",
+                        "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+                .build();
     }
 
     @GET
@@ -54,7 +62,13 @@ public class DataSetResource {
         if(list.size() != 0) {
             array.delete(array.lastIndexOf(","), array.lastIndexOf(",") + 1);
         }
-        return Response.ok(array.toString()).build();
+        return Response.ok(array.toString()).header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Credentials", "true")
+                .header("Access-Control-Allow-Headers",
+                        "origin, content-type, accept, authorization")
+                .header("Access-Control-Allow-Methods",
+                        "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+                .build();
     }
 
     @GET
@@ -76,7 +90,13 @@ public class DataSetResource {
         if(list.size() != 0) {
             array.delete(array.lastIndexOf(","), array.lastIndexOf(",") + 1);
         }
-        return Response.ok(array.toString()).build();
+        return Response.ok(array.toString())
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Credentials", "true")
+                .header("Access-Control-Allow-Headers",
+                        "origin, content-type, accept, authorization")
+                .header("Access-Control-Allow-Methods",
+                        "GET, POST, PUT, DELETE, OPTIONS, HEAD").build();
     }
 
     @GET
@@ -94,7 +114,13 @@ public class DataSetResource {
         if(list.size() != 0) {
             array.delete(array.lastIndexOf(","), array.lastIndexOf(",") + 1);
         }
-        return Response.ok(array.toString()).build();
+        return Response.ok(array.toString()).header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Credentials", "true")
+                .header("Access-Control-Allow-Headers",
+                        "origin, content-type, accept, authorization")
+                .header("Access-Control-Allow-Methods",
+                        "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+                .build();
     }
 
     @GET
@@ -104,9 +130,21 @@ public class DataSetResource {
     public Response getUnit(@PathParam("description") String description) {
         String unit = dataSetRepository.getUnitForDescription(description);
         if(unit != null) {
-            return Response.ok("\"" + unit + "\"").build();
+            return Response.ok("\"" + unit + "\"").header("Access-Control-Allow-Origin", "*")
+                    .header("Access-Control-Allow-Credentials", "true")
+                    .header("Access-Control-Allow-Headers",
+                            "origin, content-type, accept, authorization")
+                    .header("Access-Control-Allow-Methods",
+                            "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+                    .build();
         }
-        return Response.noContent().build();
+        return Response.noContent().header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Credentials", "true")
+                .header("Access-Control-Allow-Headers",
+                        "origin, content-type, accept, authorization")
+                .header("Access-Control-Allow-Methods",
+                        "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+                .build();
     }
 
    /* @GET
