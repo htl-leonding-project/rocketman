@@ -13,8 +13,10 @@ spi.max_speed_hz = 1000000
 
 # create instance of mqtt client and connect to local broker
 client = mqtt.Client('joystick_reader')
-client.connect('localhost', port=1883, keepalive=600, bind_address="")
-
+try:
+    client.connect('localhost', port=1883, keepalive=600, bind_address="")
+except ConnectionRefusedError:
+    exit("MQTT-Broker not started, check readme on info how to start it")
 
 # Function to read SPI data from MCP3008 chip
 # Channel must be an integer 0-7
@@ -48,14 +50,9 @@ while True:
     data_set = {"x-axis": vrx_pos, "y-axis": vry_pos, "switch_value": swt_val}
 
     json_dump = json.dumps(data_set)
-    json_object = json.loads(json_dump)
-    print(json_object)
+    print(json_dump)
 
-    client.publish('xaxis', vrx_pos)
-    client.publish('yaxis', vry_pos)
-    client.publish('swt-val', swt_val)
-
-    #client.publish('actuator-json', json_dump)
+    client.publish('actuator-json', json_dump)
 
     # Wait before repeating loop
     time.sleep(delay)

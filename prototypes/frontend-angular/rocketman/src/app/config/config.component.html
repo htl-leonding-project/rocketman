@@ -17,12 +17,12 @@
     <button class="checkBtn yes" type="button" [class.highlightBtn]="!useVideo" (click)="changeVideo(true)">✓</button>
     <button class="checkBtn no" type="button" [class.highlightBtn]="useVideo" (click)="changeVideo(false)">✗</button></p>
   <div class="buttons" fxLayoutAlign="center center" fxLayout="row">
-  <button class="btn" type="button">Flug Starten</button>
+  <button class="btn" (click)="start()" type="button">Flug Starten</button>
   </div>
   <div class="buttons" fxLayoutAlign="center center" fxLayout="row">
     <br>
   <button class="btn" type="button">Einstellung Speichern</button>
-  <button class="btn" type="button">Einstellung Bearbeiten</button>
+  <button class="btn" type="button">Einstellung Laden</button>
   </div>
 </form>
 

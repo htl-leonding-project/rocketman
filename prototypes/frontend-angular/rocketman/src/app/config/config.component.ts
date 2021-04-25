@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-config',
@@ -6,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./config.component.css']
 })
 export class ConfigComponent implements OnInit {
-  constructor() { }
+  constructor(private router: Router, private httpClient: HttpClient) { }
 
   countdown = '00:00';
   igniter = 0;
@@ -23,5 +25,15 @@ export class ConfigComponent implements OnInit {
   }
   changeVideo(state: boolean): void {
     this.useVideo = state;
+  }
+  start(): void{
+    this.httpClient.post<any>('http://localhost:8080/api/config/addConf', [
+      this.countdown, // zahl":"zahl
+      this.igniter, // int
+      this.resistance, // int
+      this.useJoyStick, // Boolean
+      this.useVideo  // Boolean
+    ]);
+    this.router.navigate(['/view']);
   }
 }
