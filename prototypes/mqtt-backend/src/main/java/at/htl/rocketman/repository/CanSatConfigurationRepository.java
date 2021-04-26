@@ -2,17 +2,15 @@ package at.htl.rocketman.repository;
 
 import at.htl.rocketman.entity.CanSatConfiguration;
 
+import javax.enterprise.context.ApplicationScoped;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
+@ApplicationScoped
 public class CanSatConfigurationRepository {
     final String FILENAME = "config.csv";
 
     public void writeConfig(CanSatConfiguration config) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILENAME))) {
-
             StringBuilder sb = new StringBuilder();
 
             sb.append(config.getName()).append(";");
