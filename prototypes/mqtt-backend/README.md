@@ -1,10 +1,8 @@
 # mqtt-backend
-
-- Source: https://github.com/QuirinEcker/quarkus-mqtt
-
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
-
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+## Nav
+[![Home](../../images/home.ico)](https://github.com/htl-leonding-project/rocketman/blob/master/README.md)
+# Source: 
+https://github.com/QuirinEcker/quarkus-mqtt
 
 ## Running the application in dev mode
 
@@ -13,12 +11,12 @@ Start MQTT the Broker
 docker-compose -f docker-compose.mqtt.yml up	
 ```
 
-You can run your application in dev mode that enables live coding using:
+Dev mode:
 ```shell script
 ./mvnw compile quarkus:dev
 ```
 
-To submit test data use MQTT Explorer see [here](adoc/json_schema_documentation.adoc)
+To submit test data use MQTT Explorer see [here](../../asciidocs/json_schema_documentation.adoc)
 
 ## Packaging and running the application
 

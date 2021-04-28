@@ -1,4 +1,6 @@
 # actuator-control
+## Nav
+[![Home](../../images/home.ico)](https://github.com/htl-leonding-project/rocketman/blob/master/README.md)
 ## Sources
 * Code for reading joystick input: https://www.raspberrypi-spy.co.uk/2014/04/using-a-joystick-on-the-raspberry-pi-using-an-mcp3008/
 * Wiring for joystick and mcp3008: https://www.youtube.com/watch?v=eQaBFLbYMNY
