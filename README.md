@@ -1,45 +1,30 @@
-# asciidoctor-docker-template
+# Rocketman
 
-## Overview
+## 4AHITM
 
-This is a template-project for
+* 03 DF
+* 06 FS
 
-* generating AsciiDoc-Files to html-files and
-* deploying the html-files to gh-pages,
-* where the gh-pages are located in an branch of the repo called `gh-pages`.
+## 4ahif
 
-AsciiDoctor - the software for converting the .adoc-files to .html-files - is executed in a Docker container.
-So you have nothing to install on your local machine, except Docker
+* 10 HL
+* 14 KJ
+* 17 PM
 
-## Option 1: Run script outside Docker - in your host OS
+This is the Repo for the ITP Project "Rocketman"
 
-Two scripts are available:
+## Documents
 
-* `build-html-docker.sh` -> builds the .html-pages in the folder gh-pages
-* `publish-gh-pages.sh` -> builds and deploys the gh-pages
+### 4AHITM
+* [Projekt Auftrag (4AHITM)](https://htl-leonding-project.github.io/rocketman/ahitm/proposal)
 
-additionally is a script `build-pdf-docker.sh` for creating a pdf document.
+* [Pflichtenheft (4AHITM)](https://htl-leonding-project.github.io/rocketman/ahitm/system-specification)
 
+### 4AHIF
 
-## Option 2: [preferred] Run script inside Docker-container
+* [Projekt Auftrag (4AHIF)](https://htl-leonding-project.github.io/rocketman/ahif/project-proposal )
 
-* First create a `.env`-file with
-```
-GIT_GLOBAL_MAIL=<your email>
-GIT_GLOBAL_USER_NAME=<your git - username>
-```
-* Then run the script `run-inside-docker.sh`.
-* The url of the created gh-page will be displayed. 
+* [Pflichtenheft (4AHIF)](https://htl-leonding-project.github.io/rocketman/ahif/system-specification) 
 
-## How to use Asciidoctor
-
-Download the latest [release](https://github.com/htl-leonding-college/asciidoctor-docker-template/releases) in your project and run the shell-scripts.
-
-## Demo Documents
-
-You can find demo documents in the `asciidocs.demo`-folder:
-
-- System Specification (Pflichtenheft)
-- Minutes of Meeting
-- some additional demos
-
+### Protokolle
+* [Protokoll 1, 23.10.2020](https://htl-leonding-project.github.io/rocketman/protokoll1_231020) 
