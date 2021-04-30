@@ -14,14 +14,14 @@ import java.util.List;
 @Path("/api/dataset")
 public class DataSetResource {
     @Inject
-    DataSetRepository dataSetRepository;
+    DataSetRepository repository;
 
     @GET
     @Path("descriptions")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllDescriptions() {
-        List<String> list = dataSetRepository.getAllDescriptions();
+        List<String> list = repository.getAllDescriptions();
         StringBuilder array = new StringBuilder("[");
         for (String description : list) {
             String pascalCase = description.substring(0, 1).toUpperCase() + description.substring(1).toLowerCase();
@@ -50,7 +50,7 @@ public class DataSetResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTimeStamps(@PathParam("description") String description) {
-        List<DataSet> list = dataSetRepository.findByDescription(description);
+        List<DataSet> list = repository.findByDescription(description);
         StringBuilder array = new StringBuilder("[");
         for (DataSet dataSet : list) {
             array.append("\"")
@@ -76,7 +76,7 @@ public class DataSetResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTimesSinceStart(@PathParam("description") String description) {
-        List<DataSet> list = dataSetRepository.findByDescription(description);
+        List<DataSet> list = repository.findByDescription(description);
         LocalDateTime start = list.get(0).getTimestamp();
         StringBuilder array = new StringBuilder("[");
         for (DataSet dataSet : list) {
@@ -104,7 +104,7 @@ public class DataSetResource {
     @Consumes(MediaType.APPLICATION_JSON    )
     @Produces(MediaType.APPLICATION_JSON)
     public Response getValues(@PathParam("description") String description) {
-        List<DataSet> list = dataSetRepository.findByDescription(description);
+        List<DataSet> list = repository.findByDescription(description);
         StringBuilder array = new StringBuilder("[");
         for (DataSet dataSet : list) {
             array.append(dataSet.getValue())
@@ -128,7 +128,7 @@ public class DataSetResource {
     @Consumes(MediaType.APPLICATION_JSON    )
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUnit(@PathParam("description") String description) {
-        String unit = dataSetRepository.getUnitForDescription(description);
+        String unit = repository.getUnitForDescription(description);
         if(unit != null) {
             return Response.ok("\"" + unit + "\"").header("Access-Control-Allow-Origin", "*")
                     .header("Access-Control-Allow-Credentials", "true")
