@@ -1,10 +1,10 @@
 = Actuator controller documentation
 
-For information on how to run the application read the readme file located in the project.
+For information on how to run the application read the readme file located in the project folder.
 
 == Joystick data
 
-The program will send a json object to a mqtt broker running on the Raspberry Pi locally. The topic is "**joystick-values**". This json object sends the postion of the joystick as seen below. The value of the axes in the code below are when the joystick is centered. The switch value is high when it is not pressed. It will go near zero when pushed.
+The program will send a json object to a mqtt broker running on the Raspberry Pi locally. The topic is "**joystick-values**". This json object sends the postion of the joystick as seen below. The value of the axes in the code below are when the joystick is centered. The switch value is high when it is not pressed. It will go near zero when pushed. The value for X and Y axis will change from 0 to 1023 when moved.
 
 [source,json]
 ----
@@ -13,4 +13,20 @@ The program will send a json object to a mqtt broker running on the Raspberry Pi
     "y-axis": 512,
     "switch_value": 999
 }
+----
+
+== User mode data
+
+The program will send a simple string with the name of the current user mode to the mqtt broker. On the topic "**user_mode**".
+[source,plaintext]
+----
+VIEWER_MODE
+----
+[source,plaintext]
+----
+USER_MODE
+----
+[source,plaintext]
+----
+ADMIN_MODE
 ----
