@@ -39,11 +39,16 @@ rm -rf ./.asciidoctor
 rm -v $BUILD_DIR/docinfo.html
 rm -rf -v $BUILD_DIR/*.adoc
 echo Creating html-docs in asciidocs in Docker finished ...
-for d in $(find ${BUILD_DIR}/ -type d -maxdepth 1 -mindepth 1); do
+
+for d in $(find ${BUILD_DIR}/ -type d -mindepth 1); do
   echo searching in ${d}
 adoc=$(find ${d} -type f -name "*.adoc")
 if [[ (-n $adoc) ]]
 then
+    res="${d//[^'/']}"
+    for i in ${#res} ; do
+        path+="../"
+    done
     BUILD_DIR="${d}"
     asciidoctor \
       -r asciidoctor-diagram \
@@ -53,12 +58,12 @@ then
       -a rouge-theme=github \
       -a rouge-linenums-mode=inline \
       -a docinfo=shared \
-      -a imagesdir=images \
+      -a imagesdir=${path}images \
       -a toc=left \
       -a toclevels=2 \
       -a sectanchors=true \
       -a sectnums=true \
-      -a favicon=themes/favicon.png \
+      -a favicon=${path}themes/favicon.png \
       -a sourcedir=src/main/java \
       -b html5 \
       "${BUILD_DIR}/*.adoc"
@@ -66,3 +71,30 @@ then
     rm -rf -v $BUILD_DIR/*.adoc
 fi
 done
+
+# https://github.com/asciidoctor/docker-asciidoctor
+
+# source-highlighter [highlightjs,rouge,coderay,prettify, pygments]
+
+# Rouge
+# https://asciidoctor.org/docs/user-manual/#rouge
+# rouge-style [base16,bw,colorful,github,gruvbox,igor_pro,magritte,molokai,monokai,monokai_sublime,pastie,thankful_eyes,tulip]
+#           -a source-highlighter=rouge \
+#           -a rouge-theme=gruvbox \
+#           -a rouge-linenums-mode=inline \
+#           -a docinfo=shared \
+
+
+# Highlightjs
+#           -a source-highlighter=highlightjs \
+#           -a highlightjsdir=highlight \
+#           -a highlightjs-theme=gruvbox-dark \
+
+#Pygmrnts
+# pygments ist derzeit nicht im docker-image enthalten, da im docker image nur python3 verfügbar ist
+#           -a source-highlighter=pygments \
+#           -a pygments-style=emacs \
+
+# Creating a Dockerized Hugo + AsciiDoctor Toolchain
+# https://rgielen.net/posts/2019/creating-a-dockerized-hugo-asciidoctor-toolchain/
+# https://rgielen.net/posts/2019/creating-a-blog-with-hugo-and-asciidoctor/
