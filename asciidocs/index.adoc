@@ -35,9 +35,13 @@ Feichtinger Sarah, Dumfarth Felix, Marcel Plakolb, Lukas Hain, Jan Kaufmann
 
 * https://htl-leonding-project.github.io/rocketman/ahif/system-specification[Pflichtenheft (4AHIF)]
 
-=== All
+=== Documentation
 
 * https://htl-leonding-project.github.io/rocketman/aufgabenzeitplan[Aufgabenzeitplan]
+
+* https://htl-leonding-project.github.io/rocketman/actuator_controller_documentation[Actuator-Controller]
+
+* https://htl-leonding-project.github.io/rocketman/json_schema_documentation[JSON-Schema]
 
 
 === Protokolle
