@@ -6,8 +6,8 @@ import time
 import paho.mqtt.client as mqtt
 import RPi.GPIO as GPIO
 
-VIEWER_MODE_PIN = 10
-USER_MODE_PIN = 12
+VIEWER_MODE_PIN = 16
+USER_MODE_PIN = 18
 JOYSTICK_DATA_TOPIC_NAME = 'joystick-values'
 USERMODE_MQTT_TOPIC_NAME = 'user_mode'
 MQTT_CLIENT_NAME = 'actuator-controller'
