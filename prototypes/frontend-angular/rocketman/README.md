@@ -1,5 +1,7 @@
 # Rocketman
 
+[![Home](../../../images/home.ico)](https://github.com/htl-leonding-project/rocketman/blob/master/README.md)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.1.1.
 
 ## Development server
