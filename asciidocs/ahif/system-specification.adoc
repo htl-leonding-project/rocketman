@@ -65,6 +65,40 @@ Moreover we assume that all delivered software APIs come together with the docum
 @startuml
 skinparam actorStyle awesome
 left to right direction
+:UserGUI:
+:AdminGUI:
+:ReadOnlyUserGUI:
+rectangle Rocketman {
+    (receive and save telemetry data)
+    rectangle {
+        (control actuator)
+        (communicate wirelessly with branch offices)
+        (set software mode of operation)
+    }
+    rectangle {
+        (receive and save configurations)
+        (activate actuator)
+        (set countdown)
+        (receive and save configurations) .right.> (activate actuator)
+        (receive and save configurations) .left.> (set countdown)
+    }
+}
+ReadOnlyUserGUI -- (receive and save telemetry data)
+UserGUI -->> ReadOnlyUserGUI
+UserGUI -- (control actuator)
+UserGUI -- (set software mode of operation)
+UserGUI -- (communicate wirelessly with branch offices)
+AdminGUI -->> UserGUI
+AdminGUI -- (receive and save configurations)
+@enduml
+----
+
+==== Use-Case-Diagramm outdated
+[plantuml,usecasediagramm, png]
+----
+@startuml
+skinparam actorStyle awesome
+left to right direction
 :User:
 :Admin:
 :ReadOnlyUser:
