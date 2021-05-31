@@ -93,41 +93,6 @@ AdminGUI -- (receive and save configurations)
 @enduml
 ----
 
-==== Use-Case-Diagramm outdated
-[plantuml,usecasediagramm, png]
-----
-@startuml
-skinparam actorStyle awesome
-left to right direction
-:User:
-:Admin:
-:ReadOnlyUser:
-rectangle Rocketman {
-    (receive telemetry data)
-    rectangle {
-        (initiate the ignition of the rocket)
-        (control actuator)
-        (communicate wirelessly with branch offices)
-        (set software mode of operation)
-    }
-    rectangle {
-        (configure system)
-        (activate actuator)
-        (set countdown)
-        (configure system) .right.> (activate actuator)
-        (configure system) .left.> (set countdown)
-    }
-}
-ReadOnlyUser -- (receive telemetry data)
-User -->> ReadOnlyUser
-User -- (initiate the ignition of the rocket)
-User -- (control actuator)
-User -- (set software mode of operation)
-User -- (communicate wirelessly with branch offices)
-Admin -->> User
-Admin -- (configure system)
-@enduml
-----
 
 === Goals
 The goal is to make it easier for future students to participate. As there is already an existing design for the ground station.
