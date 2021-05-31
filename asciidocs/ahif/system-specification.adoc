@@ -59,6 +59,36 @@ Moreover we assume that all delivered software APIs come together with the docum
 * The control unit should function without internet or cloud access
 ** As currently known the internet access is only required for downloading settings for the launch, so the user has to download them beforehand
 
+==== Class-Diagram
+[plantuml,classdiagram, png]
+----
+@startuml
+class CanSatConfiguration{
+    String name
+    int countdown
+    int igniter
+    String resistance
+    boolean useJoyStick
+    boolean useVideo
+}
+class DataSet{
+    String description
+    String value
+    String unit
+    LocalDateTime timestamp
+    Long Startid
+}
+class Start{
+    Long id
+    String comment
+    LocalDateTime startDate
+    LocalDateTime endDate
+}
+
+Start -right- DataSet
+@enduml
+----
+
 ==== Use-Case-Diagramm
 [plantuml,usecasediagramm, png]
 ----
