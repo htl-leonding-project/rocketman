@@ -1,6 +1,9 @@
 <form >
   <h1 fxLayout="row" fxLayoutAlign="center center">Einstellungen</h1>
   <p fxLayout="row" fxLayoutAlign="center center">
+    Countdown <input [(ngModel)]="name" name="name" type="text" placeholder="Config 1">
+  </p>
+  <p fxLayout="row" fxLayoutAlign="center center">
     Countdown <input [(ngModel)]="countdown" name="countdown" type="number" placeholder="mm:ss">
   </p>
   <p fxLayout="row" fxLayoutAlign="center center">
@@ -21,8 +24,8 @@
   </div>
   <div class="buttons" fxLayoutAlign="center center" fxLayout="row">
     <br>
-  <button class="btn" type="button">Einstellung Speichern</button>
-  <button class="btn" type="button">Einstellung Laden</button>
+  <button class="btn" (click)="save()" type="button">Einstellung Speichern</button>
+  <button class="btn" (click)="loadConf()" type="button">Einstellung Laden</button>
   </div>
 </form>
 
