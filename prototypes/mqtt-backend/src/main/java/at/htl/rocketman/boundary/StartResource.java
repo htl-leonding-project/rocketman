@@ -1,38 +1,40 @@
 package at.htl.rocketman.boundary;
 
 import at.htl.rocketman.entity.CanSatConfiguration;
-import at.htl.rocketman.repository.CanSatConfigurationRepository;
+import at.htl.rocketman.entity.DataSet;
+import at.htl.rocketman.repository.StartRepository;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.time.LocalDateTime;
 import java.util.List;
 
-
-@Path("/api/config")
-public class CanSatConfigurationResource {
-
+@Path("/api/start")
+public class StartResource {
     @Inject
-    CanSatConfigurationRepository repository;
+    StartRepository repository;
 
     @POST
-    @Path("addConf")
+    @Path("addStart")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addConfig(CanSatConfiguration config) {
+    public Response addStart(Start config) {
         if (config == null) {
             return Response.status(400).header("reason", "empty object").build();
         }
-        repository.writeConfig(config);
+        repository.persist(config);
         return Response.ok().build();
     }
 
-    @GET
-    @Path("getConf")
+
+    @PUT
+    @Path("finish")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public List<CanSatConfiguration> readConfig() {
-        return repository.readConfig();
+    public Response getTimeStamps() {
+        repository.finishStarts();
+        return Response.ok().build();
     }
 }
