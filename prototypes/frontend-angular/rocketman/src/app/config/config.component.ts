@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
+import {IConfig, RocketmanService} from '../rocketman.service';
 
 @Component({
   selector: 'app-config',
@@ -8,14 +9,15 @@ import {HttpClient} from '@angular/common/http';
   styleUrls: ['./config.component.css']
 })
 export class ConfigComponent implements OnInit {
-  constructor(private router: Router, private httpClient: HttpClient) { }
+  constructor(private router: Router, private httpClient: HttpClient, private readonly rocketman: RocketmanService) { }
 
+  name = '';
   countdown = '00:00';
   igniter = 0;
   resistance = 0;
-
   useJoyStick = true;
   useVideo = false;
+  conf!: IConfig;
 
   ngOnInit(): void {
   }
@@ -27,13 +29,29 @@ export class ConfigComponent implements OnInit {
     this.useVideo = state;
   }
   start(): void{
-    this.httpClient.post<any>('http://localhost:8080/api/config/addConf', [
-      this.countdown, // zahl":"zahl
-      this.igniter, // int
-      this.resistance, // int
-      this.useJoyStick, // Boolean
-      this.useVideo  // Boolean
-    ]);
+    this.rocketman.config =  {
+      name: this.name, // string
+      countdown: Number(this.countdown), // zahl":"zahl
+      igniter: this.igniter, // int
+      resistance: this.resistance, // int
+      useJoyStick: this.useJoyStick, // Boolean
+      useVideo: this.useVideo  // Boolean
+    };
     this.router.navigate(['/view']);
+  }
+
+  save(): void{
+    this.rocketman.saveConfig({
+      name: this.name, // string
+      countdown: Number(this.countdown), // zahl":"zahl
+      igniter: this.igniter, // int
+      resistance: this.resistance, // int
+      useJoyStick: this.useJoyStick, // Boolean
+      useVideo: this.useVideo  // Boolean
+    });
+  }
+
+  loadConf(): void {
+    this.router.navigate(['/confs']);
   }
 }

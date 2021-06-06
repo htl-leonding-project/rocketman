@@ -12,6 +12,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {Chart} from 'chart.js';
 import {ChartsModule} from 'ng2-charts';
 import { GraphComponent } from './graph/graph.component';
+import { ConfigListComponent } from './config-list/config-list.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -28,6 +29,7 @@ const routes: Routes = [
     ArchiveComponent,
     ViewComponent,
     GraphComponent,
+    ConfigListComponent,
   ],
   imports: [
     BrowserModule,
