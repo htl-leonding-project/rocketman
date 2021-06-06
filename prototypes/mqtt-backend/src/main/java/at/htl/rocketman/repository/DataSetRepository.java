@@ -63,7 +63,7 @@ public class DataSetRepository {
                 dataSet.setValue(resultSet.getString("ds_value"));
                 dataSet.setUnit(resultSet.getString("ds_unit"));
                 dataSet.setTimestamp(LocalDateTime.parse(resultSet.getString("ds_timestamp"), DateTimeFormatter.ISO_LOCAL_DATE_TIME));
-                dataSet.setStart(startRepository.findById(resultSet.getLong("ds_st_id")));
+                //dataSet.setStart(startRepository.findById(resultSet.getLong("ds_st_id")));
                 res.add(dataSet);
             }
         } catch (SQLException e) {

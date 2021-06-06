@@ -47,7 +47,7 @@ public class StartRepository {
         Datasource ds = new Datasource();
         try (Connection conn = ds.getDb()) {
             LOG.info("Connected.");
-            String sqlString = "SELECT st_id, st_comment, st_startDate, st_endStart FROM start";
+            String sqlString = "SELECT st_id, st_comment, st_startDate, st_endDate FROM start";
             PreparedStatement preparedStatement = conn.prepareStatement(sqlString);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -56,7 +56,7 @@ public class StartRepository {
                 start.setComment(resultSet.getString("st_comment"));
                 start.setStartDate(LocalDateTime.parse(resultSet.getString("st_startDate"), DateTimeFormatter.ISO_LOCAL_DATE_TIME));
                 if (resultSet.getString("st_endDate") != null) {
-                    start.setEndDate(LocalDateTime.parse(resultSet.getString("st_endStart"), DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+                    start.setEndDate(LocalDateTime.parse(resultSet.getString("st_endDate"), DateTimeFormatter.ISO_LOCAL_DATE_TIME));
                 }
                 res.add(start);
             }
@@ -72,7 +72,7 @@ public class StartRepository {
         Start start = new Start();
         Datasource ds = new Datasource();
         try (Connection conn = ds.getDb()) {
-            String sqlString = "SELECT st_comment, st_startDate, st_endStart FROM start WHERE st_id = ?";
+            String sqlString = "SELECT st_comment, st_startDate, st_endDate FROM start WHERE st_id = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(sqlString);
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -80,8 +80,8 @@ public class StartRepository {
             start.setId(id);
             start.setComment(resultSet.getString("st_comment"));
             start.setStartDate(LocalDateTime.parse(resultSet.getString("st_startDate"), DateTimeFormatter.ISO_LOCAL_DATE_TIME));
-            if (resultSet.getString("st_endStart") != null) {
-                start.setEndDate(LocalDateTime.parse(resultSet.getString("st_endStart"), DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+            if (resultSet.getString("st_endDate") != null) {
+                start.setEndDate(LocalDateTime.parse(resultSet.getString("st_endDate"), DateTimeFormatter.ISO_LOCAL_DATE_TIME));
             }
         } catch (SQLException e) {
             LOG.error("SQl-Error occurred: " + e.getMessage());
