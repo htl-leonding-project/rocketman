@@ -56,6 +56,7 @@ public class DataSetRepository {
             String getAllSqlString = "SELECT ds_description, ds_value, ds_unit, ds_timestamp, ds_st_id FROM data_set";
             PreparedStatement preparedStatement = conn.prepareStatement(getAllSqlString);
             ResultSet resultSet = preparedStatement.executeQuery();
+            conn.close();
             while (resultSet.next()) {
                 DataSet dataSet = new DataSet();
                 dataSet.setDescription(resultSet.getString("ds_description"));
