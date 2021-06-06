@@ -1,6 +1,8 @@
 package at.htl.rocketman.entity;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 
 public class DataSet {
     private Long id;
@@ -79,5 +81,10 @@ public class DataSet {
     @Override
     public String toString() {
         return String.format("%s: %s %s measured %s", this.getDescription(), this.getValue(), this.getUnit(), this.getTimestamp());
+    }
+
+    public String toCSVString() {
+        return String.format("%d;%s;%s;%s;%s", this.getStart() == null ? null : this.getStart().getId(), this.getDescription(), this.getValue(), this.getUnit(),
+                this.getTimestamp().format(DateTimeFormatter.ISO_DATE_TIME));
     }
 }

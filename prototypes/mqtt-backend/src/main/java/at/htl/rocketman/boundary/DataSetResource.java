@@ -2,19 +2,28 @@ package at.htl.rocketman.boundary;
 
 import at.htl.rocketman.entity.DataSet;
 import at.htl.rocketman.repository.DataSetRepository;
+import org.jboss.logging.Logger;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Path("/api/dataset")
 public class DataSetResource {
+    private static final String CSV_FILENAME = "values.csv";
+    private static final String CSV_HEADER = "start_id;description;value;unit;timestamp";
+
     @Inject
     DataSetRepository repository;
+
+    @Inject
+    Logger LOG;
 
     @GET
     @Path("descriptions")
@@ -125,7 +134,7 @@ public class DataSetResource {
 
     @GET
     @Path("unit/{description}")
-    @Consumes(MediaType.APPLICATION_JSON    )
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUnit(@PathParam("description") String description) {
         String unit = repository.getUnitForDescription(description);
@@ -145,6 +154,30 @@ public class DataSetResource {
                 .header("Access-Control-Allow-Methods",
                         "GET, POST, PUT, DELETE, OPTIONS, HEAD")
                 .build();
+    }
+
+    @GET
+    @Path("get-file")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getFile() {
+        StringBuilder result = new StringBuilder();
+        result.append(CSV_HEADER)
+                .append("\n");
+        List<DataSet> all = repository.getAll();
+        for (DataSet temp : all) {
+            result.append(temp.toCSVString())
+                    .append("\n");
+        }
+        try {
+            FileWriter myWriter = new FileWriter(CSV_FILENAME);
+            myWriter.write(result.toString());
+            myWriter.close();
+        }
+        catch (IOException e) {
+            LOG.error("Error while writing file " + CSV_FILENAME + " : " + e.getMessage());
+        }
+        return Response.ok(result.toString()).build();
     }
 
    /* @GET
