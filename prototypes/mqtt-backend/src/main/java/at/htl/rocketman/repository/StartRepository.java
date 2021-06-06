@@ -55,7 +55,7 @@ public class StartRepository {
                 start.setId(resultSet.getLong("st_id"));
                 start.setComment(resultSet.getString("st_comment"));
                 start.setStartDate(LocalDateTime.parse(resultSet.getString("st_startDate"), DateTimeFormatter.ISO_LOCAL_DATE_TIME));
-                if (resultSet.getString("st_endStart") != null) {
+                if (resultSet.getString("st_endDate") != null) {
                     start.setEndDate(LocalDateTime.parse(resultSet.getString("st_endStart"), DateTimeFormatter.ISO_LOCAL_DATE_TIME));
                 }
                 res.add(start);
