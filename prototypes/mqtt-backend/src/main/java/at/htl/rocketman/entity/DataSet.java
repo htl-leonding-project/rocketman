@@ -3,12 +3,22 @@ package at.htl.rocketman.entity;
 import java.time.LocalDateTime;
 
 public class DataSet {
-    String description;
-    String value;
-    String unit;
-    LocalDateTime timestamp;
+    private Long id;
+    private String description;
+    private String value;
+    private String unit;
+    private LocalDateTime timestamp;
+    private Start start;
 
     public DataSet() {
+    }
+
+    public DataSet(String description, String value, String unit, LocalDateTime timestamp, Start start) {
+        this.description = description;
+        this.value = value;
+        this.unit = unit;
+        this.timestamp = timestamp;
+        this.start = start;
     }
 
     public DataSet(String description, String value, String unit, LocalDateTime timestamp) {
@@ -16,6 +26,14 @@ public class DataSet {
         this.value = value;
         this.unit = unit;
         this.timestamp = timestamp;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getDescription() {
@@ -48,6 +66,14 @@ public class DataSet {
 
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public Start getStart() {
+        return start;
+    }
+
+    public void setStart(Start start) {
+        this.start = start;
     }
 
     @Override
