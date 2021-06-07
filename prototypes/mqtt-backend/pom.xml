@@ -8,13 +8,13 @@
   <properties>
     <surefire-plugin.version>2.22.1</surefire-plugin.version>
     <maven.compiler.target>11</maven.compiler.target>
-    <quarkus.platform.version>1.10.3.Final</quarkus.platform.version>
+    <quarkus.platform.version>1.13.4.Final</quarkus.platform.version>
     <maven.compiler.source>11</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.compiler.parameters>true</maven.compiler.parameters>
-    <quarkus-plugin.version>1.10.3.Final</quarkus-plugin.version>
+    <quarkus-plugin.version>1.13.4.Final</quarkus-plugin.version>
     <compiler-plugin.version>3.8.1</compiler-plugin.version>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
   </properties>
@@ -56,10 +56,6 @@
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-resteasy-jackson</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.quarkus</groupId>
       <artifactId>quarkus-arc</artifactId>
     </dependency>
     <dependency>
@@ -70,16 +66,6 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-junit5</artifactId>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.agroal</groupId>
-      <artifactId>agroal-api</artifactId>
-      <version>1.8</version>
-    </dependency>
-    <dependency>
-      <groupId>io.agroal</groupId>
-      <artifactId>agroal-pool</artifactId>
-      <version>1.9</version>
     </dependency>
     <dependency>
       <groupId>org.xerial</groupId>
@@ -108,13 +94,6 @@
             </goals>
           </execution>
         </executions>
-        <configuration>
-          <additionalBuildArgs>-H:IncludeResources=json_schema.json</additionalBuildArgs>
-          <additionalBuildArgs>-H:IncludeResources=sql\cr_rocketman.sql</additionalBuildArgs>
-          <additionalBuildArgs>-H:IncludeResources=sql\dr_rocketman.sql</additionalBuildArgs>
-          <additionalBuildArgs>-H:IncludeResources=sql\ins_rocketman.sql</additionalBuildArgs>
-          <additionalBuildArgs>-H:IncludeResources=sql\script-files.properties</additionalBuildArgs>
-        </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
