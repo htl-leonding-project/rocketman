@@ -53,4 +53,19 @@ public class Start {
     public void setComment(String comment) {
         this.comment = comment;
     }
+
+    @Override
+    public String toString() {
+        if (this.getEndDate() == null) {
+            return String.format("%d;%s;%s;null",
+                    this.getId(),
+                    this.getComment(),
+                    this.getStartDate().toString());
+        }
+        return String.format("%d;%s;%s;%s",
+                this.getId(),
+                this.getComment(),
+                this.getStartDate().toString(),
+                this.getEndDate().toString());
+    }
 }

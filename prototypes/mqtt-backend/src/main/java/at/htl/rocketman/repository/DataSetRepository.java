@@ -50,20 +50,21 @@ public class DataSetRepository {
 
     public List<DataSet> getAll() {
         List<DataSet> res = new LinkedList<>();
+
         Datasource ds = new Datasource();
         try (Connection conn = ds.getDb()) {
             LOG.info("Connected.");
             String getAllSqlString = "SELECT ds_description, ds_value, ds_unit, ds_timestamp, ds_st_id FROM data_set";
             PreparedStatement preparedStatement = conn.prepareStatement(getAllSqlString);
             ResultSet resultSet = preparedStatement.executeQuery();
-            conn.close();
             while (resultSet.next()) {
                 DataSet dataSet = new DataSet();
                 dataSet.setDescription(resultSet.getString("ds_description"));
                 dataSet.setValue(resultSet.getString("ds_value"));
                 dataSet.setUnit(resultSet.getString("ds_unit"));
                 dataSet.setTimestamp(LocalDateTime.parse(resultSet.getString("ds_timestamp"), DateTimeFormatter.ISO_LOCAL_DATE_TIME));
-                //dataSet.setStart(startRepository.findById(resultSet.getLong("ds_st_id")));
+                dataSet.setStart(new Start());
+                dataSet.getStart().setId(resultSet.getLong("ds_st_id"));
                 res.add(dataSet);
             }
         } catch (SQLException e) {
@@ -71,6 +72,9 @@ public class DataSetRepository {
         } catch (Exception e) {
             LOG.error("Unknown error occurred: " + e.getMessage());
         }
+        res.forEach(d -> {
+            d.setStart(startRepository.findById(d.getStart().getId()));
+        });
         return res;
     }
 

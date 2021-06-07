@@ -87,6 +87,6 @@ class DataSetRepositoryTest {
 
         assertThat(dataset).hasNumberOfRows(3);
         output(dataset).toConsole();
-
+        Assertions.assertEquals(dataSets.size(), 3);
     }
 }

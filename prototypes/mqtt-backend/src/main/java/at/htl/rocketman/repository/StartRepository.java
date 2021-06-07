@@ -98,10 +98,11 @@ public class StartRepository {
             String sqlString = "select st_id, st_comment, st_startDate from start where st_endDate is null order by st_startDate desc";
             PreparedStatement preparedStatement = conn.prepareStatement(sqlString);
             ResultSet resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-            start.setId(resultSet.getLong("st_id"));
-            start.setComment(resultSet.getString("st_comment"));
-            start.setStartDate(LocalDateTime.parse(resultSet.getString("st_startDate"), DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+            if (resultSet.next()) {
+                start.setId(resultSet.getLong("st_id"));
+                start.setComment(resultSet.getString("st_comment"));
+                start.setStartDate(LocalDateTime.parse(resultSet.getString("st_startDate"), DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+            }
         } catch (SQLException e) {
             LOG.error("SQl-Error occurred: " + e.getMessage());
         } catch (Exception e) {
