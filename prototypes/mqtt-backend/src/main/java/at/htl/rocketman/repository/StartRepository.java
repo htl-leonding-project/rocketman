@@ -95,7 +95,7 @@ public class StartRepository {
         Datasource ds = new Datasource();
         Start start = new Start();
         try (Connection conn = ds.getDb()) {
-            String sqlString = "select st_id, st_comment, st_startDate from start where st_endDate is null order by st_startDate asc";
+            String sqlString = "select st_id, st_comment, st_startDate from start where st_endDate is null order by st_startDate desc";
             PreparedStatement preparedStatement = conn.prepareStatement(sqlString);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();

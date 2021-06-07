@@ -72,6 +72,7 @@ class CanSatConfiguration{
     boolean useVideo
 }
 class DataSet{
+    Long id
     String description
     String value
     String unit
@@ -85,7 +86,33 @@ class Start{
     LocalDateTime endDate
 }
 
-Start -right- DataSet
+Start "1" -right- "*" DataSet
+@enduml
+----
+
+==== ERD
+[plantuml,erd, png]
+----
+@startuml
+class DataSet{
+    ds_id: number <<generated>>
+    --
+    ds_description: varchar
+    ds_value: varchar
+    ds_unit: varchar
+    ds_timestamp: date
+    --
+    ds_st_id: number <<FK>>
+}
+class Start{
+    st_id: number <<generated>>
+    --
+    st_comment: varchar
+    st_startDate: Date
+    st_endDate: Date
+}
+
+Start ||-right-|{ DataSet
 @enduml
 ----
 
