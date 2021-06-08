@@ -1,6 +1,7 @@
 package at.htl.rocketman.entity;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Start {
     private Long id;
@@ -67,5 +68,13 @@ public class Start {
                 this.getComment(),
                 this.getStartDate().toString(),
                 this.getEndDate().toString());
+    }
+
+    public String toCSVString() {
+        return String.format("%d;%s;%s;%s",
+                this.getId(),
+                this.getComment(),
+                this.getStartDate().format(DateTimeFormatter.ISO_DATE_TIME),
+                this.getEndDate() == null ? "null" : this.getEndDate().format(DateTimeFormatter.ISO_DATE_TIME));
     }
 }

@@ -1,7 +1,9 @@
 package at.htl.rocketman.boundary;
 
 import at.htl.rocketman.entity.DataSet;
+import at.htl.rocketman.entity.Start;
 import at.htl.rocketman.repository.DataSetRepository;
+import at.htl.rocketman.repository.StartRepository;
 import org.jboss.logging.Logger;
 
 import javax.inject.Inject;
@@ -16,21 +18,67 @@ import java.util.List;
 
 @Path("/api/dataset")
 public class DataSetResource {
-    private static final String CSV_FILENAME = "values.csv";
-    private static final String CSV_HEADER = "start_id;description;value;unit;timestamp";
+    private static final String DATASET_CSV_FILENAME = "values.csv";
+    private static final String DATASET_CSV_HEADER = "start_id;description;value;unit;timestamp";
+
+    private static final String START_CSV_FILENAME = "starts.csv";
+    private static final String START_CSV_HEADER = "id;comment;startDate;endDate";
 
     @Inject
-    DataSetRepository repository;
+    DataSetRepository dataSetRepository;
+
+    @Inject
+    StartRepository startRepository;
 
     @Inject
     Logger LOG;
+
+    @GET
+    @Path("get-file")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getFile() {
+        StringBuilder dataSets_SB = new StringBuilder();
+        StringBuilder starts_SB = new StringBuilder();
+        dataSets_SB.append(DATASET_CSV_HEADER)
+                .append("\n");
+        starts_SB.append(START_CSV_HEADER)
+                .append("\n");
+        List<DataSet> dataSets = dataSetRepository.getAll();
+        for (DataSet temp : dataSets) {
+            dataSets_SB.append(temp.toCSVString())
+                    .append("\n");
+        }
+        List<Start> starts = startRepository.getAll();
+        for (Start temp : starts) {
+            starts_SB.append(temp.toCSVString())
+                    .append("\n");
+        }
+        try {
+            FileWriter myWriter = new FileWriter(DATASET_CSV_FILENAME);
+            myWriter.write(dataSets_SB.toString());
+            myWriter.close();
+        }
+        catch (IOException e) {
+            LOG.error("Error while writing file " + DATASET_CSV_FILENAME + " : " + e.getMessage());
+        }
+        try {
+            FileWriter myWriter = new FileWriter(START_CSV_FILENAME);
+            myWriter.write(starts_SB.toString());
+            myWriter.close();
+        }
+        catch (IOException e) {
+            LOG.error("Error while writing file " + START_CSV_FILENAME + " : " + e.getMessage());
+        }
+        return Response.ok(dataSets_SB.toString()).build();
+    }
 
     @GET
     @Path("descriptions")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllDescriptions() {
-        List<String> list = repository.getAllDescriptions();
+        List<String> list = dataSetRepository.getAllDescriptions();
         StringBuilder array = new StringBuilder("[");
         for (String description : list) {
             String pascalCase = description.substring(0, 1).toUpperCase() + description.substring(1).toLowerCase();
@@ -59,7 +107,7 @@ public class DataSetResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTimeStamps(@PathParam("description") String description) {
-        List<DataSet> list = repository.findByDescription(description);
+        List<DataSet> list = dataSetRepository.findByDescription(description);
         StringBuilder array = new StringBuilder("[");
         for (DataSet dataSet : list) {
             array.append("\"")
@@ -85,7 +133,7 @@ public class DataSetResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTimesSinceStart(@PathParam("description") String description) {
-        List<DataSet> list = repository.findByDescription(description);
+        List<DataSet> list = dataSetRepository.findByDescription(description);
         LocalDateTime start = list.get(0).getTimestamp();
         StringBuilder array = new StringBuilder("[");
         for (DataSet dataSet : list) {
@@ -113,7 +161,7 @@ public class DataSetResource {
     @Consumes(MediaType.APPLICATION_JSON    )
     @Produces(MediaType.APPLICATION_JSON)
     public Response getValues(@PathParam("description") String description) {
-        List<DataSet> list = repository.findByDescription(description);
+        List<DataSet> list = dataSetRepository.findByDescription(description);
         StringBuilder array = new StringBuilder("[");
         for (DataSet dataSet : list) {
             array.append(dataSet.getValue())
@@ -137,7 +185,7 @@ public class DataSetResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUnit(@PathParam("description") String description) {
-        String unit = repository.getUnitForDescription(description);
+        String unit = dataSetRepository.getUnitForDescription(description);
         if(unit != null) {
             return Response.ok("\"" + unit + "\"").header("Access-Control-Allow-Origin", "*")
                     .header("Access-Control-Allow-Credentials", "true")
@@ -154,30 +202,6 @@ public class DataSetResource {
                 .header("Access-Control-Allow-Methods",
                         "GET, POST, PUT, DELETE, OPTIONS, HEAD")
                 .build();
-    }
-
-    @GET
-    @Path("get-file")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getFile() {
-        StringBuilder result = new StringBuilder();
-        result.append(CSV_HEADER)
-                .append("\n");
-        List<DataSet> all = repository.getAll();
-        for (DataSet temp : all) {
-            result.append(temp.toCSVString())
-                    .append("\n");
-        }
-        try {
-            FileWriter myWriter = new FileWriter(CSV_FILENAME);
-            myWriter.write(result.toString());
-            myWriter.close();
-        }
-        catch (IOException e) {
-            LOG.error("Error while writing file " + CSV_FILENAME + " : " + e.getMessage());
-        }
-        return Response.ok(result.toString()).build();
     }
 
    /* @GET
