@@ -31,10 +31,10 @@ public class InitBean {
         ResultSet tables = dbm.getTables(null, null, "data_set", null);
         if (tables.next()) {
             // Table exists
-            LOG.info("table exists");
+            LOG.info("Table exists");
         }
         else {
-            LOG.info("tables created");
+            LOG.info("Tables created");
             SqlRunner.createEmptyTables(c);
         }
 

@@ -53,7 +53,6 @@ public class DataSetRepository {
 
         Datasource ds = new Datasource();
         try (Connection conn = ds.getDb()) {
-            LOG.info("Connected.");
             String getAllSqlString = "SELECT ds_description, ds_value, ds_unit, ds_timestamp, ds_st_id FROM data_set";
             PreparedStatement preparedStatement = conn.prepareStatement(getAllSqlString);
             ResultSet resultSet = preparedStatement.executeQuery();

@@ -46,7 +46,6 @@ public class StartRepository {
         List<Start> res = new LinkedList<>();
         Datasource ds = new Datasource();
         try (Connection conn = ds.getDb()) {
-            LOG.info("Connected.");
             String sqlString = "SELECT st_id, st_comment, st_startDate, st_endDate FROM start";
             PreparedStatement preparedStatement = conn.prepareStatement(sqlString);
             ResultSet resultSet = preparedStatement.executeQuery();
