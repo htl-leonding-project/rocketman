@@ -18,7 +18,6 @@ public class StartResource {
     StartRepository repository;
 
     @POST
-    @Path("addStart")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addStart(Start config) {
@@ -31,7 +30,6 @@ public class StartResource {
 
 
     @PUT
-    @Path("finish")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTimeStamps() {

@@ -17,7 +17,6 @@ public class CanSatConfigurationResource {
     CanSatConfigurationRepository repository;
 
     @POST
-    @Path("addConf")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addConfig(CanSatConfiguration config) {
@@ -29,7 +28,6 @@ public class CanSatConfigurationResource {
     }
 
     @GET
-    @Path("getConf")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public List<CanSatConfiguration> readConfig() {
