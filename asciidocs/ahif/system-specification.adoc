@@ -161,45 +161,37 @@ Currently not foreseeable. Will be added as soon as possible.
 === System architecture
 [plantuml, systemarchitecture, png]
 ----
-package Suitcase {
-    database "LocalDB" {
-      folder "Real-time data" {
-        [Folder] as f2
-      }
-      file "CSV Files"
+package "Raspberry Pi" {
+    database "LocalDB" as db {
     }
     node "Quarkus" as q {
-        [REST] as r1
+        [REST] as r
     }
-    file "Config File"
+    file "Config File" as conf
+    file "Exported Data" as export
+    component "MQTT Broker" as mqtt
+    component "Key switch" as key
+    component "Joystick" as joy
 }
 
+db - q
+r -do- conf
+mqtt -up- q
+joy -up- mqtt
+key -up- mqtt
+q -do- export
+
 package CanSat {
-node "Sensors" as s {
+    node "Sensors" as s {
         [Humidity Sensor]
         [Temperatur Sensor]
     }
-}
-
-package "Saved data" {
-    database "ExternalDB" {
-      folder "Persisted Data" {
-        [Folder] as f1
-      }
-    }
-    rectangle {
-        [REST] as r2
+    node "Actuator" as a {
+        [Steering]
+        [Camera]
     }
 }
 
-cloud {
-  [Internet]
-  [MQTT Broker]
-}
-
-[r1] -- [Internet]
-[Internet] -- [r2]
-s -- [MQTT Broker]
-r1 -left- [MQTT Broker]
-[r2] --> [f1]
+mqtt -- s
+mqtt -- a
 ----
