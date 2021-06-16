@@ -2,6 +2,8 @@ package at.htl.rocketman.boundary;
 
 import at.htl.rocketman.entity.DataSet;
 import at.htl.rocketman.repository.DataSetRepository;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.jboss.logging.Logger;
 
 import javax.inject.Inject;
@@ -15,6 +17,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Path("/api/dataset")
+@Tag(name = "DataSet", description = "Endpoints for the DataSets")
 public class DataSetResource {
     private static final String CSV_FILENAME = "values.csv";
     private static final String CSV_HEADER = "start_id;description;value;unit;timestamp";
@@ -29,6 +32,7 @@ public class DataSetResource {
     @Path("descriptions")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Get all descriptions", description = "Returns the descriptions of all the Datasets from the database as a JSON Object")
     public Response getAllDescriptions() {
         List<String> list = repository.getAllDescriptions();
         StringBuilder array = new StringBuilder("[");
@@ -58,6 +62,8 @@ public class DataSetResource {
     @Path("timestamps/{description}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Get all timestamps for given description", description = "Returns the timestamps of all the Datasets for the given description " +
+            "from the database as a JSON Object")
     public Response getTimeStamps(@PathParam("description") String description) {
         List<DataSet> list = repository.findByDescription(description);
         StringBuilder array = new StringBuilder("[");
@@ -84,6 +90,8 @@ public class DataSetResource {
     @Path("timesSinceStart/{description}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Get all times since start for given description", description = "Returns the difference between the time of the start and the time of the timestamps " +
+            "of all the Datasets for the given description from the database as a JSON Object")
     public Response getTimesSinceStart(@PathParam("description") String description) {
         List<DataSet> list = repository.findByDescription(description);
         LocalDateTime start = list.get(0).getTimestamp();
@@ -110,8 +118,10 @@ public class DataSetResource {
 
     @GET
     @Path("values/{description}")
-    @Consumes(MediaType.APPLICATION_JSON    )
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Get all values for given description", description = "Returns the values of all the Datasets for the given description from the database " +
+            "as a JSON Object")
     public Response getValues(@PathParam("description") String description) {
         List<DataSet> list = repository.findByDescription(description);
         StringBuilder array = new StringBuilder("[");
@@ -136,6 +146,8 @@ public class DataSetResource {
     @Path("unit/{description}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Get all units for given description", description = "Returns the timestamps of all the Datasets for the given description from the database " +
+            "as a JSON Object")
     public Response getUnit(@PathParam("description") String description) {
         String unit = repository.getUnitForDescription(description);
         if(unit != null) {
