@@ -4,6 +4,8 @@ import at.htl.rocketman.entity.DataSet;
 import at.htl.rocketman.entity.Start;
 import at.htl.rocketman.repository.DataSetRepository;
 import at.htl.rocketman.repository.StartRepository;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.jboss.logging.Logger;
 
 import javax.inject.Inject;
@@ -17,6 +19,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Path("/api/dataset")
+@Tag(name = "DataSets", description = "Endpoints for the DataSets")
 public class DataSetResource {
     private static final String DATASET_CSV_FILENAME = "values.csv";
     private static final String DATASET_CSV_HEADER = "start_id;description;value;unit;timestamp";
@@ -37,6 +40,7 @@ public class DataSetResource {
     @Path("get-file")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Save data in CSV-files", description = "Saves all Starts and DataSets in their respective CSV-files and returns the datasets from the database as a JSON Object")
     public Response getFile() {
         StringBuilder dataSets_SB = new StringBuilder();
         StringBuilder starts_SB = new StringBuilder();
@@ -77,6 +81,7 @@ public class DataSetResource {
     @Path("descriptions")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Get all description", description = "returns all descriptions from the database as a JSON object")
     public Response getAllDescriptions() {
         List<String> list = dataSetRepository.getAllDescriptions();
         StringBuilder array = new StringBuilder("[");
@@ -106,6 +111,7 @@ public class DataSetResource {
     @Path("timestamps/{description}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Get all timestamps for description", description = "returns all descriptions for the given description from the database as a JSON object")
     public Response getTimeStamps(@PathParam("description") String description) {
         List<DataSet> list = dataSetRepository.findByDescription(description);
         StringBuilder array = new StringBuilder("[");
@@ -132,6 +138,8 @@ public class DataSetResource {
     @Path("timesSinceStart/{description}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Get all times since start for description", description = "returns the difference between the time of start and the time of the timestamps " +
+            "for all Datasets for the given description from the database as a JSON object")
     public Response getTimesSinceStart(@PathParam("description") String description) {
         List<DataSet> list = dataSetRepository.findByDescription(description);
         LocalDateTime start = list.get(0).getTimestamp();
@@ -158,8 +166,9 @@ public class DataSetResource {
 
     @GET
     @Path("values/{description}")
-    @Consumes(MediaType.APPLICATION_JSON    )
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Get all values for description", description = "returns all values for the given description from the database as a JSON object")
     public Response getValues(@PathParam("description") String description) {
         List<DataSet> list = dataSetRepository.findByDescription(description);
         StringBuilder array = new StringBuilder("[");
@@ -184,6 +193,7 @@ public class DataSetResource {
     @Path("unit/{description}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Get all units for description", description = "returns all units for the given description from the database as a JSON object")
     public Response getUnit(@PathParam("description") String description) {
         String unit = dataSetRepository.getUnitForDescription(description);
         if(unit != null) {
