@@ -1,0 +1,65 @@
+= Zünschaltung
+
+== Anforderung
+image::image-2021-06-16-11-21-46-734.png[]
+
+Die Hauptfunktion der „Zündhardware“ ist das Ausgeben eines Spannungsimpulses von mindestens
+12V und 2A. Zusätzlich sollten die Funktion einer ohmschen sowie Spannungsmessung implementiert
+sein, um einerseits den Zündkreis sowie die Zündspannung überprüfen zu können.
+
+== Bauteile
+
+=== Sicherungen
+S1 schütz vor Überlastung des Akkus, Falls dann bei deinem Stromkreis irgend etwas schief geht,
+unterbricht die Sicherung irgendwann den Stromkreis
+und kann z.B. einen Brand verhindern. +
+S2 soll vor Überlastung schützen. Z.B., wenn die Zündkabel versehentlich kurzgeschlossen werden
+S2 ist eine selbstrückstellende Sicherungen (Polyfuse).
+Das ist im Grunde nur ein Kaltleiter.
+Fließt zu viel Strom wird er heiß, erhöht seinen Widerstand und reduziert somit den Stromfluss.
+Schaltet man ab, dann kühlt er wieder ab und der Widerstand wird wieder klein.
+Das ist praktisch bei Sachen wo man oft damit rechnen muss, das etwas schiefgeht, sie sind dafür langsamer.
+
+=== Shottky Diode
+Als Verpolungsschutz, seriell, damit die Quelle nicht im Verpol-fall kurzgeschlossen wird,
+dafür entsteht ein kleiner Spannungsabfall ~0.3V
+
+=== Grüne Diode mit Vorwiderstand
+Dient zur Anzeige, ob eine Spannung vorhanden ist und erleichtert somit die Fehlersuche
+
+=== Zünd Elko (+12V_IGN)
+Der Elko lädt sich über den Widerstand langsam auf.
+Er wird benötigt, um die Zündung zu unterstützen und das schlagartige Ziehen von zu viel
+Strom zu verhindern.
+Vor dem nächsten Zünden muss aber einige Sekunden gewartet werden, bis sich der Elko
+wieder aufgeladen hat (Über die Spannungsmessung kann ermittelt werden, wann er wieder soweit ist)
+
+=== NPN Transistoren und PMOS
+Im Schaltplan finden sich 2 Transistoren wieder.
+Wird T1 über den GPIO Pin am Raspberry aktiviert, wird die Ohmsche Spannungsmessung gestartet.
+Wird T2 aktiviert, zündet die Rakete.
+
+Der Pull-Up hängt in der Grafik unten zur Vereinfachung auf 3.3V. Im Schaltplan hängt hinter der Zündelko,
+aus dem Grund dass, wenn die 12V_IGN einbrechen und der NPN wieder ausschaltet dann zieht der Pull-Up das Gate ja auf 12V,
+Source hat aber dann weniger.
+D.h. die Gate-Source-Spannung ist dann kurz mal positiv.
+Beim PMOS sollte sie aber entweder 0 oder negativ sein. Das hält er zwar aus, ist aber nicht ganz sauber.
+
+[Bild von Transistoren funktionsweise]
+
+
+=== Abbruch Schalter
+Beim Abbruch Schalter handelt es sich um einen 2 Poligen Kippschalter.
+Eine Funktion dieses Schalters ist, eine hardwaremäßige Unterbrechung des Zündkabels zu der
+Kontrolleinheit, sowie ein gleichzeitiges Kurzschließen des Zündkreises. Des Weiteren werden
+softwaremäßig gewisse Prozesse ausgelöst z.B. Stopp des Countdowns, Stopp diverser Aktoren usw.,
+wobei diese durchzuführenden Schritte Projektabhängig bzw. „Settig“-Abhängig sind.
+
+=== Ohmsche Messung
+Die Diode D1 schützt die Messungs Schaltung vor der hohen Zündspannung (Schwellspannung liegt bei den meisten
+Dioden zwischen 0.3-0.7V), dh ab einer bestimmten Spannung wird die Diode durchlässig.
+Diode D2 sorgt dafür, dass die Schaltung auch vor negativer Überspannung geschützt wird.
+
+Um den maximalen Prüfstrom der Zünder beim Messen nicht zu überschreiten ist ein sehr hoher Messwiderstand (Rvz) nötig,
+um trotzdem ein genaues Messergebnis zu erhalten wird die Spannung mit einem nichtinvertierenden Verstärker wieder
+verstärkt, bevor sie mit einem ADC umgewandelt und vom Raspberry empfangen wird.
