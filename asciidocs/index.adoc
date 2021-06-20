@@ -3,8 +3,85 @@ Feichtinger Sarah, Dumfarth Felix, Marcel Plakolb, Lukas Hain, Jan Kaufmann
 1.1.0, 2020-10-28
 :sourcedir: ../src/main/java
 :icons: font
+ifndef::imagesdir[:imagesdir: ./images]
 :sectnums:    // Nummerierung der Überschriften / section numbering
 :toc: left
+
+ifdef::backend-html5,backend-revealjs[image:logo.png[width=1000%]]
+
+=== Systemarchitektur
+
+[plantuml, systemarchitecture, png]
+----
+package Suitcase {
+
+rectangle {
+    database "LocalDB" as ldb{
+          rectangle "Real-time data" as rtdata{
+          }
+    }
+    File jsonFile
+
+    }
+    node "Quarkus" as q {
+            [REST] as r1
+        }
+
+    file "Config File"
+
+    rectangle "Imput and Output" as io{
+        [funkmodules] as fm
+        [imput devices] as id
+        [output devices] as od
+
+        rectangle "Touch Display" as td{
+            [Webapplication] as w1
+        }
+    }
+
+    [MQTT Broker]
+}
+
+
+package CanSat {
+    node "Sensors" as s {
+        [Humidity Sensor]
+        [Temperatur Sensor]
+    }
+}
+
+package "Laptop" {
+    [Webapplication] as w2
+}
+
+cloud {
+
+
+    package "Saved data" as sd{
+        database "ExternalDB" {
+          folder "Persisted Data" {
+            [Folder] as f1
+          }
+        }
+        rectangle {
+            [REST] as r2
+        }
+    }
+}
+
+w2 -- ldb
+ldb -- q
+[r1] -- sd
+sd -- [r2]
+q -- [MQTT Broker]
+[r2] --> [f1]
+[MQTT Broker] -down- Zündung
+id --> fm
+od --> fm
+od --> td
+io -- [MQTT Broker]
+s -- fm
+----
 
 == Project Description
 
