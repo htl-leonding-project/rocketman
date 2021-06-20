@@ -11,93 +11,83 @@ ifdef::backend-html5,backend-revealjs[image:logo.png[width=1000%]]
 
 === Systemarchitektur
 
-[plantuml, systemarchitecture, png]
-----
-package Suitcase {
+ifdef::backend-html5,backend-revealjs[image:system_architecture.png[width=1000%]]
 
-rectangle {
-    database "LocalDB" as ldb{
-          rectangle "Real-time data" as rtdata{
-          }
-    }
-    File jsonFile
-
-    }
-    node "Quarkus" as q {
-            [REST] as r1
-        }
-
-    file "Config File"
-
-    rectangle "Imput and Output" as io{
-        [funkmodules] as fm
-        [imput devices] as id
-        [output devices] as od
-
-        rectangle "Touch Display" as td{
-            [Webapplication] as w1
-        }
-    }
-
-    [MQTT Broker]
-}
-
-
-package CanSat {
-    node "Sensors" as s {
-        [Humidity Sensor]
-        [Temperatur Sensor]
-    }
-}
-
-package "Laptop" {
-    [Webapplication] as w2
-}
-
-cloud {
-
-
-    package "Saved data" as sd{
-        database "ExternalDB" {
-          folder "Persisted Data" {
-            [Folder] as f1
-          }
-        }
-        rectangle {
-            [REST] as r2
-        }
-    }
-}
-
-w2 -- ldb
-ldb -- q
-[r1] -- sd
-sd -- [r2]
-q -- [MQTT Broker]
-[r2] --> [f1]
-[MQTT Broker] -down- Zündung
-id --> fm
-od --> fm
-od --> td
-io -- [MQTT Broker]
-s -- fm
-----
+//[plantuml, systemarchitecture, png]
+//----
+//package Suitcase {
+//
+//rectangle {
+//    database "LocalDB" as ldb{
+//          rectangle "Real-time data" as rtdata{
+//          }
+//    }
+//    File jsonFile
+//
+//    }
+//    node "Quarkus" as q {
+//            [REST] as r1
+//        }
+//
+//    file "Config File"
+//
+//    rectangle "Imput and Output" as io{
+//        [funkmodules] as fm
+//        [imput devices] as id
+//        [output devices] as od
+//
+//        rectangle "Touch Display" as td{
+//            [Webapplication] as w1
+//        }
+//    }
+//
+//    [MQTT Broker]
+//}
+//
+//
+//package CanSat {
+//    node "Sensors" as s {
+//        [Humidity Sensor]
+//        [Temperatur Sensor]
+//    }
+//}
+//
+//package "Laptop" {
+//    [Webapplication] as w2
+//}
+//
+//cloud {
+//
+//
+//    package "Saved data" as sd{
+//        database "ExternalDB" {
+//          folder "Persisted Data" {
+//            [Folder] as f1
+//          }
+//        }
+//        rectangle {
+//            [REST] as r2
+//        }
+//    }
+//}
+//
+//w2 -- ldb
+//ldb -- q
+//[r1] -- sd
+//sd -- [r2]
+//q -- [MQTT Broker]
+//[r2] --> [f1]
+//[MQTT Broker] -down- Zündung
+//id --> fm
+//od --> fm
+//od --> td
+//io -- [MQTT Broker]
+//s -- fm
+//----
 
 == Project Description
 
 20/21 4ahitm/4ahif Instrumentenkoffer zum Abschuss einer Rakete für den Cansat Wettbewerb
-
-== Team
-
-=== 4AHITM
-* 03 DF
-* 06 FS
-
-=== 4AHIF
-* 17 PM
-* 10 HL
-* 14 KJ
-
 
 == Documents
 
@@ -123,6 +113,17 @@ s -- fm
 
 === Protokolle
 * https://htl-leonding-project.github.io/rocketman/protokoll1_231020[Protokoll 1, 23.10.2020]
+
+== Team
+
+=== 4AHITM
+* 03 DF
+* 06 FS
+
+=== 4AHIF
+* 17 PM
+* 10 HL
+* 14 KJ
 
 == External Project Repository
 
