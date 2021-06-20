@@ -18,6 +18,12 @@ Dev mode:
 
 To submit test data use MQTT Explorer see [here](../../asciidocs/json_schema_documentation.adoc)
 
+## Swagger documentation
+
+Documentation of all the Endpoints (When the program is started)
+
+http://localhost:8080/q/swagger-ui/
+
 ## Packaging and running the application
 
 The application can be packaged using:

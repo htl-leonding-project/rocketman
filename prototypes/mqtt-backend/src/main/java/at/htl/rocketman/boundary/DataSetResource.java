@@ -81,7 +81,7 @@ public class DataSetResource {
     @Path("descriptions")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @Operation(summary = "Get all description", description = "returns all descriptions from the database as a JSON object")
+    @Operation(summary = "Get all descriptions", description = "returns all descriptions from the database as a JSON object")
     public Response getAllDescriptions() {
         List<String> list = dataSetRepository.getAllDescriptions();
         StringBuilder array = new StringBuilder("[");
