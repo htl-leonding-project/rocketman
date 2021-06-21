@@ -1,8 +1,8 @@
-= Json Schema
+= MQTT file from CanSat
 
 image::./images/home.ico[link="https://github.com/htl-leonding-project/rocketman/blob/master/README.md"]
 
-The Json-Object sent from the CANsat contains an array of datasets.
+The Json-Object sent from the CanSat contains an array of datasets.
 
 A dataset consists of:
 

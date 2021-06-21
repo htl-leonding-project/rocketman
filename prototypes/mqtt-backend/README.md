@@ -16,7 +16,7 @@ Dev mode:
 ./mvnw compile quarkus:dev
 ```
 
-To submit test data use MQTT Explorer see [here](../../asciidocs/json_schema_documentation.adoc)
+To submit test data use MQTT Explorer see [here](../../asciidocs/CanSat_mqtt.adoc)
 
 ## Swagger documentation
 
