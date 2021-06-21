@@ -1,6 +1,6 @@
 = MQTT file from CanSat
 
-image::./images/home.ico[link="https://github.com/htl-leonding-project/rocketman/blob/master/README.md"]
+image::./images/home.ico[link="https://htl-leonding-project.github.io/rocketman/"]
 
 The Json-Object sent from the CanSat contains an array of datasets.
 

@@ -1,5 +1,7 @@
 = Actuator controller documentation
 
+image::./images/home.ico[link="https://htl-leonding-project.github.io/rocketman/"]
+
 For information on how to run the application read the readme file located in the project folder.
 
 == Joystick data
