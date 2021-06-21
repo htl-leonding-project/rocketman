@@ -37,18 +37,16 @@ export class RocketmanService {
   }
   saveConfig(conf: IConfig): void{
     this.conf = conf;
-    console.log(JSON.stringify(conf));
     const httpHeaders = new HttpHeaders();
 
-    this.httpClient.post<any>('http://localhost:8080/api/config/addConf', JSON.stringify(conf)
+    this.httpClient.post<any>('http://localhost:8080/api/config/', conf
     , { headers: httpHeaders }).subscribe(data => {
       console.log(data);
     });
-    console.log(JSON.stringify(conf));
   }
   getConfigs(): IConfig[]{
     let res: any;
-    this.httpClient.get('http://localhost:8080/api/config/getConf').subscribe((data) => {
+    this.httpClient.get('http://localhost:8080/api/config/').subscribe((data) => {
       res = data;
     });
     return [];

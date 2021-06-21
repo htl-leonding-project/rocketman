@@ -14,9 +14,7 @@ Then the application can be started using:
 docker-compose up
 
 mvn quarkus:dev
-```  
-
-Then, open your browser to http://localhost:8080/rocketman.html, and you should see a fluctuating price.
+```
 
 ## Anatomy
 
