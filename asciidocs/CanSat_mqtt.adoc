@@ -6,19 +6,14 @@ The Json-Object sent from the CanSat contains an array of datasets.
 
 A dataset consists of:
 
-* a discription -> what the dataset contains
-* the unit of the value
-* the value itself
-* timestamp -> time of recording by the CANsat
-
 [source,json]
 ----
 
 {
-    "description": "atmospheric_pressure",
-    "value": "4",
-    "unit": "pascal",
-    "timestamp": "2021-01-11T13:11:09.35"
+    "description": "atmospheric_pressure",  <.>
+    "value": "4", <.>
+    "unit": "pascal", <.>
+    "timestamp": "2021-01-11T13:11:09.35" <.>
 }
 ----
 
@@ -26,10 +21,16 @@ A dataset consists of:
 ----
 
 {
-    "description": "temperature",
-    "value": "200",
-    "unit": "celsius",
-    "timestamp": "2021-01-11T13:11:09.5Z4"
+    "description": "temperature", <.>
+    "value": "200", <.>
+    "unit": "celsius",  <.>
+    "timestamp": "2021-01-11T13:11:09.5Z4"  <.>
 }
 
 ----
+<.> a description -> what the dataset contains
+<.> the value itself
+<.> the unit of the value
+<.> timestamp -> time of recording by the CANsat
+
+

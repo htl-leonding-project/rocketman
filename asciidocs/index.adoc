@@ -108,10 +108,11 @@ ifdef::backend-html5,backend-revealjs[image:system_architecture.png[width=1000%]
 
 * https://htl-leonding-project.github.io/rocketman/actuator_controller_documentation[Actuator-Controller]
 
-* https://htl-leonding-project.github.io/rocketman/json_schema_documentation[JSON-Schema]
+* https://htl-leonding-project.github.io/rocketman/CanSat_mqtt[CanSat-mqtt]
 
 
 === Protokolle
+* https://htl-leonding-project.github.io/rocketman/protokoll1_231020[Protokoll 1, 23.10.2020]
 * https://htl-leonding-project.github.io/rocketman/protokoll1_231020[Protokoll 1, 23.10.2020]
 
 == Team
@@ -126,7 +127,5 @@ ifdef::backend-html5,backend-revealjs[image:system_architecture.png[width=1000%]
 * 14 KJ
 
 == External Project Repository
-
-https://github.com/2021-4ahif-syp/assigment02-system-specification-rocketman[System Specification 4AHIF]
 
 https://ars.electronica.art/esero/de/projects/cansat/[CanSat Homepage]
