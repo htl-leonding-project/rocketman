@@ -1,6 +1,6 @@
 = 2. Protokoll 4AHIF 21.12.2020
 
-image::./images/home.ico[link="https://htl-leonding-project.github.io/rocketman/"]
+icon:home[link="https://htl-leonding-project.github.io/rocketman/"]
 
 == Teilnehmer
 - Professor Stütz
