@@ -24,7 +24,7 @@ endif::backend-html5[]
 == System Specification
 
 === Initial situation
-The HTL Leonding is an HTL in the central region of Upper Austria. Groups of students often take part in the CanSat competition where the goal is to shoot a satellite the size of a tin can at a height of 500 meters.
+The HTL Leonding is a HTL in the central region of Upper Austria. Groups of students often take part in the CanSat competition where the goal is to shoot a satellite the size of a tin can at a height of 500 meters.
 
 === Actual state
 This satellite is equipped with various sensors and sends telemetry data (sensor data such as ambient temperature, altitude, etc.) to one or more ground stations.
