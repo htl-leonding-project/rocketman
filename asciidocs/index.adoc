@@ -9,9 +9,60 @@ ifndef::imagesdir[:imagesdir: ./images]
 
 ifdef::backend-html5,backend-revealjs[image:logo.png[width=1000%]]
 
-=== Systemarchitektur
+== Systemarchitektur
 
 ifdef::backend-html5,backend-revealjs[image:system_architecture.png[width=1000%]]
+
+
+[cols="^5,95%"]
+|===
+|Number |Description
+
+|1
+a| Es wird ein JSON Objekt mittels MQTT übertragen, in dem die Beschreibung, der Wert, die Einheit und der Zeitpunkt einer Messung gespeichert sind.
+
+[source,json]
+----
+
+{
+    "description": "temperature", <.>
+    "value": "200", <.>
+    "unit": "celsius",  <.>
+    "timestamp": "2021-01-11T13:11:09.5Z4"  <.>
+}
+
+----
+<.> Eine Beschreibung was in dem Dataset zu finden ist
+<.> Der Wert
+<.> Die Einheit des Wertes
+<.> Der Zeitpunkt der Messung
+
+|2
+a|Es wird ein JSON Objekt mittels MQTT übertragen, in dem die X-Position, Y-Position und der Wert des Schalters Übertragen wird. Weiters wird ein String gesendet in dem der aktuelle Usermode übertragen wird.
+
+[source,json]
+----
+{
+    "x-axis": 520, <.>
+    "y-axis": 512, <.>
+    "switch_value": 999 <.>
+}
+----
+
+<.> Die x-Position des Joysticks; ist bei ca. 512 wenn in der Mitte
+<.> Die Y-Position des Joysticks; ist bei ca. 512 wenn in der Mitte
+<.> Die Schalterposition, geht gegen 0, wenn der Schalter gedrückt wird
+
+|3
+|Es wird ein JSON Objekt über HTTP übertragen, in dem der Name, die Zeit für einen Countdown, der Zünder, der Widerstand und ob ein Joystick oder Videostreaming benutzt wird.
+
+|4
+|Column 2, row 4
+
+|5
+|Column 2, row 5
+|===
+
 
 //[plantuml, systemarchitecture, png]
 //----
