@@ -54,13 +54,88 @@ a|Es wird ein JSON Objekt mittels MQTT übertragen, in dem die X-Position, Y-Pos
 <.> Die Schalterposition, geht gegen 0, wenn der Schalter gedrückt wird
 
 |3
-|Es wird ein JSON Objekt über HTTP übertragen, in dem der Name, die Zeit für einen Countdown, der Zünder, der Widerstand und ob ein Joystick oder Videostreaming benutzt wird.
+a|
 
 |4
-|Column 2, row 4
+a|Es werden mehrere JSON-Arrays übertragen um im Frontend die Graphen darstellen zu können.
+
+* Es werden alle Beschreibungen als Array übermittelt.
+[source,json]
+----
+[
+  "Temperatur",
+  "Luftfeuchtigkeit"
+]
+----
+
+* Weiteres werden alle Timestamps für eine Beschreibung als Array übertragen.
+
+[source,json]
+----
+[
+  "2021-01-11T13:11:09.35",
+  "2021-01-11T13:11:12.35",
+  "2021-01-11T13:11:13.35",
+  "2021-01-11T13:11:14.35",
+  "2021-01-11T13:11:15.35"
+]
+----
+
+* Es wird die Zeit, in Sekunden die seit einem Start vergangen ist in einem JSON-Array übertragen.
+
+[source,json]
+----
+[
+  "2120863",
+  "2120812",
+  "2120842",
+  "2120889",
+  "2120921"
+]
+----
+
+* Es werden alle gespeicherten Werte für eine Beschreibung zurückgegeben.
+
+[source,json]
+----
+[
+  "1200",
+  "1402",
+  "1504",
+  "1589",
+  "1698"
+]
+----
+
+* Ein Endpoint gibt die Einheit für eine Beschreibung zurück.
+
+[source,json]
+----
+"meter"
+----
 
 |5
-|Column 2, row 5
+a|Es wird ein JSON Objekt über HTTP übertragen, in dem der Name, die Zeit für einen Countdown, der Zünder, der Widerstand und ob ein Joystick oder Videostreaming benutzt wird. Konfigurationen werden über das Frontend erstellt und dann in CSV-Files gespeichert.
+
+[source,json]
+----
+{
+    "name": "Default Configuration", <.>
+    "countdown": 120, <.>
+    "igniter": 4, <.>
+    "resistance": 1.4, <.>
+    "useJoyStick": false, <.>
+    "useVideo": false <.>
+}
+----
+
+<.> Der Name der Konfiguration
+<.> Der Countdown bis zum Start in Sekunden
+<.> Die Anzahl der Zünder
+<.> Der Widerstand **eines** Zünders
+<.> Ob ein Joystick für, zum Beispiel: Eine Kamera oder die St
+euerung für die Rakete oder den Satelliten
+<.> Ob die Rakete oder der Satellite ein Video streamt
 |===
 
 
