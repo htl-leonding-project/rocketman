@@ -32,7 +32,7 @@ public class CanSatConfigurationRepository {
             sb.append(config.getIgniter()).append(";");
             sb.append(config.getResistance()).append(";");
             sb.append(config.isUseJoyStick()).append(";");
-            sb.append(config.isUseJoyStick()).append("\n");
+            sb.append(config.isUseVideo()).append("\n");
 
             Files.write(Paths.get(FILENAME), sb.toString().getBytes(), StandardOpenOption.APPEND);
         } catch (IOException e) {
