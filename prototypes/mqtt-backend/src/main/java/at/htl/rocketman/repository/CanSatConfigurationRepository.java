@@ -31,7 +31,6 @@ public class CanSatConfigurationRepository {
             sb.append(config.getCountdown()).append(";");
             sb.append(config.getIgniter()).append(";");
             sb.append(config.getResistance()).append(";");
-            sb.append(config.isUseJoyStick()).append(";");
             sb.append(config.isUseVideo()).append("\n");
 
             Files.write(Paths.get(FILENAME), sb.toString().getBytes(), StandardOpenOption.APPEND);
@@ -42,7 +41,7 @@ public class CanSatConfigurationRepository {
 
     public List<CanSatConfiguration> readConfig() {
         File file = new File(FILENAME);
-        List<CanSatConfiguration> res = new LinkedList<CanSatConfiguration>();
+        List<CanSatConfiguration> res = new LinkedList<>();
         List<String> lines = null;
         try {
             lines = Files.readAllLines(file.toPath());

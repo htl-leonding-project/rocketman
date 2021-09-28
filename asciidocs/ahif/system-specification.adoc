@@ -151,6 +151,12 @@ AdminGUI -- (receive and save configurations)
 @enduml
 ----
 
+==== Deployment-Diagramm
+[plantuml,deploymentdiagramm, png]
+----
+
+----
+
 
 === Goals
 The goal is to make it easier for future students to participate. As there is already an existing design for the ground station.
