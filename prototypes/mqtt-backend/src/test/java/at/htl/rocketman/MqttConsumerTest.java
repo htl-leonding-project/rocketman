@@ -7,12 +7,17 @@ import org.jboss.logging.Logger;
 import org.junit.jupiter.api.*;
 
 import javax.inject.Inject;
+import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Collection;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import static org.assertj.db.api.Assertions.assertThat;
 import static org.assertj.db.output.Outputs.output;
@@ -25,6 +30,15 @@ class MqttConsumerTest {
 
     @Inject
     MqttConsumer mqttConsumer;
+
+    protected static Collection<Path> find(String fileName, String searchDirectory) throws IOException {
+        try (Stream<Path> files = Files.walk(Paths.get(searchDirectory))) {
+            return files
+                    .filter(f -> f.getFileName().toString().equals(fileName))
+                    .collect(Collectors.toList());
+
+        }
+    }
 
     @BeforeEach
     void setUp() {
@@ -47,8 +61,11 @@ class MqttConsumerTest {
     @Order(100)
     @DisplayName("Test consumeJson with a working json with only one example object")
     void test_consumeWithGoodJson() throws IOException {
-        byte[] data = Files.readAllBytes(Path.of("src/test/resources/good.json"));
-        mqttConsumer.setSchemaFilename("src/main/resources/json_schema.json");
+        Path goodJson = find("good.json", ".").stream().findFirst().get();
+        Path jsonSchema = find("json_schema.json", ".").stream().findFirst().get();
+
+        byte[] data = Files.readAllBytes(goodJson);
+        mqttConsumer.setSchemaFilename(String.valueOf(jsonSchema));
         mqttConsumer.consumeJson(data);
 
         Datasource ds = new Datasource();
@@ -62,8 +79,11 @@ class MqttConsumerTest {
     @Order(200)
     @DisplayName("Test consumeJson with a faulty json")
     void test_consumeWithBadJson() throws IOException {
-        byte[] data = Files.readAllBytes(Path.of("src/test/resources/bad.json"));
-        mqttConsumer.setSchemaFilename("src/main/resources/json_schema.json");
+        Path badjson = find("bad.json", ".").stream().findFirst().get();
+        Path jsonSchema = find("json_schema.json", ".").stream().findFirst().get();
+
+        byte[] data = Files.readAllBytes(badjson);
+        mqttConsumer.setSchemaFilename(String.valueOf(jsonSchema));
         mqttConsumer.consumeJson(data);
 
         Datasource ds = new Datasource();
