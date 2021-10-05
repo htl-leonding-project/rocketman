@@ -37,7 +37,9 @@ export class RocketmanService {
   }
   saveConfig(conf: IConfig): void{
     this.conf = conf;
-    const httpHeaders = new HttpHeaders();
+    const httpHeaders = new HttpHeaders({
+      'Access-Control-Allow-Origin':'true',
+    });
 
     this.httpClient.post<any>('http://localhost:8080/api/config/', conf
     , { headers: httpHeaders }).subscribe(data => {
@@ -46,7 +48,7 @@ export class RocketmanService {
   }
   getConfigs(): IConfig[]{
     let res: any;
-    this.httpClient.get('http://localhost:8080/api/config/').subscribe((data) => {
+    this.httpClient.get('http://localhost:8000/api/config/').subscribe((data) => {
       res = data;
     });
     return [];

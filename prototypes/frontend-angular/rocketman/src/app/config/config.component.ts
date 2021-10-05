@@ -15,7 +15,7 @@ export class ConfigComponent implements OnInit {
   countdown = '00:00';
   igniter = 0;
   resistance = 0;
-  useJoyStick = true;
+  useJoyStick = false;
   useVideo = false;
   conf!: IConfig;
 
