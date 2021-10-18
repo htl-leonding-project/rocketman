@@ -18,7 +18,10 @@ ifdef::backend-html5,backend-revealjs[image:system_architecture.png[width=1000%]
 |===
 |Number |Description
 
-|1
+|1a
+a| JSON Objekte sollten nicht mit MQTT gesendet werden, da LoRa auf Low Power und kleine Payloads optimiert ist. Müssen noch vernünftige Lösung ausarbeiten
+
+|1b
 a| Es wird ein JSON Objekt mittels MQTT übertragen, in dem die Beschreibung, der Wert, die Einheit und der Zeitpunkt einer Messung gespeichert sind.
 
 [source,json]
@@ -38,7 +41,7 @@ a| Es wird ein JSON Objekt mittels MQTT übertragen, in dem die Beschreibung, de
 <.> Der Zeitpunkt der Messung
 
 |2
-a|Es wird ein JSON Objekt mittels MQTT übertragen, in dem die X-Position, Y-Position und der Wert des Schalters Übertragen wird. Weiters wird ein String gesendet in dem der aktuelle Usermode übertragen wird.
+a| Es wird ein JSON Objekt mittels LoRa übertragen, in dem die X-Position, Y-Position und der Wert des Schalters Übertragen wird. Weiters wird ein String gesendet in dem der aktuelle Usermode übertragen wird.
 
 [source,json]
 ----
@@ -54,7 +57,7 @@ a|Es wird ein JSON Objekt mittels MQTT übertragen, in dem die X-Position, Y-Pos
 <.> Die Schalterposition, geht gegen 0, wenn der Schalter gedrückt wird
 
 |3
-a|
+a| Muss noch mit anderem Team besprochen werden.
 
 |4
 a|Es werden mehrere JSON-Arrays übertragen um im Frontend die Graphen darstellen zu können.
@@ -136,6 +139,14 @@ a|Es wird ein JSON Objekt über HTTP übertragen, in dem der Name, die Zeit für
 <.> Ob ein Joystick für, zum Beispiel: Eine Kamera oder die St
 euerung für die Rakete oder den Satelliten
 <.> Ob die Rakete oder der Satellite ein Video streamt
+
+|6
+a| Ist noch unklar.
+
+|7
+a| Muss noch mit anderem Team besprochen werden.
+
+
 |===
 
 
