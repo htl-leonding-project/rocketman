@@ -228,6 +228,10 @@ a| Muss noch mit anderem Team besprochen werden.
 
 == Documents
 
+=== Notizen
+
+* https://htl-leonding-project.github.io/rocketman/important_notes[Notizen]
+
 === 4AHITM
 * https://htl-leonding-project.github.io/rocketman/ahitm/proposal[Projekt Auftrag (4AHITM)]
 

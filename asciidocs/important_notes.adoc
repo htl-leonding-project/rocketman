@@ -1,0 +1,12 @@
+= Rocketman - Wichtige Notizen
+Feichtinger Sarah, Dumfarth Felix, Marcel Plakolb, Lukas Hain, Jan Kaufmann
+1.1.0, 2020-10-28
+:sourcedir: ../src/main/java
+:icons: font
+ifndef::imagesdir[:imagesdir: ./images]
+:sectnums:    // Nummerierung der Überschriften / section numbering
+:toc: left
+
+* xBee, LoRa Module wurden am 13.10.2021 von der 5AHITM an die 5AHIF übergeben.
+
+* 04.11.2021 wurden die Adapterplatinen für die xBee Module übergeben.
