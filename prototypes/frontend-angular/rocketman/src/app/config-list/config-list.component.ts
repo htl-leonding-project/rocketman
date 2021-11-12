@@ -13,6 +13,7 @@ export class ConfigListComponent implements OnInit {
 
   ngOnInit(): void {
     this.confs = this.rocketman.getConfigs();
+    console.log(this.confs);
   }
 
 }

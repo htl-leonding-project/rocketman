@@ -9,6 +9,10 @@ ifndef::imagesdir[:imagesdir: ./images]
 
 ifdef::backend-html5,backend-revealjs[image:logo.png[width=1000%]]
 
+Es soll eine Mobile Steuereinheit in Form eines Koffers gebaut werden, mit der man die Rakete
+über ein Kabel Starten kann. Außerdem soll die Kommunikation mit mehreren Außenstellen über 2
+verschiedene Protokolle ermöglicht werden.
+
 == Systemarchitektur
 
 ifdef::backend-html5,backend-revealjs[image:system_architecture.png[width=1000%]]

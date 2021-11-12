@@ -44,7 +44,7 @@ export class RocketmanService {
   }
   getConfigs(): IConfig[]{
     let res: any;
-    this.httpClient.get<IConfig[]>('http://localhost:8000/api/config/').subscribe((data) => {
+    this.httpClient.get<IConfig[]>('http://localhost:8080/api/config/').subscribe((data) => {
       res = data;
     });
     return res;
