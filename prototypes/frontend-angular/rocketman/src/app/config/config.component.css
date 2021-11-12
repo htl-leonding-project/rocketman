@@ -5,7 +5,7 @@ p,h1{
   color: white;
 }
 form{
-  margin-top: 10vh;
+  margin-top: 7vh;
 }
 h1{
   font-size: 350%;
@@ -91,14 +91,128 @@ input{
 }
 .yes{
   background-color: lawngreen;
+  -webkit-animation-name: yes;
+  -moz-animation-name: yes;
+  -o-animation-name: yes;
+  animation-name: yes;
+  -webkit-animation-duration: 0.8s;
+  -moz-animation-duration: 0.8s;
+  -o-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -webkit-animation-iteration-count: infinite;
+  -moz-animation-iteration-count: infinite;
+  -o-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+  -moz-animation-direction: alternate;
+  -o-animation-direction: alternate;
+  animation-direction: alternate;
+  -webkit-animation-timing-function: ease-in-out;
+  -moz-animation-timing-function: ease-in-out;
+  -o-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+  border: 0px;
 }
 
 .highlightBtn {
   opacity: .5;
+  -o-animation: none !important;
+  -moz-animation: none !important;
+  -ms-animation: none !important;
+  -webkit-animation: none !important;
+  animation: none !important;
 }
 
 .no{
   background-color: orangered;
+  -webkit-animation-name: red;
+  -moz-animation-name: red;
+  -o-animation-name: red;
+  animation-name: red;
+  -webkit-animation-duration: 0.8s;
+  -moz-animation-duration: 0.8s;
+  -o-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -webkit-animation-iteration-count: infinite;
+  -moz-animation-iteration-count: infinite;
+  -o-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+  -moz-animation-direction: alternate;
+  -o-animation-direction: alternate;
+  animation-direction: alternate;
+  -webkit-animation-timing-function: ease-in-out;
+  -moz-animation-timing-function: ease-in-out;
+  -o-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+  border: 0px;
+}
+
+@-webkit-keyframes yes {
+  0% {box-shadow: 0px 0px 8px rgba(0, 255, 0, 0.7);}
+  100% {box-shadow: 0px 0px 22px rgba(0, 255, 0, 1);}
+}
+@-moz-keyframes yes {
+  0% {box-shadow: 0px 0px 8px rgba(0, 255, 0, 0.7);}
+  100% {box-shadow: 0px 0px 22px rgba(0, 255, 0, 1);}
+}
+@-o-keyframes yes {
+  0% {box-shadow: 0px 0px 8px rgba(0, 255, 0, 0.7);}
+  100% {box-shadow: 0px 0px 22px rgba(0, 255, 0, 1);}
+}
+@keyframes yes {
+  0% {box-shadow: 0px 0px 8px rgba(0, 255, 0, 0.7);}
+  100% {box-shadow: 0px 0px 22px rgba(0, 255, 0, 1);}
+}
+
+@-webkit-keyframes red {
+  0% {box-shadow: 0px 0px 8px rgba(255, 0, 0, 0.7);}
+  100% {box-shadow: 0px 0px 22px rgb(255, 0, 0);}
+}
+@-moz-keyframes red {
+  0% {box-shadow: 0px 0px 8px rgba(255, 0, 0, 0.7);}
+  100% {box-shadow: 0px 0px 22px rgb(255, 0, 0);}
+}
+@-o-keyframes red {
+  0% {box-shadow: 0px 0px 8px rgba(255, 0, 0, 0.7);}
+  100% {box-shadow: 0px 0px 22px rgb(255, 0, 0);}
+}
+@keyframes red {
+  0% {box-shadow: 0px 0px 8px rgba(255, 0, 0, 0.7);}
+  100% {box-shadow: 0px 0px 22px rgb(255, 0, 0);}
 }
 
 
+
+.svg{
+  margin: 2vh 0 0 2vh;
+}
+.houseA{
+  position: absolute;
+  top: 2vh;
+}
+.house{
+  display:inline;
+  font-size: 55px;
+  color: #4fc44f;
+  -webkit-animation-name: pulseText;
+  -moz-animation-name: pulseText;
+  -o-animation-name: pulseText;
+  animation-name: pulseText;
+  -webkit-animation-duration: 0.8s;
+  -moz-animation-duration: 0.8s;
+  -o-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -webkit-animation-iteration-count: infinite;
+  -moz-animation-iteration-count: infinite;
+  -o-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+  -moz-animation-direction: alternate;
+  -o-animation-direction: alternate;
+  animation-direction: alternate;
+  -webkit-animation-timing-function: ease-in-out;
+  -moz-animation-timing-function: ease-in-out;
+  -o-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+}

@@ -1,11 +1,17 @@
-<div class="chart-wrapper">
-  <canvas [width]="20" baseChart
-          [datasets]="lineChartData"
-          [labels]="lineChartLabels"
-          [options]="lineChartOptions"
-          [colors]="lineChartColors"
-          [legend]="lineChartLegend"
-          [chartType]="lineChartType"
-          [plugins]="lineChartPlugins">
-  </canvas>
-</div>
+<ngx-charts-line-chart
+  [view]="[700, 300]"
+  [scheme]="colorScheme"
+  [legend]="true"
+  [showXAxisLabel]="showXAxisLabel"
+  [showYAxisLabel]="showYAxisLabel"
+  [xAxis]="xAxis"
+  [yAxis]="yAxis"
+  [xAxisLabel]="xAxisLabel"
+  [yAxisLabel]="yAxisLabel"
+  [timeline]="timeline"
+  [results]="lineChartData"
+  (select)="onSelect($event)"
+  (activate)="onActivate($event)"
+  (deactivate)="onDeactivate($event)"
+>
+</ngx-charts-line-chart>

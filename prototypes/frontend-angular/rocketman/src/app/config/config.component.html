@@ -1,10 +1,21 @@
-<form >
+<a class="houseA" style="text-decoration: none;" href="/home">
+  <p class="svg house">⇦</p>
+<!--  <svg class="svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 48 48"
+       width="48px" height="48px">
+    <g id="surface1623067">
+      <path style=" stroke:none;fill-rule:nonzero;fill:rgb(100%,100%,100%);fill-opacity:1;"
+            d="M 24 4.199219 L 2 24 L 8 24 L 8 42 L 22 42 L 22 30 L 26 30 L 26 42 L 40 42 L 40 24 L 46 24 Z M 24 9.582031 L 36 20.382812 L 36 38 L 30 38 L 30 26 L 18 26 L 18 38 L 12 38 L 12 20.382812 Z M 24 9.582031 "/>
+    </g>
+  </svg>-->
+</a>
+
+<form>
   <h1 fxLayout="row" fxLayoutAlign="center center">Einstellungen</h1>
   <p fxLayout="row" fxLayoutAlign="center center">
     Name <input [(ngModel)]="name" name="name" type="text" placeholder="Config 1">
   </p>
   <p fxLayout="row" fxLayoutAlign="center center">
-    Countdown <input [(ngModel)]="countdown" name="countdown" type="number" placeholder="mm:ss">
+    Countdown <input [(ngModel)]="countdown" name="countdown" type="time" placeholder="00:10">
   </p>
   <p fxLayout="row" fxLayoutAlign="center center">
     Anzahl Zünder <input [(ngModel)]="igniter" name="igniter" type="number" placeholder="1">
@@ -14,18 +25,23 @@
   </p>
   <p fxLayout="row" fxLayoutAlign="center center">
     JoyStick
-    <button class="checkBtn yes" type="button" [class.highlightBtn]="!useJoyStick" (click)="changeJoyStickUse(true)">✓</button>
-    <button class="checkBtn no" type="button" [class.highlightBtn]="useJoyStick" (click)="changeJoyStickUse(false)">✗</button></p>
+    <button class="checkBtn yes" type="button" [class.highlightBtn]="!useJoyStick" (click)="changeJoyStickUse(true)">✓
+    </button>
+    <button class="checkBtn no" type="button" [class.highlightBtn]="useJoyStick" (click)="changeJoyStickUse(false)">✗
+    </button>
+  </p>
   <p fxLayout="row" fxLayoutAlign="center center">Video
     <button class="checkBtn yes" type="button" [class.highlightBtn]="!useVideo" (click)="changeVideo(true)">✓</button>
-    <button class="checkBtn no" type="button" [class.highlightBtn]="useVideo" (click)="changeVideo(false)">✗</button></p>
+    <button class="checkBtn no" type="button" [class.highlightBtn]="useVideo" (click)="changeVideo(false)">✗</button>
+  </p>
   <div class="buttons" fxLayoutAlign="center center" fxLayout="row">
-  <button class="btn" (click)="start()" type="button">Daten Anzeige</button>
+    <button class="button pulseText" (click)="start()" type="button">Daten Anzeige</button>
   </div>
   <div class="buttons" fxLayoutAlign="center center" fxLayout="row">
     <br>
-  <button class="btn" (click)="save()" type="button">Einstellung Speichern</button>
-  <button class="btn" (click)="loadConf()" type="button">Einstellung Laden</button>
+    <button class="button pulseText" (click)="save()" type="button">Einstellung Speichern</button>
+    <h1>|</h1>
+    <button class="button pulseText" (click)="loadConf()" type="button">Einstellung Laden</button>
   </div>
 </form>
 

@@ -10,8 +10,7 @@ import {HttpData, RocketmanService} from '../rocketman.service';
 interface Data{
   desc: string;
   bC: string;
-  lineChartData: ChartDataSets[];
-  lineChartLabels: Label[];
+  data: any[]
 }
 
 @Component({
@@ -42,6 +41,25 @@ export class ViewComponent implements OnInit {
       for (const sub of subscribtion) {
         this.loadData(sub.toString()).subscribe((data: HttpData) => {
           let found = false;
+          let graphData: { name: Label; value: JsonObject; }[] = []
+          let dataLenght = []
+          let graphData2 = '[\n' +
+            '  {\n' +
+            '    "name": "'+ sub.toString() +'",\n' +
+            '    "series": [\n'
+          for (let i = 0; i <this.graphs.length;i++){
+            dataLenght.push(i)
+            graphData2 += "{\n" +
+            "        \"name\": \""+ data.timeStamps[i] +"\",\n" +
+            "        \"value\": "+ data.values[i]+"\n" +
+            "      }"
+            if (i != this.graphs.length-1){
+              graphData2 += ","
+            }
+          }
+          graphData2 += "    ]\n" +
+            "  }]"
+         // dataLenght.map(elem => graphData.push({name: data.timeStamps[elem], value: data.values[elem] }));
 
           for (let i = 0; i < this.graphs.length; i++) {
             if (this.graphs[i].desc === sub.toString()) {
@@ -50,8 +68,7 @@ export class ViewComponent implements OnInit {
               this.graphs[i] = {
                 desc: sub.toString(),
                 bC: 'rgba(255, 255, 0, 0.28)',
-                lineChartData: [{data: data.values, label: sub.toString()}],
-                lineChartLabels: data.timeStamps
+                data: JSON.parse(graphData2)
               };
             }
           }
@@ -60,8 +77,7 @@ export class ViewComponent implements OnInit {
             this.graphs.push({
               desc: sub.toString(),
               bC: 'rgba(255, 255, 0, 0.28)',
-              lineChartData: [{data: data.values, label: sub.toString()}],
-              lineChartLabels: data.timeStamps
+              data: JSON.parse(graphData2)
             });
           }
         });

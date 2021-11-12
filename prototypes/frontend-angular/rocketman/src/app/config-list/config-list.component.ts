@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {RocketmanService} from "../rocketman.service";
 
 @Component({
   selector: 'app-config-list',
@@ -6,10 +8,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./config-list.component.css']
 })
 export class ConfigListComponent implements OnInit {
-
-  constructor() { }
+  confs: any;
+  constructor(private httpClient: HttpClient, private readonly rocketman: RocketmanService) { }
 
   ngOnInit(): void {
+    this.confs = this.rocketman.getConfigs();
   }
 
 }
