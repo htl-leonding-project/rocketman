@@ -1,9 +1,6 @@
 package at.htl.rocketman;
 
-
-import org.jboss.logging.Logger;
 import org.sqlite.SQLiteDataSource;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -17,10 +14,6 @@ public class Datasource {
 
     private static Connection c = null;
 
-    /**
-     * @return
-     * @throws SQLException
-     */
     public Connection getDb() throws SQLException {
         if (c == null || c.isClosed()) {
             c = sqliteDb.getConnection();

@@ -35,6 +35,7 @@ public class StartRepository {
             ResultSet rs = preparedStatement.getGeneratedKeys();
             rs.next();
             start.setId(rs.getLong(1));
+            preparedStatement.close();
         } catch (SQLException e) {
             LOG.error("SQl-Error occurred: " + e.getMessage());
         } catch (Exception e) {
@@ -59,6 +60,8 @@ public class StartRepository {
                 }
                 res.add(start);
             }
+            resultSet.close();
+            preparedStatement.close();
         } catch (SQLException e) {
             LOG.error("SQl-Error occurred: " + e.getMessage());
         } catch (Exception e) {
@@ -82,6 +85,8 @@ public class StartRepository {
             if (resultSet.getString("st_endDate") != null) {
                 start.setEndDate(LocalDateTime.parse(resultSet.getString("st_endDate"), DateTimeFormatter.ISO_LOCAL_DATE_TIME));
             }
+            resultSet.close();
+            preparedStatement.close();
         } catch (SQLException e) {
             LOG.error("SQl-Error occurred: " + e.getMessage());
         } catch (Exception e) {
@@ -102,6 +107,8 @@ public class StartRepository {
                 start.setComment(resultSet.getString("st_comment"));
                 start.setStartDate(LocalDateTime.parse(resultSet.getString("st_startDate"), DateTimeFormatter.ISO_LOCAL_DATE_TIME));
             }
+            resultSet.close();
+            preparedStatement.close();
         } catch (SQLException e) {
             LOG.error("SQl-Error occurred: " + e.getMessage());
         } catch (Exception e) {
@@ -122,6 +129,7 @@ public class StartRepository {
             PreparedStatement preparedStatement = conn.prepareStatement(sqlString);
             preparedStatement.setString(1, LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
             preparedStatement.execute();
+            preparedStatement.close();
         } catch (SQLException e) {
             LOG.error("SQl-Error occurred: " + e.getMessage());
         } catch (Exception e) {

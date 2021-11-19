@@ -141,25 +141,28 @@ public class DataSetResource {
             "for all Datasets for the given description from the database as a JSON object")
     public Response getTimesSinceStart(@PathParam("description") String description) {
         List<DataSet> list = dataSetRepository.findByDescription(description);
-        LocalDateTime start = list.get(0).getTimestamp();
-        StringBuilder array = new StringBuilder("[");
-        for (DataSet dataSet : list) {
-            long timeSinceStart = ChronoUnit.SECONDS.between(start, dataSet.getTimestamp());
-            array.append("\"")
-                    .append(timeSinceStart)
-                    .append("\"")
-                    .append(",");
+        if (!list.isEmpty()) {
+            LocalDateTime start = list.get(0).getTimestamp();
+            StringBuilder array = new StringBuilder("[");
+            for (DataSet dataSet : list) {
+                long timeSinceStart = ChronoUnit.SECONDS.between(start, dataSet.getTimestamp());
+                array.append("\"")
+                        .append(timeSinceStart)
+                        .append("\"")
+                        .append(",");
+            }
+            array.append("]");
+            if(list.size() != 0) {
+                array.delete(array.lastIndexOf(","), array.lastIndexOf(",") + 1);
+            }
+            return Response.ok(array.toString())
+                    .header("Access-Control-Allow-Credentials", "true")
+                    .header("Access-Control-Allow-Headers",
+                            "origin, content-type, accept, authorization")
+                    .header("Access-Control-Allow-Methods",
+                            "GET, POST, PUT, DELETE, OPTIONS, HEAD").build();
         }
-        array.append("]");
-        if(list.size() != 0) {
-            array.delete(array.lastIndexOf(","), array.lastIndexOf(",") + 1);
-        }
-        return Response.ok(array.toString())
-                .header("Access-Control-Allow-Credentials", "true")
-                .header("Access-Control-Allow-Headers",
-                        "origin, content-type, accept, authorization")
-                .header("Access-Control-Allow-Methods",
-                        "GET, POST, PUT, DELETE, OPTIONS, HEAD").build();
+        return Response.ok("[]").build();
     }
 
     @GET

@@ -40,8 +40,9 @@ public class DataSetRepository {
                 preparedStatement.setLong(5, dataSet.getStart().getId());
             }
             preparedStatement.executeUpdate();
+            preparedStatement.close();
         } catch (SQLException e) {
-            LOG.error("SQl-Error occurred: " + e.getMessage());
+            LOG.error("SQL-Error occurred in persist: " + e.getMessage());
         } catch (Exception e) {
             LOG.error("Unknown error occurred: " + e.getMessage());
         }
@@ -65,8 +66,10 @@ public class DataSetRepository {
                 dataSet.getStart().setId(resultSet.getLong("ds_st_id"));
                 res.add(dataSet);
             }
+            resultSet.close();
+            preparedStatement.close();
         } catch (SQLException e) {
-            LOG.error("SQl-Error occurred: " + e.getMessage());
+            LOG.error("SQl-Error occurred in getAll: " + e.getMessage());
         } catch (Exception e) {
             LOG.error("Unknown error occurred: " + e.getMessage());
         }
@@ -92,8 +95,10 @@ public class DataSetRepository {
                 dataSet.setTimestamp(LocalDateTime.parse(resultSet.getString("ds_timestamp"), DateTimeFormatter.ISO_LOCAL_DATE_TIME));
                 res.add(dataSet);
             }
+            resultSet.close();
+            preparedStatement.close();
         } catch (SQLException e) {
-            LOG.error("SQl-Error occurred: " + e.getMessage());
+            LOG.error("SQl-Error occurred in findByDescription: " + e.getMessage());
         } catch (Exception e) {
             LOG.error("Unknown error occurred: " + e.getMessage());
         }
@@ -111,7 +116,7 @@ public class DataSetRepository {
                 res.add(resultSet.getString("ds_description"));
             }
         } catch (SQLException e) {
-            LOG.error("SQl-Error occurred: " + e.getMessage());
+            LOG.error("SQl-Error occurred in getAllDescriptions: " + e.getMessage());
         } catch (Exception e) {
             LOG.error("Unknown error occurred: " + e.getMessage());
         }
@@ -129,7 +134,7 @@ public class DataSetRepository {
                 return resultSet.getString("ds_unit");
             }
         } catch (SQLException e) {
-            LOG.error("SQl-Error occurred: " + e.getMessage());
+            LOG.error("SQl-Error occurred in getUnitForDescription: " + e.getMessage());
         } catch (Exception e) {
             LOG.error("Unknown error occurred: " + e.getMessage());
         }

@@ -31,12 +31,14 @@ public class InitBean {
         ResultSet tables = dbm.getTables(null, null, "data_set", null);
         if (tables.next()) {
             // Table exists
-            LOG.info("Table exists");
+            LOG.info("Tables exist");
         }
         else {
             LOG.info("Tables created");
             SqlRunner.createEmptyTables(c);
         }
+        tables.close();
+        c.close();
 
         // check internet connectivity
         try {
@@ -44,9 +46,7 @@ public class InitBean {
             URLConnection connection = url.openConnection();
             connection.connect();
             LOG.info("Internet is connected");
-        } catch (MalformedURLException e) {
-            LOG.error("Internet is not connected");
-        } catch (IOException e) {
+        } catch (Exception e) {
             LOG.error("Internet is not connected");
         }
     }

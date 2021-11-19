@@ -2,7 +2,6 @@ package at.htl.rocketman.repository;
 import at.htl.rocketman.Datasource;
 import org.apache.ibatis.jdbc.ScriptRunner;
 
-import javax.sql.DataSource;
 import java.io.*;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -26,7 +25,6 @@ public class SqlRunner {
             Properties scriptProperties = new Properties();
             loadFile(scriptProperties);
 
-
             Datasource dataSource = new Datasource();
             Connection conn = dataSource.getDb();
             System.out.println("Connection established......");
@@ -37,7 +35,7 @@ public class SqlRunner {
                 Reader reader = new BufferedReader(new FileReader(scriptProperties.getProperty(file)));
                 sr.runScript(reader);
             }
-
+            conn.close();
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
@@ -49,7 +47,6 @@ public class SqlRunner {
             Properties scriptProperties = new Properties();
             loadFile(scriptProperties);
 
-
             Datasource dataSource = new Datasource();
             Connection conn = dataSource.getDb();
             System.out.println("Connection established......");
@@ -60,13 +57,13 @@ public class SqlRunner {
             sr.runScript(new BufferedReader(new FileReader(dropScript)));
             String createScript = scriptProperties.getProperty(SqlScript.CREATE.name().toLowerCase());
             sr.runScript(new BufferedReader(new FileReader(createScript)));
-
+            conn.close();
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void createEmptyTables(Connection c) throws IOException {
+    public static void createEmptyTables(Connection c) throws IOException, SQLException {
         Properties scriptProperties = new Properties();
         loadFile(scriptProperties);
 
@@ -75,6 +72,7 @@ public class SqlRunner {
 
         String createScript = scriptProperties.getProperty(SqlScript.CREATE.name().toLowerCase());
         sr.runScript(new BufferedReader(new FileReader(createScript)));
+        c.close();
     }
 
     private static void loadFile(Properties scriptProperties) throws IOException {
@@ -83,7 +81,6 @@ public class SqlRunner {
         } catch(FileNotFoundException e){
             scriptProperties.load(new FileInputStream(TARGET_SCRIPT_PROPERTIES_PATH));
         }
-
     }
 
     public static void runScript(SqlScript sqlScript) {
@@ -100,7 +97,7 @@ public class SqlRunner {
 
             String script = scriptProperties.getProperty(sqlScript.name().toLowerCase());
             sr.runScript(new BufferedReader(new FileReader(script)));
-
+            conn.close();
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
