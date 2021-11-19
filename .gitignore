@@ -9,3 +9,5 @@ gh-pages/
 *.iml
 .DS_Store
 .env
+startCommands.txt
+startRocketman.sh

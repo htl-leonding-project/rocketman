@@ -52,7 +52,7 @@ public class DataSetRepository {
 
         Datasource ds = new Datasource();
         try (Connection conn = ds.getDb()) {
-            String getAllSqlString = "SELECT ds_description, ds_value, ds_unit, ds_timestamp, ds_st_id FROM data_set";
+            String getAllSqlString = "SELECT ds_description, ds_value, ds_unit, ds_timestamp, ds_st_id FROM data_set LIMIT 200";
             PreparedStatement preparedStatement = conn.prepareStatement(getAllSqlString);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -80,7 +80,7 @@ public class DataSetRepository {
         List<DataSet> res = new LinkedList<>();
         Datasource ds = new Datasource();
         try (Connection conn = ds.getDb()) {
-            String sqlString = "SELECT ds_description, ds_value, ds_unit, ds_timestamp FROM data_set WHERE ds_description = ?";
+            String sqlString = "SELECT ds_description, ds_value, ds_unit, ds_timestamp FROM data_set WHERE ds_description = ? LIMIT 200 ";
             PreparedStatement preparedStatement = conn.prepareStatement(sqlString);
             preparedStatement.setString(1, description.toLowerCase());
             ResultSet resultSet = preparedStatement.executeQuery();

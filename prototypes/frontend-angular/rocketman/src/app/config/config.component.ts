@@ -12,10 +12,10 @@ export class ConfigComponent implements OnInit {
   constructor(private router: Router, private httpClient: HttpClient, private readonly rocketman: RocketmanService) { }
 
   name = '';
-  countdown = '00:00';
+  countdown = new Date(2017, 10, 13, 10, 30, 0);
   igniter = 0;
   resistance = 0;
-  useJoyStick = false;
+  useJoyStick = true;
   useVideo = false;
   conf!: IConfig;
 
@@ -31,7 +31,7 @@ export class ConfigComponent implements OnInit {
   start(): void{
     this.rocketman.config =  {
       name: this.name, // string
-      countdown: Number(this.countdown), // zahl":"zahl
+      countdown: this.convertCountdown(), // zahl":"zahl
       igniter: this.igniter, // int
       resistance: this.resistance, // int
       useJoyStick: this.useJoyStick, // Boolean
@@ -43,7 +43,7 @@ export class ConfigComponent implements OnInit {
   save(): void{
     this.rocketman.saveConfig({
       name: this.name, // string
-      countdown: Number(this.countdown), // zahl":"zahl
+      countdown: this.convertCountdown(), // zahl":"zahl
       igniter: this.igniter, // int
       resistance: this.resistance, // int
       useJoyStick: this.useJoyStick, // Boolean
@@ -51,6 +51,11 @@ export class ConfigComponent implements OnInit {
     });
   }
 
+  convertCountdown(): number{
+     const min = Number(this.countdown.toString().split(':')[0]) * 60
+    const sec = Number(this.countdown.toString().split(':')[1]);
+    return sec+min;
+}
   loadConf(): void {
     this.router.navigate(['/confs']);
   }

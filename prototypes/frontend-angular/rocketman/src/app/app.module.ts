@@ -9,17 +9,19 @@ import { ArchiveComponent } from './archive/archive.component';
 import {FormsModule} from '@angular/forms';
 import { ViewComponent } from './view/view.component';
 import {HttpClientModule} from '@angular/common/http';
-import {Chart} from 'chart.js';
-import {ChartsModule} from 'ng2-charts';
-import { GraphComponent } from './graph/graph.component';
 import { ConfigListComponent } from './config-list/config-list.component';
+import {ChartCommonModule, ChartComponent, LineChartModule} from "@swimlane/ngx-charts";
+import {GraphComponent} from "./graph/graph.component";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
   { path: 'home', component: HomeComponent },
   { path: 'config', component: ConfigComponent },
   { path: 'archive', component: ArchiveComponent },
-  { path: 'view', component: ViewComponent }];
+  { path: 'view', component: ViewComponent },
+  { path: 'confs', component: ConfigListComponent }
+];
 
 @NgModule({
   declarations: [
@@ -36,8 +38,10 @@ const routes: Routes = [
     FlexLayoutModule,
     RouterModule.forRoot(routes),
     FormsModule,
+    ChartCommonModule,
     HttpClientModule,
-    ChartsModule
+    LineChartModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
