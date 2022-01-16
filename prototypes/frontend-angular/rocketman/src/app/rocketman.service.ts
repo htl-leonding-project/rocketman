@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Label} from 'ng2-charts';
@@ -13,9 +13,11 @@ export class RocketmanService {
   timestamps?: Observable<any>;
   values?: Observable<any>;
   unit?: Observable<any>;
-  constructor(private httpClient: HttpClient) { }
 
-  loadData(desc: string): Observable<HttpData>{
+  constructor(private httpClient: HttpClient) {
+  }
+
+  loadData(desc: string): Observable<HttpData> {
     return new Observable(observer => {
       this.timestamps = this.getData('http://localhost:8080/api/dataset/timesSinceStart/' + desc);
       this.timestamps.subscribe((timeStamps: Label[]) => {
@@ -35,20 +37,19 @@ export class RocketmanService {
   getData(url: string): Observable<any> {
     return this.httpClient.get(url);
   }
-  saveConfig(conf: IConfig): void{
+
+  saveConfig(conf: IConfig): void {
     this.conf = conf;
 
     this.httpClient.post<any>('http://localhost:8080/api/config/', conf).subscribe(data => {
       console.log(data);
     });
   }
-  getConfigs(): IConfig[]{
-    let res: any;
-    this.httpClient.get<IConfig[]>('http://localhost:8080/api/config/').subscribe((data) => {
-      res = data;
-    });
-    return res;
+
+  getConfigs(): Observable<IConfig[]> {
+    return this.httpClient.get<IConfig[]>('http://localhost:8080/api/config/')
   }
+
   get config(): IConfig {
     return this.conf;
   }
@@ -56,7 +57,28 @@ export class RocketmanService {
   set config(value: IConfig) {
     this.conf = value;
   }
+
+  start() {
+    this.httpClient.post<any>('http://localhost:8080/api/start/', {
+      comment: '',
+      startDate: new Date().toDateString(),
+      endDate: null
+    }).subscribe(data => {
+      console.log(data);
+    });
+  }
+
+  endFlight() {
+    this.httpClient.put('http://localhost:8080/api/start/', {}).subscribe(data => {
+      console.log(data);
+    });
+  }
+
+  getFile() {
+    return this.httpClient.get<String>('http://localhost:8080/api/dataset/get-file')
+  }
 }
+
 export interface IConfig {
   name: string;
   countdown: number;
@@ -66,7 +88,7 @@ export interface IConfig {
   useVideo: boolean;
 }
 
-export interface HttpData{
+export interface HttpData {
   timeStamps: Label[];
   values: JsonObject[];
   unit: string;

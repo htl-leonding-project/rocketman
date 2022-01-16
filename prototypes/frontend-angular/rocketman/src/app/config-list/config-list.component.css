@@ -1,0 +1,50 @@
+div{
+  margin: 2% auto 2% auto;
+  color: black;
+  padding: 1%;
+  background-color: white;
+  width: 40%;
+  border-radius: 10px;
+}
+
+button{
+  padding: 1%;
+  color: white;
+  background-color: #121212;
+  border-radius: 10px;
+  font-size: 24px;
+  border: none;
+}
+
+.svg{
+  margin: 2vh 0 0 2vh;
+}
+.houseA{
+  position: absolute;
+  top: 2vh;
+}
+.house{
+  display:inline;
+  font-size: 55px;
+  color: #4fc44f;
+  -webkit-animation-name: pulseText;
+  -moz-animation-name: pulseText;
+  -o-animation-name: pulseText;
+  animation-name: pulseText;
+  -webkit-animation-duration: 0.8s;
+  -moz-animation-duration: 0.8s;
+  -o-animation-duration: 0.8s;
+  animation-duration: 0.8s;
+  -webkit-animation-iteration-count: infinite;
+  -moz-animation-iteration-count: infinite;
+  -o-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  -webkit-animation-direction: alternate;
+  -moz-animation-direction: alternate;
+  -o-animation-direction: alternate;
+  animation-direction: alternate;
+  -webkit-animation-timing-function: ease-in-out;
+  -moz-animation-timing-function: ease-in-out;
+  -o-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+}

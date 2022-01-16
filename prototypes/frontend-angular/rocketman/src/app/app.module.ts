@@ -13,6 +13,9 @@ import { ConfigListComponent } from './config-list/config-list.component';
 import {ChartCommonModule, ChartComponent, LineChartModule} from "@swimlane/ngx-charts";
 import {GraphComponent} from "./graph/graph.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {CountdownComponent, FormatTimePipe} from './countdown/countdown.component';
+import { DownloadComponent } from './download/download.component';
+import {CsvModule} from "@ctrl/ngx-csv";
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -20,7 +23,9 @@ const routes: Routes = [
   { path: 'config', component: ConfigComponent },
   { path: 'archive', component: ArchiveComponent },
   { path: 'view', component: ViewComponent },
-  { path: 'confs', component: ConfigListComponent }
+  { path: 'confs', component: ConfigListComponent },
+  { path: 'countdown', component: CountdownComponent },
+  { path: 'download', component: DownloadComponent }
 ];
 
 @NgModule({
@@ -32,6 +37,9 @@ const routes: Routes = [
     ViewComponent,
     GraphComponent,
     ConfigListComponent,
+    CountdownComponent,
+    FormatTimePipe,
+    DownloadComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +49,8 @@ const routes: Routes = [
     ChartCommonModule,
     HttpClientModule,
     LineChartModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    CsvModule
   ],
   providers: [],
   bootstrap: [AppComponent]

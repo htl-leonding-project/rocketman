@@ -18,3 +18,12 @@ body {
   width: 100%;
   background-color: white;
 }
+
+button{
+  padding: 1%;
+  color: white;
+  background-color: #121212;
+  border-radius: 10px;
+  font-size: 24px;
+  border: none;
+}
