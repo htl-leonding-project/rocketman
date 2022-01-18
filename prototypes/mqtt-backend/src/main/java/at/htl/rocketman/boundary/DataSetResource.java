@@ -9,6 +9,9 @@ import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.jboss.logging.Logger;
 
 import javax.inject.Inject;
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObjectBuilder;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -42,39 +45,62 @@ public class DataSetResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Save data in CSV-files", description = "Saves all Starts and DataSets in their respective CSV-files and returns the datasets from the database as a JSON Object")
     public Response getFile() {
-        StringBuilder dataSets_SB = new StringBuilder();
-        StringBuilder starts_SB = new StringBuilder();
-        dataSets_SB.append(DATASET_CSV_HEADER)
-                .append("\n");
-        starts_SB.append(START_CSV_HEADER)
-                .append("\n");
-        List<DataSet> dataSets = dataSetRepository.getAll();
-        for (DataSet temp : dataSets) {
-            dataSets_SB.append(temp.toCSVString())
-                    .append("\n");
+//        StringBuilder dataSets_SB = new StringBuilder();
+//        StringBuilder starts_SB = new StringBuilder();
+//        dataSets_SB.append(DATASET_CSV_HEADER)
+//                .append("\n");
+//        starts_SB.append(START_CSV_HEADER)
+//                .append("\n");
+//        List<DataSet> dataSets = dataSetRepository.getAll();
+//        for (DataSet temp : dataSets) {
+//            dataSets_SB.append(temp.toCSVString())
+//                    .append("\n");
+//        }
+//        List<Start> starts = startRepository.getAll();
+//        for (Start temp : starts) {
+//            starts_SB.append(temp.toCSVString())
+//                    .append("\n");
+//        }
+//        try {
+//            FileWriter myWriter = new FileWriter(DATASET_CSV_FILENAME);
+//            myWriter.write(dataSets_SB.toString());
+//            myWriter.close();
+//        }
+//        catch (IOException e) {
+//            LOG.error("Error while writing file " + DATASET_CSV_FILENAME + " : " + e.getMessage());
+//        }
+//        try {
+//            FileWriter myWriter = new FileWriter(START_CSV_FILENAME);
+//            myWriter.write(starts_SB.toString());
+//            myWriter.close();
+//        }
+//        catch (IOException e) {
+//            LOG.error("Error while writing file " + START_CSV_FILENAME + " : " + e.getMessage());
+//        }
+//        return Response.ok(dataSets_SB.toString()).build();
+        JsonObjectBuilder builder = Json.createObjectBuilder();
+        JsonArrayBuilder startArrayBuilder = Json.createArrayBuilder();
+        JsonArrayBuilder dataSetArrayBuilder = Json.createArrayBuilder();
+        for (Start start : startRepository.getAll()) {
+            JsonObjectBuilder startBuilder = Json.createObjectBuilder();
+            startBuilder.add("id", start.getId());
+            startBuilder.add("comment", start.getComment());
+            startBuilder.add("startDate", start.getStartDate().toString());
+            startBuilder.add("endDate", start.getEndDate().toString());
+            startArrayBuilder.add(startBuilder.build());
         }
-        List<Start> starts = startRepository.getAll();
-        for (Start temp : starts) {
-            starts_SB.append(temp.toCSVString())
-                    .append("\n");
+        for (DataSet dataSet : dataSetRepository.getAll()) {
+            JsonObjectBuilder dataSetBuilder = Json.createObjectBuilder();
+            dataSetBuilder.add("start_id", dataSet.getStart().getId());
+            dataSetBuilder.add("description", dataSet.getDescription());
+            dataSetBuilder.add("value", dataSet.getValue());
+            dataSetBuilder.add("unit", dataSet.getUnit());
+            dataSetBuilder.add("timestamp", dataSet.getTimestamp().toString());
+            dataSetArrayBuilder.add(dataSetBuilder.build());
         }
-        try {
-            FileWriter myWriter = new FileWriter(DATASET_CSV_FILENAME);
-            myWriter.write(dataSets_SB.toString());
-            myWriter.close();
-        }
-        catch (IOException e) {
-            LOG.error("Error while writing file " + DATASET_CSV_FILENAME + " : " + e.getMessage());
-        }
-        try {
-            FileWriter myWriter = new FileWriter(START_CSV_FILENAME);
-            myWriter.write(starts_SB.toString());
-            myWriter.close();
-        }
-        catch (IOException e) {
-            LOG.error("Error while writing file " + START_CSV_FILENAME + " : " + e.getMessage());
-        }
-        return Response.ok(dataSets_SB.toString()).build();
+        builder.add("starts", startArrayBuilder.build());
+        builder.add("dataSets", dataSetArrayBuilder.build());
+        return Response.ok(builder.build()).build();
     }
 
     @GET
