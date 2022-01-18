@@ -11,4 +11,7 @@
 
 - **actuator-controller**
     - Reads the position of an analog joystick and sends it to a mqtt-broker that is running on localhost. 
+    
+- **xbee**
+    - Contains the files for xBee video streaming.
   

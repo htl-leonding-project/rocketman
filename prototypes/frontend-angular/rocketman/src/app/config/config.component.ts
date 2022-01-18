@@ -9,7 +9,12 @@ import {IConfig, RocketmanService} from '../rocketman.service';
   styleUrls: ['./config.component.css']
 })
 export class ConfigComponent implements OnInit {
-  constructor(private router: Router, private httpClient: HttpClient, private readonly rocketman: RocketmanService) { }
+  constructor(private router: Router, private httpClient: HttpClient, private readonly rocketman: RocketmanService) {
+
+    if (rocketman.config){
+      this.addInput(rocketman.config)
+    }
+  }
 
   name = '';
   countdown = new Date(2017, 10, 13, 10, 30, 0);
@@ -22,6 +27,16 @@ export class ConfigComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  addInput(config: IConfig): void{
+    this.name = config.name;
+    this.countdown = this.convertCountdownToDate(config.countdown);
+    console.log(this.convertCountdownToDate(config.countdown))
+    this.igniter = config.igniter;
+    this.resistance = config.resistance;
+    this.useJoyStick= config.useJoyStick;
+    this.useVideo= config.useVideo;
+
+  }
   changeJoyStickUse(state: boolean): void {
     this.useJoyStick = state;
   }
@@ -56,7 +71,24 @@ export class ConfigComponent implements OnInit {
     const sec = Number(this.countdown.toString().split(':')[1]);
     return sec+min;
 }
+  convertCountdownToDate(countdown: number): Date{
+    var m = Math.floor(countdown % 3600 / 60);
+    var s = Math.floor(countdown % 3600 % 60);
+    return new Date(2017, 10, 13, m, s, 0);
+  }
   loadConf(): void {
     this.router.navigate(['/confs']);
+  }
+
+  startFlight() {
+    this.rocketman.config =  {
+      name: this.name, // string
+      countdown: this.convertCountdown(), // zahl":"zahl
+      igniter: this.igniter, // int
+      resistance: this.resistance, // int
+      useJoyStick: this.useJoyStick, // Boolean
+      useVideo: this.useVideo  // Boolean
+    };
+    this.router.navigate(['/countdown']);
   }
 }

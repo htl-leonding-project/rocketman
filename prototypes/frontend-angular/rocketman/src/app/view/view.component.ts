@@ -6,6 +6,7 @@ import {JsonObject} from '@angular/compiler-cli/ngcc/src/packages/entry_point';
 import {ChartDataSets} from 'chart.js';
 import {Label} from 'ng2-charts';
 import {HttpData, RocketmanService} from '../rocketman.service';
+import {Router} from "@angular/router";
 
 interface Data{
   desc: string;
@@ -26,7 +27,7 @@ export class ViewComponent implements OnInit {
   unit?: Observable<any>;
   desc?: string;
 
-  constructor(private httpClient: HttpClient, private readonly rocketman: RocketmanService) {
+  constructor(private httpClient: HttpClient, private readonly rocketman: RocketmanService,private router: Router) {
   }
 
   async ngOnInit(): Promise<void> {
@@ -87,5 +88,10 @@ export class ViewComponent implements OnInit {
 
   loadData(desc: string): Observable<HttpData> {
     return this.rocketman.loadData(desc);
+  }
+
+  endFlight() {
+    this.rocketman.endFlight()
+    this.router.navigate(['home'])
   }
 }
