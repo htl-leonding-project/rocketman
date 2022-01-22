@@ -37,3 +37,4 @@ nb-configuration.xml
 
 # database file
 /rocketman.db
+config.csv

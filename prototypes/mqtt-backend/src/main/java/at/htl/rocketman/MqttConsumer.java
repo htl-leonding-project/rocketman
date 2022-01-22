@@ -12,10 +12,15 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
+import javax.json.bind.JsonbException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.Collection;
+import java.nio.file.*;
 
 @ApplicationScoped
 public class MqttConsumer {
@@ -26,13 +31,9 @@ public class MqttConsumer {
     @Inject
     DataSetRepository dataSetRepository;
 
-    private static String SCHEMA_FILENAME = "classes/json_schema.json";
+    private static final String SCHEMA_FILENAME = "json_schema.json";
     private final ObjectMapper mapper = new ObjectMapper();
 
-    // Only for unittests
-    public void setSchemaFilename(String schemaFilename) {
-        SCHEMA_FILENAME = schemaFilename;
-    }
 
     /*
         {
@@ -45,7 +46,8 @@ public class MqttConsumer {
     @Incoming("rocketman")
     public void consumeJson(byte[] raw) throws IOException {
         String message = new String(raw);
-        JsonSchema schema = getJsonSchemaFromStringContent(new String(Files.readAllBytes(Path.of(SCHEMA_FILENAME))));
+        Path schemaFilePath = find(SCHEMA_FILENAME).stream().findFirst().get();
+        JsonSchema schema = getJsonSchemaFromStringContent(new String(Files.readAllBytes(schemaFilePath)));
         JsonNode node = getJsonNodeFromStringContent(message);
         Jsonb jsonb = JsonbBuilder.create();
         Set<ValidationMessage> errors = schema.validate(node);
@@ -53,7 +55,17 @@ public class MqttConsumer {
             LOG.error("JSON Object has errors! -> Ignored");
             return;
         }
-        DataSet ds = jsonb.fromJson(message, DataSet.class);
+        DataSet ds;
+        try {
+            ds = jsonb.fromJson(message, DataSet.class);
+        } catch (JsonbException e) {
+            LOG.error("JSON Object can't be deserialized -> Ignored");
+            return;
+        }
+        if (ds.getDescription().equals("")) {
+            LOG.error("JSON Object has no description -> Ignored");
+            return;
+        }
         LOG.info("JSON Object has no errors! " + ds.getDescription() + ": " + ds.getValue());
         try {
             double valueDouble = Double.parseDouble(ds.getValue());
@@ -70,5 +82,14 @@ public class MqttConsumer {
     protected JsonSchema getJsonSchemaFromStringContent(String schemaContent) {
         JsonSchemaFactory factory = JsonSchemaFactory.getInstance(SpecVersion.VersionFlag.V7);
         return factory.getSchema(schemaContent);
+    }
+
+    protected static Collection<Path> find(String fileName) throws IOException {
+        try (Stream<Path> files = Files.walk(Paths.get("."))) {
+            return files
+                    .filter(f -> f.getFileName().toString().equals(fileName))
+                    .collect(Collectors.toList());
+
+        }
     }
 }
