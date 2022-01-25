@@ -7,38 +7,76 @@ import org.jboss.logging.Logger;
 import org.junit.jupiter.api.*;
 
 import javax.inject.Inject;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Collection;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
-
 import static org.assertj.db.api.Assertions.assertThat;
 import static org.assertj.db.output.Outputs.output;
 
 @QuarkusTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class MqttConsumerTest {
+
     @Inject
     Logger LOG;
 
     @Inject
     MqttConsumer mqttConsumer;
 
-    protected static Collection<Path> find(String fileName, String searchDirectory) throws IOException {
-        try (Stream<Path> files = Files.walk(Paths.get(searchDirectory))) {
-            return files
-                    .filter(f -> f.getFileName().toString().equals(fileName))
-                    .collect(Collectors.toList());
+    String workingTemperatureJson = """
+            {
+              "description": "temperature",
+              "value": "1200",
+              "unit": "celsius",
+              "timestamp": "2021-01-19T17:13:41.777301100"
+            }
+            """;
 
-        }
-    }
+    String workingHeightJson = """
+            {
+              "description": "hoehe",
+              "value": "4000",
+              "unit": "meter",
+              "timestamp": "2022-01-19T17:13:41.777301100"
+            }
+            """;
+
+    String workingAirPressureJson = """
+            {
+              "description": "luftdruck",
+              "value": "100000",
+              "unit": "bar",
+              "timestamp": "2022-02-19T17:13:41.777301100"
+            }
+            """;
+
+    String noDescriptionJson = """
+            {
+              "description": "",
+              "value": "1200",
+              "unit": "celsius",
+              "timestamp": "2021-01-19T17:13:41.777301100"
+            }
+            """;
+
+    String faultyTimestampJson = """
+            {
+              "description": "",
+              "value": "1200",
+              "unit": "celsius",
+              "timestamp": "01-19T17:13:41.777301100"
+            }
+            """;
+
+    String valueNoStringJson = """
+            {
+              "description": "temperature",
+              "value": 1200,
+              "unit": "celsius",
+              "timestamp": "2021-01-19T17:13:41.777301100"
+            }
+            """;
 
     @BeforeEach
     void setUp() {
@@ -59,14 +97,9 @@ class MqttConsumerTest {
 
     @Test
     @Order(100)
-    @DisplayName("Test consumeJson with a working json with only one example object")
-    void test_consumeWithGoodJson() throws IOException {
-        Path goodJson = find("good.json", ".").stream().findFirst().get();
-        Path jsonSchema = find("json_schema.json", ".").stream().findFirst().get();
-
-        byte[] data = Files.readAllBytes(goodJson);
-        mqttConsumer.setSchemaFilename(String.valueOf(jsonSchema));
-        mqttConsumer.consumeJson(data);
+    @DisplayName("Consume - Should save one object")
+    void test_consumeSaveOneObject() throws IOException {
+        mqttConsumer.consumeJson(workingTemperatureJson.getBytes(StandardCharsets.UTF_8));
 
         Datasource ds = new Datasource();
 
@@ -77,19 +110,73 @@ class MqttConsumerTest {
 
     @Test
     @Order(200)
-    @DisplayName("Test consumeJson with a faulty json")
-    void test_consumeWithBadJson() throws IOException {
-        Path badjson = find("bad.json", ".").stream().findFirst().get();
-        Path jsonSchema = find("json_schema.json", ".").stream().findFirst().get();
-
-        byte[] data = Files.readAllBytes(badjson);
-        mqttConsumer.setSchemaFilename(String.valueOf(jsonSchema));
-        mqttConsumer.consumeJson(data);
+    @DisplayName("Consume - Temperature is not a string - nothing saved")
+    void test_valueIsNotAString() throws IOException {
+        mqttConsumer.consumeJson(valueNoStringJson.getBytes(StandardCharsets.UTF_8));
 
         Datasource ds = new Datasource();
 
         Table dataset = new Table(ds.getSqliteDb(), "data_set");
         output(dataset).toConsole();
         assertThat(dataset).hasNumberOfRows(0);
+    }
+
+    @Test
+    @Order(300)
+    @DisplayName("Consume - No description provided - nothing saved")
+    void test_consumeNoDescription() throws IOException {
+        mqttConsumer.consumeJson(noDescriptionJson.getBytes(StandardCharsets.UTF_8));
+
+        Datasource ds = new Datasource();
+
+        Table dataset = new Table(ds.getSqliteDb(), "data_set");
+        output(dataset).toConsole();
+        assertThat(dataset).hasNumberOfRows(0);
+    }
+
+    @Test
+    @Order(350)
+    @DisplayName("Consume - No timestamp- nothing saved")
+    void test_consumeWrongTimestamp() throws IOException {
+        mqttConsumer.consumeJson(faultyTimestampJson.getBytes(StandardCharsets.UTF_8));
+
+        Datasource ds = new Datasource();
+
+        Table dataset = new Table(ds.getSqliteDb(), "data_set");
+        output(dataset).toConsole();
+        assertThat(dataset).hasNumberOfRows(0);
+    }
+
+    @Test
+    @Order(400)
+    @DisplayName("Consume - Save three object")
+    void test_consumeSaveThreeObjects() throws IOException {
+        mqttConsumer.consumeJson(workingTemperatureJson.getBytes(StandardCharsets.UTF_8));
+        mqttConsumer.consumeJson(workingHeightJson.getBytes(StandardCharsets.UTF_8));
+        mqttConsumer.consumeJson(workingAirPressureJson.getBytes(StandardCharsets.UTF_8));
+
+        Datasource ds = new Datasource();
+
+        Table dataset = new Table(ds.getSqliteDb(), "data_set");
+        output(dataset).toConsole();
+        assertThat(dataset).hasNumberOfRows(3);
+    }
+
+    @Test
+    @Order(500)
+    @DisplayName("Consume - Save three objects after faulty json")
+    void test_consumeThreeAfterFaultyJson() throws IOException {
+        mqttConsumer.consumeJson(noDescriptionJson.getBytes(StandardCharsets.UTF_8));
+        mqttConsumer.consumeJson(workingTemperatureJson.getBytes(StandardCharsets.UTF_8));
+        mqttConsumer.consumeJson(workingHeightJson.getBytes(StandardCharsets.UTF_8));
+        mqttConsumer.consumeJson(valueNoStringJson.getBytes(StandardCharsets.UTF_8));
+        mqttConsumer.consumeJson(workingAirPressureJson.getBytes(StandardCharsets.UTF_8));
+        mqttConsumer.consumeJson(valueNoStringJson.getBytes(StandardCharsets.UTF_8));
+
+        Datasource ds = new Datasource();
+
+        Table dataset = new Table(ds.getSqliteDb(), "data_set");
+        output(dataset).toConsole();
+        assertThat(dataset).hasNumberOfRows(3);
     }
 }

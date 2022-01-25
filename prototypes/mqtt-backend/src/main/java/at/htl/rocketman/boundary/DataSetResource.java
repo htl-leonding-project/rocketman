@@ -240,24 +240,4 @@ public class DataSetResource {
                         "GET, POST, PUT, DELETE, OPTIONS, HEAD")
                 .build();
     }
-
-   /* @GET
-    @Consumes(MediaType.TEXT_HTML)
-    @Produces(MediaType.TEXT_HTML)
-    public String getLuftfeuchtigkeit() {
-        List<DataSet> list = dataSetRepository.getAll();
-        StringBuilder array = new StringBuilder("[");
-        for (DataSet dataSet : list) {
-            if(dataSet.getDescription().equals("Luftfeuchtigkeit"))
-            array.append(",").append(dataSet);
-        }
-        array.append("]");
-        return index.data("datasets_lf", array.toString()).render();
-    }*/
-
-    /*<ul>
-    {#for dataset in datasets}
-    <li>{dataset}</li>
-    {/for}
-    </ul>*/
 }
