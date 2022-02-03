@@ -1,7 +1,6 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
-import {Label} from 'ng2-charts';
+import {HttpClient} from '@angular/common/http';
 import {JsonObject} from '@angular/compiler-cli/ngcc/src/packages/entry_point';
 
 @Injectable({
@@ -9,22 +8,32 @@ import {JsonObject} from '@angular/compiler-cli/ngcc/src/packages/entry_point';
 })
 export class RocketmanService {
 
-  private conf!: IConfig;
+  private conf: IConfig | null;
+  warnings: string[];
   timestamps?: Observable<any>;
   values?: Observable<any>;
   unit?: Observable<any>;
 
   constructor(private httpClient: HttpClient) {
+    this.config = {
+      name: 'Default Config',
+      countdown: 10,
+      igniter: 4,
+      resistance: 1.4,
+      useVideo: false,
+      useJoyStick: false
+    };
+    this.warnings = [];
+    this.warnings.push('Standard Config!');
   }
 
   loadData(desc: string): Observable<HttpData> {
     return new Observable(observer => {
       this.timestamps = this.getData('http://localhost:8080/api/dataset/timesSinceStart/' + desc);
-      this.timestamps.subscribe((timeStamps: Label[]) => {
+      this.timestamps.subscribe((timeStamps: string[]) => {
 
         this.values = this.getData('http://localhost:8080/api/dataset/values/' + desc);
-        this.values.subscribe((values: JsonObject[]) => {
-
+        this.values.subscribe((values: string[]) => {
           this.unit = this.getData('http://localhost:8080/api/dataset/unit/' + desc);
           this.unit.subscribe((unit: string) => {
             observer.next({timeStamps, values, unit});
@@ -47,7 +56,7 @@ export class RocketmanService {
   }
 
   getConfigs(): Observable<IConfig[]> {
-    return this.httpClient.get<IConfig[]>('http://localhost:8080/api/config/')
+    return this.httpClient.get<IConfig[]>('http://localhost:8080/api/config/');
   }
 
   get config(): IConfig {
@@ -58,7 +67,7 @@ export class RocketmanService {
     this.conf = value;
   }
 
-  start() {
+  start(): void {
     this.httpClient.post<any>('http://localhost:8080/api/start/', {
       comment: '',
       startDate: new Date().toDateString(),
@@ -68,14 +77,14 @@ export class RocketmanService {
     });
   }
 
-  endFlight() {
+  endFlight(): void {
     this.httpClient.put('http://localhost:8080/api/start/', {}).subscribe(data => {
       console.log(data);
     });
   }
 
-  getFile() {
-    return this.httpClient.get<String>('http://localhost:8080/api/dataset/get-file')
+  getFile(): Observable<string> {
+    return this.httpClient.get<string>('http://localhost:8080/api/dataset/get-file')
   }
 }
 
@@ -89,7 +98,7 @@ export interface IConfig {
 }
 
 export interface HttpData {
-  timeStamps: Label[];
-  values: JsonObject[];
+  timeStamps: string[];
+  values: string[];
   unit: string;
 }

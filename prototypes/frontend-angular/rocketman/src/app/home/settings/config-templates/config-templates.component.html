@@ -1,0 +1,20 @@
+<button (click)="back()" mat-raised-button color="primary" class="backButton">
+  <mat-icon>
+    arrow_back
+  </mat-icon>
+</button>
+<mat-card *ngFor="let config of configs">
+  <mat-card-title>
+    {{config.name}}
+  </mat-card-title>
+  <mat-card-content>
+    <ul>
+      <li>Countdown: {{config.countdown}}s</li>
+      <li>Anzahl Zünder: {{config.igniter}}</li>
+      <li>Innenwiederstand pro Zünder: {{config.resistance}} Ohm</li>
+      <li>JoyStick benutzen: {{config.useJoyStick  && 'Ja' || 'Nein'}}</li>
+      <li>Video benutzen: {{config.useVideo  && 'Ja' || 'Nein'}}</li>
+    </ul>
+  </mat-card-content>
+  <button mat-raised-button color="primary" (click)="useConfig(config)">Benutzen</button>
+</mat-card>

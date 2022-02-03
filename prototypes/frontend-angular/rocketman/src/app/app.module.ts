@@ -1,56 +1,41 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { AppComponent } from './app.component';
-import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { ConfigComponent } from './config/config.component';
-import { ArchiveComponent } from './archive/archive.component';
-import {FormsModule} from '@angular/forms';
-import { ViewComponent } from './view/view.component';
-import {HttpClientModule} from '@angular/common/http';
-import { ConfigListComponent } from './config-list/config-list.component';
-import {ChartCommonModule, ChartComponent, LineChartModule} from "@swimlane/ngx-charts";
-import {GraphComponent} from "./graph/graph.component";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {CountdownComponent, FormatTimePipe} from './countdown/countdown.component';
-import { DownloadComponent } from './download/download.component';
-import {CsvModule} from "@ctrl/ngx-csv";
 
-const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'home' },
-  { path: 'home', component: HomeComponent },
-  { path: 'config', component: ConfigComponent },
-  { path: 'archive', component: ArchiveComponent },
-  { path: 'view', component: ViewComponent },
-  { path: 'confs', component: ConfigListComponent },
-  { path: 'countdown', component: CountdownComponent },
-  { path: 'download', component: DownloadComponent }
-];
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
+import { SettingsComponent } from './home/settings/settings.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {MatIconModule} from '@angular/material/icon';
+import {MatInputModule} from '@angular/material/input';
+import {FormsModule} from '@angular/forms';
+import {MatButtonModule} from '@angular/material/button';
+import {HttpClientModule} from '@angular/common/http';
+import { ConfigTemplatesComponent } from './home/settings/config-templates/config-templates.component';
+import {MatCardModule} from '@angular/material/card';
+import { DataViewComponent } from './home/data-view/data-view.component';
+import {CountdownComponent, FormatTimePipe} from './home/data-view/countdown/countdown.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    ConfigComponent,
-    ArchiveComponent,
-    ViewComponent,
-    GraphComponent,
-    ConfigListComponent,
+    SettingsComponent,
+    ConfigTemplatesComponent,
+    DataViewComponent,
     CountdownComponent,
-    FormatTimePipe,
-    DownloadComponent
+    FormatTimePipe
   ],
   imports: [
     BrowserModule,
-    FlexLayoutModule,
-    RouterModule.forRoot(routes),
+    AppRoutingModule,
+    NoopAnimationsModule,
+    MatIconModule,
+    MatInputModule,
     FormsModule,
-    ChartCommonModule,
+    MatButtonModule,
     HttpClientModule,
-    LineChartModule,
-    BrowserAnimationsModule,
-    CsvModule
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

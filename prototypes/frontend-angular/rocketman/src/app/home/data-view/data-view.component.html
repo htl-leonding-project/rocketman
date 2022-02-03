@@ -1,0 +1,10 @@
+<mat-card *ngFor="let recipient of felixVariante | keyvalue">
+  <mat-card-title>
+    {{recipient.key}}
+  </mat-card-title>
+  <mat-card-content>
+    <ul>
+      <li *ngFor="let data of recipient.value.values.splice(-5)">{{data}} {{recipient.value.unit}}</li>
+    </ul>
+  </mat-card-content>
+</mat-card>

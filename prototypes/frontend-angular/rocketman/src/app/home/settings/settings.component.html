@@ -1,0 +1,106 @@
+<button (click)="back()" mat-raised-button color="primary" class="backButton">
+  <mat-icon>
+    arrow_back
+  </mat-icon>
+</button>
+<form>
+  <div class="formInput">
+    <p>Config Name: </p>
+    <mat-form-field>
+      <input matInput (ngModelChange)="changeDetect()" [(ngModel)]="name" type="text" name="name">
+    </mat-form-field>
+  </div>
+  <div class="formInput">
+    <p>Countdown: </p>
+    <mat-form-field>
+      <input matInput (ngModelChange)="changeDetect()" [(ngModel)]="countdown" type="number" name="countdown">
+    </mat-form-field>
+    <div class="buttons">
+      <button (click)="countdownUp(true)" class="upDownButton" mat-raised-button color="primary">
+        <mat-icon>
+          arrow_upward
+        </mat-icon>
+      </button>
+      <button (click)="countdownUp(false)" class="upDownButton" mat-raised-button color="primary" [disabled]="countdown <= 0">
+        <mat-icon>
+          arrow_downward
+        </mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="formInput">
+    <p>Anzahl Zünder: </p>
+    <mat-form-field>
+      <input matInput (ngModelChange)="changeDetect()" [(ngModel)]="igniter" type="number" name="igniter">
+    </mat-form-field>
+    <div class="buttons">
+      <button (click)="igniterUp(true)" class="upDownButton" mat-raised-button color="primary">
+        <mat-icon>
+          arrow_upward
+        </mat-icon>
+      </button>
+      <button (click)="igniterUp(false)" class="upDownButton" mat-raised-button color="primary" [disabled]="igniter <= 0">
+        <mat-icon>
+          arrow_downward
+        </mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="formInput">
+    <p>Innenwiederstand pro Zünder (Ohm): </p>
+    <mat-form-field>
+      <input matInput (ngModelChange)="changeDetect()" [(ngModel)]="resistance" type="number" name="resistance">
+    </mat-form-field>
+    <div class="buttons">
+      <button (click)="resistanceUp(true)" class="upDownButton" mat-raised-button color="primary">
+        <mat-icon>
+          arrow_upward
+        </mat-icon>
+      </button>
+      <button (click)="resistanceUp(false)" class="upDownButton" mat-raised-button color="primary" [disabled]="resistance <= 0">
+        <mat-icon>
+          arrow_downward
+        </mat-icon>
+      </button>
+    </div>
+  </div>
+    <div class="formInput">
+      <p>JoyStick benutzen: <b>{{useJoyStick && 'Ja' || 'Nein'}}</b></p>
+      <div class="buttons">
+        <button class="selectionButton" mat-raised-button color="primary" [disabled]="useJoyStick" (click)="joyStickUse()">
+          <mat-icon>
+            check
+          </mat-icon>
+        </button>
+        <button class="selectionButton" mat-raised-button  color="warn" [disabled]="!useJoyStick" (click)="joyStickUse()">
+          <mat-icon>
+           close
+          </mat-icon>
+        </button>
+      </div>
+    </div>
+  <div class="formInput">
+    <p>Video benutzen: <b>{{useVideo && 'Ja' || 'Nein'}}</b></p>
+    <div class="buttons">
+      <button class="selectionButton" mat-raised-button color="primary" [disabled]="useVideo" (click)="videoUse()">
+        <mat-icon>
+          check
+        </mat-icon>
+      </button>
+      <button class="selectionButton" mat-raised-button  color="warn" [disabled]="!useVideo" (click)="videoUse()">
+        <mat-icon>
+          close
+        </mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="buttons">
+    <button [disabled]="savedTemplate" (click)="saveTemplate()" mat-raised-button color="primary" class="templateButton">
+      Speichere Config Vorlage
+    </button>
+
+    <button (click)="loadTemplate()" mat-raised-button color="primary" class="templateButton">
+      Lade Config Vorlage
+    </button>
+  </div>
+</form>

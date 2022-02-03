@@ -1,10 +1,12 @@
-<div class="content" fxLayout="row" fxLayoutAlign="center center" >
-  <img id="logo" src="./assets/logo.png" alt="Rocketman Logo + Rocketman as Text">
+<div class="warnings">
+  <div class="warning" *ngFor="let warning of rocketman.warnings"><mat-icon>warning</mat-icon><p>{{warning}}</p></div>
 </div>
-<div fxLayout="row" fxLayoutAlign="center center" >
-  <a href="/config" class="button pulseText">Flug Starten</a>
-</div>
-<div fxLayout="row" fxLayoutAlign="center center" >
-  <a href="/download" class="button pulseText">File Download</a>
+<div class="buttons">
+<button class="button" (click)="toSettings()">
+  <mat-icon>settings</mat-icon> Einstellungen
+</button>
+<button class="button" (click)="toData()">
+  <mat-icon>trending_up</mat-icon> Daten
+</button>
 </div>
 
