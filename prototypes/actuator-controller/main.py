@@ -5,11 +5,12 @@ import spidev
 import time
 import paho.mqtt.client as mqtt
 import RPi.GPIO as GPIO
+import atexit
 
 VIEWER_MODE_PIN = 16
 USER_MODE_PIN = 18
 JOYSTICK_DATA_TOPIC_NAME = 'joystick-values'
-USERMODE_MQTT_TOPIC_NAME = 'user_mode'
+USER_MODE_MQTT_TOPIC_NAME = 'user_mode'
 MQTT_CLIENT_NAME = 'actuator-controller'
 
 # Define sensor channels
@@ -21,7 +22,7 @@ JOYSTICK_Y_CHANNEL = 2
 # Define delay between readings (s)
 delay = 0.5
 
-current_usermode = ''
+current_user_mode = ''
 
 GPIO.setwarnings(False)  # Ignore warning for now
 GPIO.setmode(GPIO.BOARD)  # Use physical pin numbering
@@ -52,19 +53,26 @@ def read_channel(channel):
 
 
 def toggle_to_viewer_mode(channel):
-    global current_usermode
-    current_usermode = 'VIEWER_MODE'
+    global current_user_mode
+    current_user_mode = 'VIEWER_MODE'
 
 
 def toggle_to_user_mode(channel):
-    global current_usermode
-    current_usermode = 'USER_MODE'
+    global current_user_mode
+    current_user_mode = 'USER_MODE'
 
 
 def toggle_to_admin_mode(channel):
-    global current_usermode
-    current_usermode = 'ADMIN_MODE'
+    global current_user_mode
+    current_user_mode = 'ADMIN_MODE'
 
+
+def exit_handler():
+    joystick_data_file.close()
+    client.disconnect()
+
+
+atexit.register(exit_handler)
 
 if GPIO.input(USER_MODE_PIN) == GPIO.LOW and GPIO.input(VIEWER_MODE_PIN) == GPIO.LOW:
     toggle_to_admin_mode(0)
@@ -76,9 +84,11 @@ elif GPIO.input(VIEWER_MODE_PIN) == GPIO.HIGH:
 GPIO.add_event_detect(VIEWER_MODE_PIN, GPIO.RISING, callback=toggle_to_viewer_mode)
 GPIO.add_event_detect(USER_MODE_PIN, GPIO.RISING, callback=toggle_to_user_mode)
 
+joystick_data_file = open('joystick_mock_data.csv', 'w')
+
 while True:
-    if current_usermode != 'ADMIN_MODE' and (GPIO.input(USER_MODE_PIN) == GPIO.LOW and
-                                             GPIO.input(VIEWER_MODE_PIN) == GPIO.LOW):
+    if current_user_mode != 'ADMIN_MODE' and (GPIO.input(USER_MODE_PIN) == GPIO.LOW and
+                                              GPIO.input(VIEWER_MODE_PIN) == GPIO.LOW):
         toggle_to_admin_mode(0)
 
     # Read the joystick position data
@@ -88,15 +98,18 @@ while True:
     swt_val = read_channel(JOYSTICK_SWITCH_CHANNEL)
 
     # Print out results
-    print("--------------------------------------------")
-    print("X : {}  Y : {}  Switch : {}".format(vrx_pos, vry_pos, swt_val))
-    print("Usermode: " + current_usermode)
+    print('--------------------------------------------')
+    print('X : {}  Y : {}  Switch : {}'.format(vrx_pos, vry_pos, swt_val))
+    print('User mode: ' + current_user_mode)
 
-    data_set = {"x-axis": vrx_pos, "y-axis": vry_pos, "switch_value": swt_val}
+    # save to file
+    print('{};{};{}'.format(vrx_pos, vry_pos, swt_val), file=joystick_data_file)
+
+    data_set = {'x-axis': vrx_pos, 'y-axis': vry_pos, 'switch_value': swt_val}
     json_dump = json.dumps(data_set)
 
     client.publish(JOYSTICK_DATA_TOPIC_NAME, json_dump)
-    client.publish(USERMODE_MQTT_TOPIC_NAME, current_usermode)
+    client.publish(USER_MODE_MQTT_TOPIC_NAME, current_user_mode)
 
     # Wait before repeating loop
     time.sleep(delay)
