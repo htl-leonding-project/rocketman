@@ -6,6 +6,12 @@ import time
 import paho.mqtt.client as mqtt
 import RPi.GPIO as GPIO
 import atexit
+import sys
+
+WRITE_TO_FILE = False
+
+if len(sys.argv) > 1:
+    WRITE_TO_FILE = True
 
 VIEWER_MODE_PIN = 16
 USER_MODE_PIN = 18
@@ -68,7 +74,8 @@ def toggle_to_admin_mode(channel):
 
 
 def exit_handler():
-    joystick_data_file.close()
+    if WRITE_TO_FILE:
+        joystick_data_file.close()
     client.disconnect()
 
 
@@ -84,7 +91,8 @@ elif GPIO.input(VIEWER_MODE_PIN) == GPIO.HIGH:
 GPIO.add_event_detect(VIEWER_MODE_PIN, GPIO.RISING, callback=toggle_to_viewer_mode)
 GPIO.add_event_detect(USER_MODE_PIN, GPIO.RISING, callback=toggle_to_user_mode)
 
-joystick_data_file = open('joystick_mock_data.csv', 'w')
+if WRITE_TO_FILE:
+    joystick_data_file = open('joystick_mock_data.csv', 'w')
 
 while True:
     if current_user_mode != 'ADMIN_MODE' and (GPIO.input(USER_MODE_PIN) == GPIO.LOW and
@@ -103,7 +111,8 @@ while True:
     print('User mode: ' + current_user_mode)
 
     # save to file
-    print('{};{};{}'.format(vrx_pos, vry_pos, swt_val), file=joystick_data_file)
+    if WRITE_TO_FILE:
+        print('{};{};{}'.format(vrx_pos, vry_pos, swt_val), file=joystick_data_file)
 
     data_set = {'x-axis': vrx_pos, 'y-axis': vry_pos, 'switch_value': swt_val}
     json_dump = json.dumps(data_set)

@@ -1,0 +1,119 @@
+= How to run this backend on a Raspberry Pi
+
+== Native
+
+Currently, if you want to run this backend natively you have to "deactivate" JSON-Validation. To do this you have to replace the following line in the MqttConsumer.java file:
+
+[source,java]
+----
+Set<ValidationMessage> errors = schema.validate(node);
+----
+
+with this one:
+
+[source,java]
+----
+Set<ValidationMessage> errors = new HashSet<>();
+----
+
+This will disable JSON-Validation, and it will be attempted to convert every JSON to a Java-Object. If this is not an option for you, you have to run the backend in the JVM.
+
+== Build on Raspberry Pi
+
+If you have a Raspberry Pi or other ARM based board with enough RAM you can build it on there. Minimum amount of RAM needed is 8 GB.
+
+[source,shell]
+----
+./mvnw clean package -Dquarkus.package.type=native -Dmaven.test.skip=true
+----
+
+You can try using the "-Dquarkus.native.additional-build-args=-J-Xmx3G" parameter to try with less RAM but it might not work.
+
+Compiling on the Raspberry Pi will take a lot of time.
+
+Once built you can just the file with:
+[source,shell]
+----
+./target/mqtt-backend-v1.0.0-runner
+----
+
+== Build native image on the cloud
+
+Create an oracle VM with the "Oracle Linux Cloud Developer" image and build it there.
+
+When you run this command:
+
+[source,shell]
+----
+uname -a
+Linux aarch64-vm 5.4.17-2102.204.4.4.el8uek.aarch64 #2 SMP Tue Aug 17 20:32:12 PDT 2021 aarch64 aarch64 aarch64 GNU/Linux
+----
+
+The response should contain aarch64 (as pictured above).
+
+[%collapsible]
+====
+Log into your cloud instance with ssh. The default user for this type of VM is "opc".
+
+[source,shell]
+----
+ssh -i ssh-key-2022-01-22.key opc@PUBLIC_IP
+----
+Note: In my case building the native executable on the VM took around 12 minutes.
+====
+
+Navigate to the root of this project.
+
+[source,shell]
+----
+./mvnw clean package -Dquarkus.package.type=native -Dmaven.test.skip=true
+----
+
+Make sure that in the application.properties both lines is set:
+
+[source,properties]
+----
+quarkus.native.additional-build-args=-H:+ParseOnce,--initialize-at-run-time=at.htl.rocketman.repository.SqlRunner
+quarkus.native.resources.includes=sql/**,json_schema.json,jsv-messages_en_US.properties
+----
+
+You need to add it manually.
+
+This is needed due to an incompatibility in the SQLite Driver.
+https://github.com/quarkusio/quarkus/issues/22822#issuecomment-1011396976[Source]
+
+After the build succeeds there should be a file in the target folder called **mqtt-backend-v1.0.0-runner**
+
+=== Transfer the native executable to the Raspberry Pi
+
+You can transfer the compiled executable from your cloud instance to the raspberry using scp. You can't transfer binary files via scp, so you have to zip it beforehand.
+
+On the VM:
+[source,shell]
+----
+zip runner.zip target/mqtt-backend-1.0.0-SNAPSHOT-runner
+mv runner.zip ~
+----
+
+On the Pi:
+[source,shell]
+----
+scp opc@instance_ip:~/runner.zip /local/path/
+unzip runner.zip
+----
+
+== JVM
+
+Build a jar-File with the following command.
+
+[source,shell]
+----
+./mvnw clean package -Dquarkus.package.type=uber-jar -Dmaven.test.skip=true
+----
+
+And then execute it via the following command:
+
+[source,shell]
+----
+java -jar target/mqtt-backend-v1.0.0-runner.jar
+----

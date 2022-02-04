@@ -3,16 +3,32 @@ import at.htl.rocketman.Datasource;
 import org.apache.ibatis.jdbc.ScriptRunner;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.Properties;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class SqlRunner {
+    // "src/main/resources/sql/test-script-files.properties";
+    // "classes/sql/script-files.properties"
+    private static final String SCRIPT_PROPERTIES_PATH = find("test-script-files.properties").stream().findFirst().get().toString();
+    private static final String TARGET_SCRIPT_PROPERTIES_PATH = find("script-files.properties").stream().findFirst().get().toString();
 
-    private static final String SCRIPT_PROPERTIES_PATH = "src/main/resources/sql/test-script-files.properties";
-    private static final String TARGET_SCRIPT_PROPERTIES_PATH = "classes/sql/script-files.properties";
+    protected static Collection<Path> find(String fileName) {
+        try (Stream<Path> files = Files.walk(Paths.get("."))) {
+            return files
+                    .filter(f -> f.getFileName().toString().equals(fileName))
+                    .collect(Collectors.toList());
 
-
+        } catch (IOException e){
+            return null;
+        }
+    }
 
     public static void main(String[] args) {
         //runScript(SqlScript.INSERT);

@@ -1,9 +1,12 @@
 package at.htl.rocketman.entity;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 
+@RegisterForReflection
 public class DataSet {
     private Long id;
     private String description;

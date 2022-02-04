@@ -59,13 +59,19 @@ pip3 install spidev
 ```
 
 ### Start MQTT broker
-First navigate to the mqtt-backend folder () then execute the following command:
+First navigate to the mqtt-backend folder then execute the following command:
 ```shell
 docker-compose -f docker-compose.mqtt.yml up
 ```
 
 ### Launch the python program
-In this folder execute the following command:
+
+If you want to save the joystick data to a file call the program with the parameter "true":
+```shell
+python3 main.py true
+```
+
+If not then just execute the following command:
 ```shell
 python3 main.py
 ```

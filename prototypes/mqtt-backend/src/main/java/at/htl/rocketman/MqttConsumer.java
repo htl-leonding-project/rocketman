@@ -16,6 +16,7 @@ import javax.json.bind.JsonbException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -34,7 +35,6 @@ public class MqttConsumer {
     private static final String SCHEMA_FILENAME = "json_schema.json";
     private final ObjectMapper mapper = new ObjectMapper();
 
-
     /*
         {
           "description": "temperature",
@@ -47,7 +47,7 @@ public class MqttConsumer {
     public void consumeJson(byte[] raw) throws IOException {
         String message = new String(raw);
         Path schemaFilePath = find(SCHEMA_FILENAME).stream().findFirst().get();
-        JsonSchema schema = getJsonSchemaFromStringContent(new String(Files.readAllBytes(schemaFilePath)));
+        JsonSchema schema = getJsonSchemaFromStringContent(Files.readString(schemaFilePath));
         JsonNode node = getJsonNodeFromStringContent(message);
         Jsonb jsonb = JsonbBuilder.create();
         Set<ValidationMessage> errors = schema.validate(node);
