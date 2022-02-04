@@ -15,6 +15,8 @@ import { ConfigTemplatesComponent } from './home/settings/config-templates/confi
 import {MatCardModule} from '@angular/material/card';
 import { DataViewComponent } from './home/data-view/data-view.component';
 import {CountdownComponent, FormatTimePipe} from './home/data-view/countdown/countdown.component';
+import { DownloadComponent } from './home/download/download.component';
+import {CsvModule} from "@ctrl/ngx-csv";
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import {CountdownComponent, FormatTimePipe} from './home/data-view/countdown/cou
     ConfigTemplatesComponent,
     DataViewComponent,
     CountdownComponent,
-    FormatTimePipe
+    FormatTimePipe,
+    DownloadComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +38,8 @@ import {CountdownComponent, FormatTimePipe} from './home/data-view/countdown/cou
     FormsModule,
     MatButtonModule,
     HttpClientModule,
-    MatCardModule
+    MatCardModule,
+    CsvModule
   ],
   providers: [],
   bootstrap: [AppComponent]
