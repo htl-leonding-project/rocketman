@@ -1,3 +1,9 @@
+<button (click)="endFlight()" mat-raised-button color="primary" class="backButton">
+  <mat-icon>
+    arrow_back
+  </mat-icon>
+</button>
+
 <mat-card *ngFor="let recipient of felixVariante | keyvalue">
   <mat-card-title>
     {{recipient.key}}

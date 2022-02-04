@@ -49,5 +49,4 @@ export class DataViewComponent implements OnInit {
     this.rocketman.endFlight();
     this.router.navigate(['home']);
   }
-
 }
