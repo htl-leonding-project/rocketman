@@ -2,6 +2,8 @@
 
 == Native
 
+*The _build_native_runner.sh_-script does all of this automatically and copies the runner-file into the project directory once finished.*
+
 Currently, if you want to run this backend natively you have to "deactivate" JSON-Validation. To do this you have to replace the following line in the MqttConsumer.java file:
 
 [source,java]
@@ -103,6 +105,8 @@ unzip runner.zip
 ----
 
 == JVM
+
+*The _build_uberjar.sh_-script does all of this automatically and copies the jar-file into the project directory once finished.*
 
 Build a jar-File with the following command.
 
