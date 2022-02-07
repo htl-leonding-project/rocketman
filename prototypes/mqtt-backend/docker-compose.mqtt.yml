@@ -8,3 +8,9 @@ services:
       - "9002:9001"
     volumes:
       - ./mosquitto:/mosquitto
+    networks:
+      - mqtt
+
+networks:
+  mqtt:
+    driver: bridge

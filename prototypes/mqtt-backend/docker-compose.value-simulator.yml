@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  value-simulator:
+    image: scarfed/rocketman-value-simulator
+    ports:
+      - "8090:8090"
+    networks:
+      - mqtt
+
+networks:
+  mqtt:
+    driver: bridge
