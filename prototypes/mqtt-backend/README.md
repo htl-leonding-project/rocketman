@@ -6,7 +6,7 @@ https://github.com/QuirinEcker/quarkus-mqtt
 
 ## Running the application in dev mode
 
-Start MQTT the Broker
+Start the MQTT Broker
 ```shell script	
 docker-compose -f docker-compose.mqtt.yml up	
 ```
@@ -14,6 +14,11 @@ docker-compose -f docker-compose.mqtt.yml up
 Dev mode:
 ```shell script
 ./mvnw compile quarkus:dev
+```
+
+Start the value simulator
+```shell script	
+docker-compose -f docker-compose.mqtt.yml up	
 ```
 
 To submit test data use MQTT Explorer see [here](../../asciidocs/CanSat_mqtt.adoc)

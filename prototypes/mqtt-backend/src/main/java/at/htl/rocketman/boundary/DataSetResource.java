@@ -4,6 +4,8 @@ import at.htl.rocketman.entity.DataSet;
 import at.htl.rocketman.entity.Start;
 import at.htl.rocketman.repository.DataSetRepository;
 import at.htl.rocketman.repository.StartRepository;
+import io.quarkus.mailer.Mail;
+import io.quarkus.mailer.Mailer;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.jboss.logging.Logger;
@@ -11,6 +13,7 @@ import org.jboss.logging.Logger;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -39,45 +42,10 @@ public class DataSetResource {
     @Inject
     Logger LOG;
 
-    @GET
-    @Path("get-file")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    @Operation(summary = "Save data in CSV-files", description = "Saves all Starts and DataSets in their respective CSV-files and returns the datasets from the database as a JSON Object")
-    public Response getFile() {
-//        StringBuilder dataSets_SB = new StringBuilder();
-//        StringBuilder starts_SB = new StringBuilder();
-//        dataSets_SB.append(DATASET_CSV_HEADER)
-//                .append("\n");
-//        starts_SB.append(START_CSV_HEADER)
-//                .append("\n");
-//        List<DataSet> dataSets = dataSetRepository.getAll();
-//        for (DataSet temp : dataSets) {
-//            dataSets_SB.append(temp.toCSVString())
-//                    .append("\n");
-//        }
-//        List<Start> starts = startRepository.getAll();
-//        for (Start temp : starts) {
-//            starts_SB.append(temp.toCSVString())
-//                    .append("\n");
-//        }
-//        try {
-//            FileWriter myWriter = new FileWriter(DATASET_CSV_FILENAME);
-//            myWriter.write(dataSets_SB.toString());
-//            myWriter.close();
-//        }
-//        catch (IOException e) {
-//            LOG.error("Error while writing file " + DATASET_CSV_FILENAME + " : " + e.getMessage());
-//        }
-//        try {
-//            FileWriter myWriter = new FileWriter(START_CSV_FILENAME);
-//            myWriter.write(starts_SB.toString());
-//            myWriter.close();
-//        }
-//        catch (IOException e) {
-//            LOG.error("Error while writing file " + START_CSV_FILENAME + " : " + e.getMessage());
-//        }
-//        return Response.ok(dataSets_SB.toString()).build();
+    @Inject
+    Mailer mailer;
+
+    private JsonObject buildJsonObject() {
         JsonObjectBuilder builder = Json.createObjectBuilder();
         JsonArrayBuilder startArrayBuilder = Json.createArrayBuilder();
         JsonArrayBuilder dataSetArrayBuilder = Json.createArrayBuilder();
@@ -100,7 +68,30 @@ public class DataSetResource {
         }
         builder.add("starts", startArrayBuilder.build());
         builder.add("dataSets", dataSetArrayBuilder.build());
-        return Response.ok(builder.build()).build();
+        return builder.build();
+    }
+
+    @GET
+    @Path("send-file/{address}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Send data per e-mail", description = "Sends all Starts and DataSets from the database as a JSON Object to the requested e-mail address.")
+    public void sendEmail(@PathParam("address") String address) {
+        mailer.send(
+                Mail.withText(address,
+                        "Rocketman DataSets",
+                        buildJsonObject().toString()
+                )
+        );
+    }
+
+    @GET
+    @Path("get-file")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Save data in CSV-files", description = "Saves all Starts and DataSets in their respective CSV-files and returns the datasets from the database as a JSON Object")
+    public Response getFile() {
+        return Response.ok(buildJsonObject()).build();
     }
 
     @GET
