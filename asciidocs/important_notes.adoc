@@ -10,3 +10,9 @@ ifndef::imagesdir[:imagesdir: ./images]
 * xBee, LoRa Module wurden am 13.10.2021 von der 5AHITM an die 5AHIF übergeben.
 
 * 04.11.2021 wurden die Adapterplatinen für die xBee Module übergeben.
+
+* 11.01.2022 wurden xBee, LoRa Module und Schlüsselschalter an 5AHITM übergeben
+
+* 11.01.2022 wurden xBee, LoRa Module und Schlüsselschalter an 5AHITM übergeben
+
+* 24.01.2022 xBee, LoRa Module und Schlüsselschalter an 5AHIF übergeben
