@@ -1,14 +1,19 @@
 package org.acme.mqtt;
 
+import java.time.Duration;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+
+import io.smallrye.mutiny.Multi;
 import org.acme.mqtt.entity.DataHelper;
 import org.acme.mqtt.entity.DataSet;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import java.time.LocalDateTime;
+import java.util.logging.Logger;
 
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
 
@@ -23,13 +28,17 @@ import io.smallrye.reactive.messaging.annotations.Broadcast;
 @ApplicationScoped
 public class RocketmanGenerator {
 
+
+    @Inject
+    Logger log;
+
     private Random random = new Random();
     private DataHelper[] dh = fillDH();
     @Outgoing("rocketman")
     @Broadcast
-    public Flowable<DataSet> generate() {
-
-        return Flowable.interval(5, TimeUnit.SECONDS)
+    public Multi<DataSet> generate() {
+        return Multi.createFrom().ticks().every(Duration.ofSeconds(5))
+                .onOverflow().drop()
                 .map(r -> {
                     int ran = random.nextInt(3);
                     DataSet ds = new DataSet(
@@ -38,7 +47,7 @@ public class RocketmanGenerator {
                             dh[ran].getUnit(),
                             LocalDateTime.now()
                     );
-                    System.out.println("Sending DataSet: " + ds.toString());
+                    log.info("Sending DataSet: " + ds.toString());
                     return  ds;
                 });
     }
