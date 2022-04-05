@@ -1,0 +1,33 @@
+= Koffer Setup Protokoll 5AHIF 29.03.2022
+
+== Teilnehmer
+- Hain Lukas
+- Kaufmann Jan
+
+== Initiales Setup für Rasperry Pi
+
+* Sprache: Englisch
+* Standard PW: raspberry
+* Installation von On Screen Tastatur
+* System updaten
+* Bestehende Installation prüfen
+** Docker
+*** Installierte Version: 20.10.14
+*** User Pi zu Docker hinzugefügt, um docker Befehle ohne sudo ausführen zu können
+** Java
+*** Installierte Version: Open-JDK 11.0.14
+** Javac
+*** Installierte Version: 11.0.14
+** docker-compose
+*** Installierte Version: 1.29.2
+* Python Module installieren
+
+== Testen des Backends
+
+* Quarkus Backend mittels shellscript in eine über-jar gepackaged
+* Ausführen des MQTT-Brokers in Docker
+* Ausführen des Werte-Simulators in Docker
+** Funktioniert mit Docker nicht
+* weitere probleme mit lokaler ausführung mussten behoben werden
+* backend funktioniert
+* simulator funktioniert nur lokal ohne docker

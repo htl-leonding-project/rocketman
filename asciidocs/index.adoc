@@ -1,5 +1,5 @@
 = Rocketman
-Feichtinger Sarah, Dumfarth Felix, Marcel Plakolb, Lukas Hain, Jan Kaufmann
+Feichtinger Sarah, Dumfarth Felix, Lukas Hain, Jan Kaufmann
 1.1.0, 2020-10-28
 :sourcedir: ../src/main/java
 :icons: font
@@ -251,6 +251,16 @@ a| Die einzelnen Bilder werden als base64 String übergeben
 //s -- fm
 //----
 
+== Links
+
+* https://youtu.be/-oZP3VJ7W_c?t=3720[Project Award 5AHIF]
+
+* https://youtu.be/ynMgZQklOlo?t=11691[Project Award 5AHITM]
+
+* https://github.com/htl-leonding-project/rocketman[GitHub Repository]
+
+* https://vm81.htl-leonding.ac.at/agiles/99-269/current[YouTrack]
+
 == Project Description
 
 20/21 4ahitm/4ahif Instrumentenkoffer zum Abschuss einer Rakete für den Cansat Wettbewerb
@@ -284,6 +294,7 @@ a| Die einzelnen Bilder werden als base64 String übergeben
 === Protokolle
 * https://htl-leonding-project.github.io/rocketman/protokoll1_231020[Protokoll 1, 23.10.2020]
 * https://htl-leonding-project.github.io/rocketman/protokoll2_211220[Protokoll 2, 21.12.2020]
+* https://htl-leonding-project.github.io/rocketman/protokoll_290322_Koffer_setup[Protokoll Koffer Setup, 29.03.2022]
 
 == Team
 
