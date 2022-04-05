@@ -1,0 +1,12 @@
+= 3. Protokoll 5AHIF 18.01.2022
+
+== Teilnehmer
+- Professor Stütz
+- Hain Lukas
+- Kaufmann Jan
+
+== Besprochenes
+
+* Deployment am Koffer
+** muss mit workflow automatisiert sein
+** mit backend und frontend
