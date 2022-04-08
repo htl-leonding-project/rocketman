@@ -34,7 +34,7 @@ public class MqttConsumer {
 
     private static final String SCHEMA_FILENAME = "json_schema.json";
     private final ObjectMapper mapper = new ObjectMapper();
-
+// jaja
     /*
         {
           "description": "temperature",
