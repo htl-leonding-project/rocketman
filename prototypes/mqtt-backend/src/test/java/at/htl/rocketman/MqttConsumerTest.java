@@ -24,59 +24,52 @@ class MqttConsumerTest {
     @Inject
     MqttConsumer mqttConsumer;
 
-    String workingTemperatureJson = """
-            {
-              "description": "temperature",
-              "value": "1200",
-              "unit": "celsius",
-              "timestamp": "2021-01-19T17:13:41.777301100"
-            }
-            """;
+    String workingTemperatureJson = "{\n" +
+            "              \"description\": \"temperature\",\n" +
+            "              \"value\": \"1200\",\n" +
+            "              \"unit\": \"celsius\",\n" +
+            "              \"timestamp\": \"2021-01-19T17:13:41.777301100\"\n" +
+            "            }";
 
-    String workingHeightJson = """
-            {
-              "description": "hoehe",
-              "value": "4000",
-              "unit": "meter",
-              "timestamp": "2022-01-19T17:13:41.777301100"
-            }
-            """;
+    String workingHeightJson = "\n" +
+            "            {\n" +
+            "              \"description\": \"hoehe\",\n" +
+            "              \"value\": \"4000\",\n" +
+            "              \"unit\": \"meter\",\n" +
+            "              \"timestamp\": \"2022-01-19T17:13:41.777301100\"\n" +
+            "            }";
 
-    String workingAirPressureJson = """
-            {
-              "description": "luftdruck",
-              "value": "100000",
-              "unit": "bar",
-              "timestamp": "2022-02-19T17:13:41.777301100"
-            }
-            """;
+    String workingAirPressureJson = "\n" +
+            "            {\n" +
+            "              \"description\": \"luftdruck\",\n" +
+            "              \"value\": \"100000\",\n" +
+            "              \"unit\": \"bar\",\n" +
+            "              \"timestamp\": \"2022-02-19T17:13:41.777301100\"\n" +
+            "            }";
 
-    String noDescriptionJson = """
-            {
-              "description": "",
-              "value": "1200",
-              "unit": "celsius",
-              "timestamp": "2021-01-19T17:13:41.777301100"
-            }
-            """;
+    String noDescriptionJson = "\n" +
+            "            {\n" +
+            "              \"description\": \"\",\n" +
+            "              \"value\": \"1200\",\n" +
+            "              \"unit\": \"celsius\",\n" +
+            "              \"timestamp\": \"2021-01-19T17:13:41.777301100\"\n" +
+            "            }";
 
-    String faultyTimestampJson = """
-            {
-              "description": "",
-              "value": "1200",
-              "unit": "celsius",
-              "timestamp": "01-19T17:13:41.777301100"
-            }
-            """;
+    String faultyTimestampJson = "\n" +
+            "            {\n" +
+            "              \"description\": \"\",\n" +
+            "              \"value\": \"1200\",\n" +
+            "              \"unit\": \"celsius\",\n" +
+            "              \"timestamp\": \"01-19T17:13:41.777301100\"\n" +
+            "            }";
 
-    String valueNoStringJson = """
-            {
-              "description": "temperature",
-              "value": 1200,
-              "unit": "celsius",
-              "timestamp": "2021-01-19T17:13:41.777301100"
-            }
-            """;
+    String valueNoStringJson = "\n" +
+            "            {\n" +
+            "              \"description\": \"temperature\",\n" +
+            "              \"value\": 1200,\n" +
+            "              \"unit\": \"celsius\",\n" +
+            "              \"timestamp\": \"2021-01-19T17:13:41.777301100\"\n" +
+            "            }";
 
     @BeforeEach
     void setUp() {
