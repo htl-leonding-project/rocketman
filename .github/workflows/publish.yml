@@ -96,6 +96,7 @@ jobs:
           run: docker build . -f src/main/docker/Dockerfile.fast-jar --tag rocketman-backend-aarch64
       - name: Push image
         run: |
+          apt-get install docker*
           IMAGE_ID=ghcr.io/${{ github.repository_owner }}/rocketman-backend-aarch64
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
           VERSION=latest
