@@ -94,7 +94,7 @@ jobs:
           arch: aarch64
           distro: ubuntu20.04
           run: |
-            apt-get install docker*
+            apt-get install docker-ce
             docker build . -f src/main/docker/Dockerfile.fast-jar --tag rocketman-backend-aarch64
       - name: Push image
         run:
