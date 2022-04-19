@@ -37,6 +37,7 @@ jobs:
           distro: ubuntu20.04
           run: docker build . -f src/main/docker/Dockerfile.fast-jar --tag $IMAGE_NAME
       - name: Push image
+        uses: uraimo/run-on-arch-action@v2.1.1
         with:
           arch: aarch64
           distro: ubuntu20.04
@@ -72,6 +73,7 @@ jobs:
           distro: ubuntu20.04
           run: docker build . --tag $IMAGE_NAME
       - name: Push image
+        uses: uraimo/run-on-arch-action@v2.1.1
         with:
           arch: aarch64
           distro: ubuntu20.04
