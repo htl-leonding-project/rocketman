@@ -15,7 +15,7 @@ jobs:
     name: Build backend
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: rocketman-backend
+      IMAGE_NAME: rocketman-backend-aarch64
     defaults:
       run:
         working-directory: ./prototypes/mqtt-backend
@@ -28,19 +28,20 @@ jobs:
         uses: docker/login-action@v1
         with:
           arch: aarch64
+          distro: ubuntu_latest
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build image
-        run: docker build . -f src/main/docker/Dockerfile.fast-jar --tag "$IMAGE_NAME-aarch64"
+        run: docker build . -f src/main/docker/Dockerfile.fast-jar --tag $IMAGE_NAME
       - name: Push image
         run: |
-          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME-aarch64
+          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
           VERSION=latest
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
-          docker tag "$IMAGE_NAME-aarch64" $IMAGE_ID:$VERSION
+          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
   build_frontend:
     name: Build frontend
@@ -57,17 +58,18 @@ jobs:
         uses: docker/login-action@v1
         with:
           arch: aarch64
+          distro: ubuntu_latest
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build image
-        run: docker build . --tag "$IMAGE_NAME-aarch64"
+        run: docker build . --tag $IMAGE_NAME
       - name: Push image
         run: |
-          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME-aarch64
+          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
           VERSION=latest
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
-          docker tag "$IMAGE_NAME-aarch64" $IMAGE_ID:$VERSION
+          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
