@@ -93,15 +93,15 @@ jobs:
         with:
           arch: aarch64
           distro: ubuntu20.04
-          run: docker build . -f src/main/docker/Dockerfile.fast-jar --tag rocketman-backend-aarch64
+          run: docker build . -f src/main/docker/Dockerfile.fast-jar --tag $IMAGE_NAME
       - name: Push image
         run: |
-          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/rocketman-backend-aarch64
+          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
           VERSION=latest
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
-          docker tag rocketman-backend-aarch64 $IMAGE_ID:$VERSION
+          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
 
   build_frontend_aarch64:
@@ -124,12 +124,12 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
           run: |
             echo "Building Image"
-            docker build . --tag rocketman-frontend-aarch64
+            docker build . --tag $IMAGE_NAME
             echo "Publishing Image"
-            IMAGE_ID=ghcr.io/${{ github.repository_owner }}/rocketman-frontend-aarch64
+            IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
             IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
             VERSION=latest
             echo IMAGE_ID=$IMAGE_ID
             echo VERSION=$VERSION
-            docker tag rocketman-frontend-aarch64 $IMAGE_ID:$VERSION
+            docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
             docker push $IMAGE_ID:$VERSION
