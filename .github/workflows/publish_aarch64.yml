@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Publish Rocketman Frontend and Backend
+name: Publish Rocketman Frontend and Backend for aarch64
 
 # Controls when the action will run. 
 on:
@@ -32,7 +32,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build image
-        run: docker build . -f src/main/docker/Dockerfile.fast-jar --tag $IMAGE_NAME
+        run: docker build . -f src/main/docker/Dockerfile.fast-jar --tag "$IMAGE_NAME-aarch64"
       - name: Push image
         run: |
           IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
@@ -61,7 +61,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build image
-        run: docker build . --tag $IMAGE_NAME
+        run: docker build . --tag "$IMAGE_NAME-aarch64"
       - name: Push image
         run: |
           IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
