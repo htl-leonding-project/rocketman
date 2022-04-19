@@ -10,7 +10,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build".
+  # This workflow contains a single job called "build"
   build_backend:
     name: Build backend for aarch64
     runs-on: ubuntu-latest
@@ -35,19 +35,19 @@ jobs:
         with:
           arch: aarch64
           distro: ubuntu20.04
-        run: docker build . -f src/main/docker/Dockerfile.fast-jar --tag $IMAGE_NAME
+          run: docker build . -f src/main/docker/Dockerfile.fast-jar --tag $IMAGE_NAME
       - name: Push image
         with:
           arch: aarch64
           distro: ubuntu20.04
-        run: |
-          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
-          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-          VERSION=latest
-          echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION
-          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
+          run: |
+            IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+            IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+            VERSION=latest
+            echo IMAGE_ID=$IMAGE_ID
+            echo VERSION=$VERSION
+            docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
+            docker push $IMAGE_ID:$VERSION
   build_frontend:
     name: Build frontend for aarch64
     runs-on: ubuntu-latest
@@ -70,16 +70,16 @@ jobs:
         with:
           arch: aarch64
           distro: ubuntu20.04
-        run: docker build . --tag $IMAGE_NAME
+          run: docker build . --tag $IMAGE_NAME
       - name: Push image
         with:
           arch: aarch64
           distro: ubuntu20.04
-        run: |
-          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
-          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
-          VERSION=latest
-          echo IMAGE_ID=$IMAGE_ID
-          echo VERSION=$VERSION
-          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
+          run: |
+            IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+            IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+            VERSION=latest
+            echo IMAGE_ID=$IMAGE_ID
+            echo VERSION=$VERSION
+            docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
+            docker push $IMAGE_ID:$VERSION
