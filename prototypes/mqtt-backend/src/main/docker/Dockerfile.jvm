@@ -79,7 +79,7 @@ FROM openjdk:11-jdk
 
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en'
 
-RUN chown 185 .
+RUN chown -R 185 .
 
 # We make four distinct layers so if there are application changes the library layers can be re-used
 COPY --chown=185 target/quarkus-app/lib/ /deployments/lib/
@@ -91,11 +91,8 @@ COPY --chown=185 target/classes/jsv-messages_en_US.properties /deployments/resou
 COPY --chown=185 target/classes/sql/* /deployments/resources/sql/
 RUN mv /deployments/resources/sql/docker-script-files.properties /deployments/resources/sql/test-script-files.properties
 
-RUN ls -la
-
 EXPOSE 8080
 USER 185
 ENV AB_JOLOKIA_OFF=""
 ENV JAVA_OPTS="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
 ENV JAVA_APP_JAR="/deployments/quarkus-run.jar"
-

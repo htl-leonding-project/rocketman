@@ -47,6 +47,10 @@ COPY --chown=1001 target/quarkus-app/lib/ /deployments/lib/
 COPY --chown=1001 target/quarkus-app/*.jar /deployments/
 COPY --chown=1001 target/quarkus-app/app/ /deployments/app/
 COPY --chown=1001 target/quarkus-app/quarkus/ /deployments/quarkus/
+COPY --chown=185 target/classes/json_schema.json /deployments/resources/json_schema.json
+COPY --chown=185 target/classes/jsv-messages_en_US.properties /deployments/resources/jsv-messages_en_US.properties
+COPY --chown=185 target/classes/sql/* /deployments/resources/sql/
+RUN mv /deployments/resources/sql/docker-script-files.properties /deployments/resources/sql/test-script-files.properties
 
 EXPOSE 8080
 USER 1001
