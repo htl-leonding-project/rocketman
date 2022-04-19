@@ -70,7 +70,7 @@ jobs:
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
   build_backend_aarch64:
-    name: Build backend
+    name: Build backend aarch64
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: rocketman-backend-aarch64
@@ -102,7 +102,7 @@ jobs:
             docker push $IMAGE_ID:$VERSION
 
   build_frontend_aarch64:
-    name: Build frontend
+    name: Build frontend aarch64
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: rocketman-frontend-aarch64
