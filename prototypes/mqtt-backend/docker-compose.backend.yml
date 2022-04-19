@@ -20,6 +20,16 @@ services:
     networks:
       - mqtt
 
+  frontend:
+    image: ghcr.io/htl-leonding-project/rocketman-frontend:latest
+    container_name: rocketman_frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - mosquitto
+    networks:
+      - mqtt
+
 networks:
   mqtt:
     driver: bridge
