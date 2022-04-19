@@ -69,3 +69,64 @@ jobs:
           echo VERSION=$VERSION
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
+  build_backend_aarch64:
+    name: Build backend
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: rocketman-backend-aarch64
+    defaults:
+      run:
+        working-directory: ./prototypes/mqtt-backend
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Package
+        run: mvn package -DskipTests
+      - name: Login to GitHub Packages
+        uses: uraimo/run-on-arch-action@v2.1.1
+        with:
+          arch: aarch64
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          run: |
+            echo "Building Image"
+            docker build . -f src/main/docker/Dockerfile.fast-jar --tag $IMAGE_NAME
+            echo "Publishing Image"
+            IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+            IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+            VERSION=latest
+            echo IMAGE_ID=$IMAGE_ID
+            echo VERSION=$VERSION
+            docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
+            docker push $IMAGE_ID:$VERSION
+
+  build_frontend_aarch64:
+    name: Build frontend
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: rocketman-frontend-aarch64
+    defaults:
+      run:
+        working-directory: ./prototypes/frontend-angular/rocketman
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Login to GitHub Packages
+        uses: uraimo/run-on-arch-action@v2.1.1
+        with:
+          arch: aarch64
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          run: |
+            echo "Building Image"
+            docker build . --tag $IMAGE_NAME
+            echo "Publishing Image"
+            IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+            IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+            VERSION=latest
+            echo IMAGE_ID=$IMAGE_ID
+            echo VERSION=$VERSION
+            docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
+            docker push $IMAGE_ID:$VERSION
