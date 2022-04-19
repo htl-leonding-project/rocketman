@@ -24,8 +24,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Package
         run: mvn package -DskipTests
-      - uses: uraimo/run-on-arch-action@v2
-      - uses: docker/login-action@v1
+      - name: Login action
+        uses: docker/login-action@v1
       - name: Login to GitHub Packages
         with:
           arch: aarch64
@@ -44,6 +44,7 @@ jobs:
             echo VERSION=$VERSION
             docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
             docker push $IMAGE_ID:$VERSION
+            
 
   build_frontend_aarch64:
     name: Build frontend
