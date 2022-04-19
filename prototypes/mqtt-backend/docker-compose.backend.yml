@@ -26,7 +26,7 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - mosquitto
+      - backend
     networks:
       - mqtt
 
