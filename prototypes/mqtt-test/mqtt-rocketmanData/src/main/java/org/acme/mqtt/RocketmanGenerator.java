@@ -29,8 +29,6 @@ import io.smallrye.reactive.messaging.annotations.Broadcast;
 public class RocketmanGenerator {
 
 
-    @Inject
-    Logger log;
 
     private Random random = new Random();
     private DataHelper[] dh = fillDH();
@@ -47,7 +45,7 @@ public class RocketmanGenerator {
                             dh[ran].getUnit(),
                             LocalDateTime.now()
                     );
-                    log.info("Sending DataSet: " + ds.toString());
+                    System.out.println("Sending DataSet: " + ds.toString());
                     return  ds;
                 });
     }

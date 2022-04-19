@@ -1,0 +1,7 @@
+version: '3.3'
+
+services:
+  backend:
+    image: ghcr.io/htl-leonding-project/rocketman-backend:latest
+    ports:
+      - "8080:8080"
