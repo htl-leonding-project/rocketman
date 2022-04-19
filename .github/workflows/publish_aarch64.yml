@@ -48,7 +48,7 @@ jobs:
     name: Build frontend
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: rocketman-frontend
+      IMAGE_NAME: rocketman-frontend-aarch64
     defaults:
       run:
         working-directory: ./prototypes/frontend-angular/rocketman
