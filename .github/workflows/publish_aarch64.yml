@@ -11,7 +11,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build_backend:
+  build_backend_aarch64:
     name: Build backend
     runs-on: ubuntu-latest
     env:
@@ -20,11 +20,11 @@ jobs:
       run:
         working-directory: ./prototypes/mqtt-backend
     steps:
-      - uses: uraimo/run-on-arch-action@v2
       - name: Check out the repo
         uses: actions/checkout@v2
       - name: Package
         run: mvn package -DskipTests
+      - uses: uraimo/run-on-arch-action@v2
       - name: Login to GitHub Packages
         uses: docker/login-action@v1
         with:
@@ -45,7 +45,7 @@ jobs:
             docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
             docker push $IMAGE_ID:$VERSION
 
-  build_frontend:
+  build_frontend_aarch64:
     name: Build frontend
     runs-on: ubuntu-latest
     env:
@@ -54,9 +54,9 @@ jobs:
       run:
         working-directory: ./prototypes/frontend-angular/rocketman
     steps:
-      - uses: uraimo/run-on-arch-action@v2
       - name: Check out the repo
         uses: actions/checkout@v2
+      - uses: uraimo/run-on-arch-action@v2
       - name: Login to GitHub Packages
         uses: docker/login-action@v1
         with:
