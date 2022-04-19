@@ -7,7 +7,7 @@ services:
       - "1883:1883"
       - "9002:9001"
     volumes:
-      - ./mosquitto:/mosquitto
+      - ./mqtt-backend/mosquitto:/mosquitto
     networks:
       - mqtt
   backend:
