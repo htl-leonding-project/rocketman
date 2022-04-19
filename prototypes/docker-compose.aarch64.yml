@@ -1,0 +1,35 @@
+version: '3.3'
+
+services:
+  mosquitto:
+    image: eclipse-mosquitto:1.6.12
+    ports:
+      - "1883:1883"
+      - "9002:9001"
+    volumes:
+      - ./mqtt-backend/mosquitto:/mosquitto
+    networks:
+      - mqtt
+  backend:
+    image: ghcr.io/htl-leonding-project/rocketman-backend-aarch64:latest
+    container_name: rocketman_backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mosquitto
+    networks:
+      - mqtt
+
+  frontend:
+    image: ghcr.io/htl-leonding-project/rocketman-frontend-aarch64:latest
+    container_name: rocketman_frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - mqtt
+
+networks:
+  mqtt:
+    driver: bridge
