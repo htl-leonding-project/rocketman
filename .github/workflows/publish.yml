@@ -92,7 +92,7 @@ jobs:
         id: buildx
         uses: docker/setup-buildx-action@v1
       - name: Build image
-        run: docker buildx build . -f src/main/docker/Dockerfile.fast-jar --tag $IMAGE_NAME --platform linux/aarch64 --push ghcr.io
+        run: docker buildx build . -f src/main/docker/Dockerfile.fast-jar --tag ghcr.io/$IMAGE_NAME --platform linux/aarch64 --push
 
   build_frontend_aarch64:
     name: Build frontend aarch64
