@@ -89,10 +89,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build image
-        uses: uraimo/run-on-arch-action@v2.1.1
-        with:
-          platform: aarch64
-          run: docker buildx build --platform linux/amd64,linux/arm64 .-f src/main/docker/Dockerfile.fast-jar --tag rocketman-backend-aarch64
+        run: docker buildx build --platform linux/amd64,linux/arm64 .-f src/main/docker/Dockerfile.fast-jar --tag $IMAGE_NAME
       - name: Push image
         run: |
           IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
@@ -102,7 +99,6 @@ jobs:
           echo VERSION=$VERSION
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
-
   build_frontend_aarch64:
     name: Build frontend aarch64
     runs-on: ubuntu-latest
