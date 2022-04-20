@@ -88,18 +88,11 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and push
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          platforms: linux/aarch64
-          push: true
-          tags: user/app:latest
       - name: Build image
         uses: uraimo/run-on-arch-action@v2.1.1
         with:
           platform: aarch64
-          run: docker build . -f src/main/docker/Dockerfile.fast-jar --tag rocketman-backend-aarch64
+          run: docker buildx build --platform linux/amd64,linux/arm64 .-f src/main/docker/Dockerfile.fast-jar --tag rocketman-backend-aarch64
       - name: Push image
         run: |
           IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
